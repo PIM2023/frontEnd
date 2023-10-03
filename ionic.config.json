@@ -1,0 +1,7 @@
+{
+  "name": "OutFiFtuO",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

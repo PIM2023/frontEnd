@@ -95,6 +95,6 @@ export class RegisterPage implements OnInit {
   }
 
   goTo(dest: string, extras?: any) {
-    this.navCtrl.navigateRoot('login');
+    this.navCtrl.navigateRoot(dest);
   }
 }

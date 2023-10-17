@@ -14,6 +14,13 @@ const routes: Routes = [
         (m) => m.RegisterPageModule
       ),
   },
+  {
+    path: 'login',
+    loadChildren: () => 
+      import('./features/login/login.module').then( 
+        (m) => m.LoginPageModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -1,13 +1,11 @@
-import { Injectable, Injector } from '@angular/core';
-import { Repository } from '../../base/repository.repository';
+import { Injectable } from '@angular/core';
+import { UserRepository } from '../../repository/user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserRepository extends Repository {
-  constructor(injector: Injector) {
-    super(injector);
-  }
+export class UserService {
+  constructor(private repo: UserRepository) {}
 
   /**
    * This method is used to register a user
@@ -22,7 +20,7 @@ export class UserRepository extends Repository {
    * @param weight Weight of the user
    * @returns Observable that tells if the user was registered or not
    */
-  registerUser(
+  public register(
     username: string,
     email: string,
     password: string,
@@ -33,18 +31,16 @@ export class UserRepository extends Repository {
     height?: number,
     weight?: number
   ) {
-    return this.doRequest<any>('get', `/register`, {
-      params: {
-        username: username,
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        bornDate: bornDate,
-        avatar: avatar,
-        height: height,
-        weight: weight,
-      },
-    });
+    return this.repo.registerUser(
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      bornDate,
+      avatar,
+      height,
+      weight
+    );
   }
 }

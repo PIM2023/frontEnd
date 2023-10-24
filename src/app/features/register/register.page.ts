@@ -6,6 +6,9 @@ import {
   AlertController,
   NavController,
 } from '@ionic/angular';
+import { h } from 'ionicons/dist/types/stencil-public-runtime';
+import { first, last } from 'rxjs';
+import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
   selector: 'app-register',
@@ -23,15 +26,31 @@ export class RegisterPage implements OnInit {
     private readonly fb: FormBuilder,
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private userService: UserService
   ) {
     this.checkForm().then(() => this.checkboxListener());
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.register('a', 'b', 'c', 'd', 'e', new Date()).subscribe(
+      (response) => {
+        console.log('response', response);
+      },
+      (error) => {
+        console.log('error', error);
+      }
+    );
+  }
 
   async checkForm() {
     this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      bornDate: ['', Validators.required],
+      height: [''],
+      weight: [''],
       email: [
         '',
         [
@@ -41,7 +60,6 @@ export class RegisterPage implements OnInit {
         ],
       ],
       password: ['', Validators.required],
-      username: ['', Validators.required],
       termsAgreed: [false, Validators.requiredTrue],
     });
   }
@@ -52,7 +70,7 @@ export class RegisterPage implements OnInit {
     this.registerForm.get('termsAgreed')?.valueChanges.subscribe((value) => {
       if (this.registerForm.get('termsAgreed')!.value && !this.termsRead) {
         console.log('ahora');
-        this.registerForm.setValue({ termsAgreed: false });
+        this.registerForm.value.termsAgreed = false;
         this.presentAlert();
       }
     });
@@ -71,6 +89,7 @@ export class RegisterPage implements OnInit {
         {
           text: 'Cancelar',
           handler: async () => {
+            this.registerForm.value.termsAgreed = false;
             alert.dismiss();
           },
         },
@@ -91,7 +110,21 @@ export class RegisterPage implements OnInit {
   }
 
   onRegister() {
-    console.log('ON REGISTER');
+    this.userService
+      .register(
+        this.registerForm.value.username,
+        this.registerForm.value.email,
+        this.registerForm.value.password,
+        this.registerForm.value.firstName,
+        this.registerForm.value.lastName,
+        this.registerForm.value.bornDate,
+        this.registerForm.value.avatar,
+        this.registerForm.value.height,
+        this.registerForm.value.weight
+      )
+      .subscribe((response) => {
+        console.log('response', response);
+      });
   }
 
   goTo(dest: string, extras?: any) {

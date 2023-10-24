@@ -9,6 +9,56 @@
     <ion-item>
       <ion-input
         required
+        label="Nombre"
+        labelPlacement="floating"
+        formControlName="firstName"
+        type="text"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        required
+        label="Apellidos"
+        labelPlacement="floating"
+        formControlName="lastName"
+        type="text"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        required
+        label="Altura"
+        labelPlacement="floating"
+        formControlName="height"
+        type="number"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        required
+        label="Fecha de nacimiento"
+        labelPlacement="floating"
+        formControlName="bornDate"
+        type="date"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        required
+        label="Peso"
+        labelPlacement="floating"
+        formControlName="weight"
+        type="number"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        required
         label="Email"
         labelPlacement="floating"
         formControlName="email"

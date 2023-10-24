@@ -92,6 +92,8 @@ export class RegisterPage implements OnInit {
 
   onRegister() {
     console.log('ON REGISTER');
+    console.warn("WARN")
+    console.error("ERROR")
   }
 
   goTo(dest: string, extras?: any) {

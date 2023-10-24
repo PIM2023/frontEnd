@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   LoadingController,
-  AlertController,
   NavController,
 } from '@ionic/angular';
 
@@ -15,7 +14,6 @@ import {
 export class LoginPage implements OnInit {
 
   loginForm!: FormGroup;
-  termsRead = false;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
     message: 'Iniciando sesión',

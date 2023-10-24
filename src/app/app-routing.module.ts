@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'register',
+    redirectTo: 'other-profile',
     pathMatch: 'full',
   },
   {
@@ -21,6 +21,14 @@ const routes: Routes = [
         (m) => m.LoginPageModule
       ),
   },
+  {
+    path: 'other-profile',
+    loadChildren: () => 
+      import('./features/other-profile/other-profile.module').then( 
+        (m) => m.OtherProfilePageModule
+      ),
+  },
+
 ];
 
 @NgModule({

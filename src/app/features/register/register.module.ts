@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
+import { UserService } from 'src/app/core/services/user/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { RegisterPage } from './register.page';
     ReactiveFormsModule,
     IonicModule,
     RegisterPageRoutingModule,
+    HttpClientModule,
   ],
+  providers: [UserService],
   declarations: [RegisterPage],
 })
 export class RegisterPageModule {}

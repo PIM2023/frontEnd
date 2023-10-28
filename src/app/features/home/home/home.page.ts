@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { IonModal, ToastController } from '@ionic/angular';
 import { PostService } from 'src/app/core/services/post/post.service';
 
 @Component({
@@ -8,33 +9,65 @@ import { PostService } from 'src/app/core/services/post/post.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  constructor(private postService: PostService) {}
+  img!: string;
+  description!: string;
+  @ViewChild(IonModal) modal!: IonModal;
+
+  constructor(
+    private postService: PostService,
+    private toastCtrl: ToastController
+  ) {}
 
   ngOnInit() {}
 
   async post() {
+    const date = this.formatDate(new Date());
+    console.warn(date);
+    this.postService
+      .post(this.description, this.img, date, 'user')
+      .subscribe((postResult) => {
+        console.log(postResult);
+      });
+  }
+
+  async takePicture() {
     const picture = await Camera.getPhoto({
       quality: 100,
       allowEditing: true,
-      resultType: CameraResultType.Base64,
+      resultType: CameraResultType.DataUrl,
       saveToGallery: true,
       source: CameraSource.Prompt,
     });
-    // this.postService.post('text', 'image', new Date(), 'user').subscribe(() => {
-    //   console.log('posted');
-    // });
+    this.img = picture.dataUrl || '';
   }
 
-  onWillDismiss(ev: any) {
-    console.log(ev);
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Debes seleccionar una imagen',
+      duration: 2000,
+      position: 'bottom',
+    });
+    toast.present();
+  }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   cancel() {
-    console.log('cancel');
+    this.modal.dismiss();
   }
 
-  confirm() {
-    console.log('confirm');
-    this.post();
+  async confirm() {
+    if (!this.img) {
+      this.presentToast();
+      return;
+    }
+    await this.post();
+    this.modal.dismiss();
+    this.img = '';
   }
 }

@@ -17,7 +17,7 @@ export class PostRepository extends Repository {
    * @param user User that posts
    * @returns Observable that tells if the post was posted or not
    */
-  post(text: string, image: string, createdAt: Date, user: any) {
+  post(text: string, image: string, createdAt: Date | string, user: any) {
     return this.doRequest<any>('post', `/post`, {
       params: {
         text: text,

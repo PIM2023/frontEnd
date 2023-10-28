@@ -15,7 +15,12 @@ export class PostService {
    * @param user User that posts
    * @returns Observable that tells if the post was posted or not
    */
-  public post(text: string, image: string, createdAt: Date, user: any) {
+  public post(
+    text: string,
+    image: string,
+    createdAt: Date | string,
+    user: any
+  ) {
     return this.repo.post(text, image, createdAt, user);
   }
 }

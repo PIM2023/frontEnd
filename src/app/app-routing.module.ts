@@ -9,6 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'register',
+    title: 'Registro',
     loadChildren: () =>
       import('./features/register/register.module').then(
         (m) => m.RegisterPageModule
@@ -16,8 +17,9 @@ const routes: Routes = [
   },
   {
     path: 'home',
+    title: 'Página principal',
     loadChildren: () =>
-      import('./features/home/home/home.module').then((m) => m.HomePageModule),
+      import('./features/home/home.module').then((m) => m.HomePageModule),
   },
 ];
 

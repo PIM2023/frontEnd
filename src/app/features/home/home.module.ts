@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { HttpClientModule } from '@angular/common/http';
 import { PostService } from 'src/app/core/services/post/post.service';
+import { PostComponent } from '../../shared/post/post.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { PostService } from 'src/app/core/services/post/post.service';
     IonicModule,
     HomePageRoutingModule,
     HttpClientModule,
+    PostComponent,
   ],
   providers: [PostService],
   declarations: [HomePage],

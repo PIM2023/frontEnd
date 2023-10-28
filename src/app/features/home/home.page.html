@@ -10,10 +10,17 @@
       <ion-title size="large">home</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-button id="open-modal">
-    <ion-label>Post</ion-label>
-  </ion-button>
+  <ion-list>
+    <post *ngFor="let post of [1,2,3,4]" [post]="post"></post>
+  </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button id="open-modal">
+      <ion-label>Post</ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
 
 <ion-modal mode="ios" trigger="open-modal">
   <ng-template>

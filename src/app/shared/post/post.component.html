@@ -1,0 +1,89 @@
+<div class="post-item">
+  <div class="post-header">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="auto">
+        <ion-avatar class="avatar-md">
+          <img src="https://picsum.photos/id/{{ i * 20 }}/1000/1000" alt="" />
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <strong>Spiderman</strong>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-icon name="ellipsis-horizontal"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="post-media">
+    <img src="https://picsum.photos/id/{{ i }}/1000/1000" alt="" />
+  </div>
+  <div class="post-actions">
+    <ion-row>
+      <ion-col>
+        <ion-button size="small" fill="clear" color="dark">
+          <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+        </ion-button>
+        <ion-button
+          size="small"
+          fill="clear"
+          color="dark"
+          (click)="goToComments(post)"
+        >
+          <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+        </ion-button>
+        <ion-button size="small" fill="clear" color="dark">
+          <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button size="small" fill="clear" color="dark">
+          <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="post-stats">
+    <strong>20 likes</strong>
+  </div>
+
+  <div class="post-comments">
+    <div class="comment-item" (click)="goToComments(post)">
+      <span class="username">spiderman</span>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut <a href="" class="hash-tag">#labore</a>
+      <a href="" class="hash-tag">#dolore</a>
+      <a href="" class="hash-tag">#magna</a>
+      <a href="" class="hash-tag">#aliqua</a>
+    </div>
+
+    <div class="comment-expander text-muted" (click)="goToComments(post)">
+      View all 35 comments
+    </div>
+
+    <div class="comment-item">
+      <span class="username">steveroger</span>
+      Ipsum dolor sit amet, consectetur?
+
+      <div class="comment-item reply">
+        <span class="username">spiderman</span>
+        Lorem ipsum hehe
+      </div>
+    </div>
+
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="auto">
+        <ion-avatar class="avatar-sm">
+          <img src="https://picsum.photos/id/{{ i + 200 }}/1000/1000" alt="" />
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <ion-input
+          #commentInput
+          label="Escribe un comentario"
+          labelPlacement="floating"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>

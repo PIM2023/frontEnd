@@ -19,7 +19,7 @@ export class PostRepository extends Repository {
    */
   post(text: string, image: string, createdAt: Date | string, user: any) {
     return this.doRequest<any>('post', `/post`, {
-      params: {
+      body: {
         text: text,
         image: image,
         createdAt: createdAt,
@@ -28,5 +28,13 @@ export class PostRepository extends Repository {
         user: user,
       },
     });
+  }
+
+  /**
+   *
+   * @returns Observable that returns all the posts
+   */
+  getPosts() {
+    return this.doRequest<any>('get', '/post');
   }
 }

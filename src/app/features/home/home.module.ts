@@ -9,7 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { HttpClientModule } from '@angular/common/http';
 import { PostService } from 'src/app/core/services/post/post.service';
-import { PostComponent } from '../../shared/post/post.component';
+import { PostComponent } from 'src/app/shared/components/post/post.component';
 
 @NgModule({
   imports: [

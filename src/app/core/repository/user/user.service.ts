@@ -33,8 +33,8 @@ export class UserRepository extends Repository {
     height?: number,
     weight?: number
   ) {
-    return this.doRequest<any>('get', `/register`, {
-      params: {
+    return this.doRequest<any>('post', `/register`, {
+      body: {
         username: username,
         email: email,
         password: password,

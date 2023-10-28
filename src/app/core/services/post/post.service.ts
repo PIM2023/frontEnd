@@ -23,4 +23,12 @@ export class PostService {
   ) {
     return this.repo.post(text, image, createdAt, user);
   }
+
+  /**
+   *
+   * @returns Observable that returns all the posts
+   */
+  public getPosts() {
+    return this.repo.getPosts();
+  }
 }

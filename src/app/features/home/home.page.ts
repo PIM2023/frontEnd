@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { IonModal, ToastController } from '@ionic/angular';
+import {
+  IonModal,
+  RefresherEventDetail,
+  ToastController,
+} from '@ionic/angular';
 import { PostService } from 'src/app/core/services/post/post.service';
 
 @Component({
@@ -11,14 +16,20 @@ import { PostService } from 'src/app/core/services/post/post.service';
 export class HomePage implements OnInit {
   img!: string;
   description!: string;
+  state: any;
   @ViewChild(IonModal) modal!: IonModal;
 
   constructor(
     private postService: PostService,
-    private toastCtrl: ToastController
-  ) {}
+    private toastCtrl: ToastController,
+    private router: Router
+  ) {
+    this.state = this.router.getCurrentNavigation()?.extras.state;
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPosts();
+  }
 
   async post() {
     const date = this.formatDate(new Date());
@@ -30,20 +41,32 @@ export class HomePage implements OnInit {
       });
   }
 
-  async takePicture() {
-    const picture = await Camera.getPhoto({
-      quality: 100,
-      allowEditing: true,
-      resultType: CameraResultType.DataUrl,
-      saveToGallery: true,
-      source: CameraSource.Prompt,
+  async getPosts() {
+    this.postService.getPosts().subscribe((posts) => {
+      console.log(posts);
     });
-    this.img = picture.dataUrl || '';
   }
 
-  async presentToast() {
+  async takePicture() {
+    try {
+      const picture = await Camera.getPhoto({
+        quality: 100,
+        allowEditing: true,
+        resultType: CameraResultType.DataUrl,
+        saveToGallery: true,
+        source: CameraSource.Prompt,
+      });
+      this.img = picture.dataUrl || '';
+    } catch (_) {
+      this.presentToast(
+        'Parece que ha habido un problema al seleccionar la foto'
+      );
+    }
+  }
+
+  async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
-      message: 'Debes seleccionar una imagen',
+      message: message,
       duration: 2000,
       position: 'bottom',
     });
@@ -63,11 +86,17 @@ export class HomePage implements OnInit {
 
   async confirm() {
     if (!this.img) {
-      this.presentToast();
+      this.presentToast('Debes seleccionar una imagen');
       return;
     }
     await this.post();
     this.modal.dismiss();
     this.img = '';
+  }
+
+  refreshPage(ev: any) {
+    setTimeout(() => {
+      ev.target.complete();
+    }, 2000);
   }
 }

@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   LoadingController,
   AlertController,
   NavController,
 } from '@ionic/angular';
-import { h } from 'ionicons/dist/types/stencil-public-runtime';
-import { first, last } from 'rxjs';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
@@ -18,6 +16,7 @@ import { UserService } from 'src/app/core/services/user/user.service';
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
   termsRead = false;
+  userSignal: WritableSignal<any>;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
     message: 'Registrando la cuenta...',
@@ -27,9 +26,11 @@ export class RegisterPage implements OnInit {
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private alertController: AlertController,
-    private userService: UserService
+    private userService: UserService,
+    private signalsService: SignalsService
   ) {
     this.checkForm().then(() => this.checkboxListener());
+    this.userSignal = this.signalsService.getUserSignal();
   }
 
   ngOnInit() {

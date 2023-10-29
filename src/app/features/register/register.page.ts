@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   LoadingController,
   AlertController,
   NavController,
 } from '@ionic/angular';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +19,7 @@ import { UserService } from 'src/app/core/services/user/user.service';
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
   termsRead = false;
+  userSignal: WritableSignal<any>;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
     message: 'Registrando la cuenta...',
@@ -24,21 +29,15 @@ export class RegisterPage implements OnInit {
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private alertController: AlertController,
-    private userService: UserService
+    private userService: UserService,
+    private signalsService: SignalsService,
+    private toastService: ToastService
   ) {
     this.checkForm().then(() => this.checkboxListener());
+    this.userSignal = this.signalsService.getUserSignal();
   }
 
-  ngOnInit() {
-    this.userService.register('a', 'b', 'c', 'd', 'e', new Date()).subscribe(
-      (response) => {
-        console.log('response', response);
-      },
-      (error) => {
-        console.log('error', error);
-      }
-    );
-  }
+  ngOnInit() {}
 
   async checkForm() {
     this.registerForm = this.fb.group({
@@ -62,12 +61,8 @@ export class RegisterPage implements OnInit {
   }
 
   async checkboxListener() {
-    console.log('CHECKBOX LISTENER');
-    const check = document.querySelector('#condition');
     this.registerForm.get('termsAgreed')?.valueChanges.subscribe((value) => {
       if (this.registerForm.get('termsAgreed')!.value && !this.termsRead) {
-        console.log('ahora');
-        this.registerForm.value.termsAgreed = false;
         this.presentAlert();
       }
     });
@@ -79,7 +74,6 @@ export class RegisterPage implements OnInit {
 
   async presentAlert() {
     const check = document.querySelector('#condition');
-    console.log('check', check);
     const alert = await this.alertController.create({
       header: 'Términos y Condiciones de uso',
       buttons: [
@@ -87,6 +81,7 @@ export class RegisterPage implements OnInit {
           text: 'Cancelar',
           handler: async () => {
             this.registerForm.value.termsAgreed = false;
+            (<any>check).checked = false;
             alert.dismiss();
           },
         },
@@ -99,8 +94,9 @@ export class RegisterPage implements OnInit {
           },
         },
       ],
-      message:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus orci, bibendum quis nisl ut, tincidunt maximus lorem. Nam nec tincidunt ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur eget porttitor urna. Proin ornare egestas tempus. Quisque vel sodales sapien. Aenean eget lobortis nulla.',
+      message: `Al registrarte, aceptas los términos y condiciones de uso de la aplicación. \n
+        Los datos que nos proporciones serán tratados de forma confidencial y no serán compartidos con terceros. \n
+        Solo usaremos tus datos para almacenarlos temporalmente en el almacenamiento local del navegador para permitir que sigas con la sesión iniciada al recargar la página \n`,
     });
 
     alert.present();
@@ -115,12 +111,23 @@ export class RegisterPage implements OnInit {
         this.registerForm.value.firstName,
         this.registerForm.value.lastName,
         this.registerForm.value.bornDate,
-        this.registerForm.value.avatar,
-        this.registerForm.value.height,
-        this.registerForm.value.weight
+        this.registerForm.value.avatar ?? null,
+        this.registerForm.value.height ?? null,
+        this.registerForm.value.weight ?? null
+      )
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
       )
       .subscribe((response) => {
-        console.log('response', response);
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
+        else {
+          //mi usuario, se ha de cambiar por response
+          this.userSignal.set(response);
+          this.navCtrl.navigateRoot('home');
+        }
       });
   }
 

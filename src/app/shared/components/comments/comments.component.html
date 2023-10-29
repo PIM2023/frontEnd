@@ -1,0 +1,51 @@
+<div class="comments-list">
+  <div class="comment-item" *ngFor="let i of [1, 2, 3, 4]">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-avatar class="avatar-sm">
+          <img src="https://picsum.photos/id/{{ i }}/1000/1000" alt="" />
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <div>
+          <span class="username">USER COMMENTED</span>
+          Comment
+        </div>
+        <div class="comment-actions">
+          <span class="action-item">Time from comment</span>
+          <span class="action-item"><strong>Nº likes</strong></span>
+          <span class="action-item"><strong>Contestar</strong></span>
+        </div>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <div class="replies">
+      <div class="comment-item reply">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-avatar class="avatar-sm">
+              <img src="https://picsum.photos/id/{{ i }}/1000/1000" alt="" />
+            </ion-avatar>
+          </ion-col>
+          <ion-col>
+            <div>
+              <span class="username">USER REPLIED</span>
+              Reply
+            </div>
+            <div class="comment-actions">
+              <span class="action-item">Time reply</span>
+              <span class="action-item"><strong>Nº likes</strong></span>
+              <span class="action-item"><strong>Contestar</strong></span>
+            </div>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-icon name="heart-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+</div>

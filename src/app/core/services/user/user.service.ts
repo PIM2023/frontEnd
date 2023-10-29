@@ -59,4 +59,12 @@ export class UserService {
       password
     );
   }
+
+  public getUserById(
+    id: number
+  ) {
+    return this.repo.getUserById(
+      id
+    );
+  }
 }

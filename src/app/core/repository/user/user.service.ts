@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Repository } from '../../base/repository.repository';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -33,18 +34,16 @@ export class UserRepository extends Repository {
     height?: number,
     weight?: number
   ) {
-    return this.doRequest<any>('get', `/register`, {
-      params: {
-        username: username,
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        bornDate: bornDate,
-        avatar: avatar,
-        height: height,
-        weight: weight,
-      },
+    return this.doRequest<User>('post', `/register`, {
+      username: username,
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      bornDate: bornDate,
+      avatar: avatar,
+      height: height,
+      weight: weight,
     });
   }
 
@@ -65,5 +64,16 @@ export class UserRepository extends Repository {
         password: password,
       },
     });
+  }
+
+  /**
+   * @param id Id of the user
+   * @returns User with the given id
+   */
+  
+  getUserById(
+    id: number
+  ) {
+    return this.doRequest<User>('get', `/users/${id}/profile`);
   }
 }

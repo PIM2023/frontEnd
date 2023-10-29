@@ -46,4 +46,13 @@ export class UserRepository extends Repository {
       weight: weight,
     });
   }
+
+  /**
+   *
+   * @param id Id of the user
+   * @returns User with the given id
+   */
+  getUserById(id: number) {
+    return this.doRequest<User>('get', `/users/${id}/profile`);
+  }
 }

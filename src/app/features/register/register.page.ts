@@ -94,8 +94,9 @@ export class RegisterPage implements OnInit {
           },
         },
       ],
-      message:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus orci, bibendum quis nisl ut, tincidunt maximus lorem. Nam nec tincidunt ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur eget porttitor urna. Proin ornare egestas tempus. Quisque vel sodales sapien. Aenean eget lobortis nulla.',
+      message: `Al registrarte, aceptas los términos y condiciones de uso de la aplicación. \n
+        Los datos que nos proporciones serán tratados de forma confidencial y no serán compartidos con terceros. \n
+        Solo usaremos tus datos para almacenarlos temporalmente en el almacenamiento local del navegador para permitir que sigas con la sesión iniciada al recargar la página \n`,
     });
 
     alert.present();

@@ -43,4 +43,8 @@ export class UserService {
       weight
     );
   }
+
+  public getUserById(id: number) {
+    return this.repo.getUserById(id);
+  }
 }

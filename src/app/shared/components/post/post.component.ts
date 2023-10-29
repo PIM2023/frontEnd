@@ -21,9 +21,7 @@ export class PostComponent implements OnInit {
   @ViewChild('commentInput', { static: true }) commentInput!: IonInput;
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.post);
-  }
+  ngOnInit() {}
 
   goToComments(post: any) {
     console.log('post ', post);

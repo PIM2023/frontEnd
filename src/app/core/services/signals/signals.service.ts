@@ -1,13 +1,25 @@
-import { Injectable, WritableSignal } from '@angular/core';
+import { EffectRef, Injectable, WritableSignal, effect } from '@angular/core';
 import { User } from '../../models/user';
+import * as CryptoJs from 'crypto-js';
+import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignalsService {
   userSignal!: WritableSignal<User>;
+  localStorage: EffectRef;
 
-  constructor() {}
+  constructor(private encriptionService: EncryptionService) {
+    //Si almacenamos un usuario en el signal, encriptamos su id y la guardamos en el localstorage
+    this.localStorage = effect(() => {
+      if (!this.userSignal().id) return;
+      const encriptedId = this.encriptionService.encryptId(
+        this.userSignal().id
+      );
+      localStorage.setItem('userId', encriptedId);
+    });
+  }
 
   /**
    *

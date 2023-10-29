@@ -80,7 +80,6 @@ export class HomePage implements OnInit {
         source: CameraSource.Prompt,
       });
       this.img = picture.dataUrl || '';
-      console.log(this.img);
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'

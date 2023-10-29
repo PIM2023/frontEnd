@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   LoadingController,
   NavController,
 } from '@ionic/angular';
+import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,6 @@ import {
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   loginForm!: FormGroup;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
@@ -23,6 +22,7 @@ export class LoginPage implements OnInit {
     private readonly fb: FormBuilder,
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
+    private userService: UserService
   ) {
     this.checkForm();
   }
@@ -48,7 +48,14 @@ export class LoginPage implements OnInit {
   }
 
   onRegister() {
-    console.log('ON REGISTER');
+    this.userService
+      .login(
+        this.loginForm.value.email,
+        this.loginForm.value.password
+      )
+      .subscribe((response) => {
+        console.log('response', response);
+      });
   }
 
   goTo(dest:string, extras?: any){

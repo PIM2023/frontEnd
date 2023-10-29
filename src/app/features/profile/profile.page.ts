@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import {
+  NavController,
+} from '@ionic/angular';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
 
-  constructor() { }
+  username!: string;
+
+  constructor(
+    private navCtrl: NavController,
+  ) { }
 
   ngOnInit() {
+    this.username = "adadvadadaad"
+  }
+
+  goTo(dest:string, extras?: any){
+    this.navCtrl.navigateRoot(dest);
   }
 
 }

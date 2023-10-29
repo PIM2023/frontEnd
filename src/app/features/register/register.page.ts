@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   LoadingController,
   AlertController,
   NavController,
 } from '@ionic/angular';
-import { h } from 'ionicons/dist/types/stencil-public-runtime';
-import { first, last } from 'rxjs';
 import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({

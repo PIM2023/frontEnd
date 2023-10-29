@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Repository } from '../../base/repository.repository';
+import { Post, PostCreated } from '../../models/post';
 
 @Injectable({
   providedIn: 'root',
@@ -13,20 +14,14 @@ export class PostRepository extends Repository {
    * This method is used to post a post
    * @param text Text of the post
    * @param image Image of the post
-   * @param createdAt Created at of the post
-   * @param user User that posts
+   * @param userId Id of the user that posted the post
    * @returns Observable that tells if the post was posted or not
    */
-  post(text: string, image: string, createdAt: Date | string, user: any) {
-    return this.doRequest<any>('post', `/post`, {
-      body: {
-        text: text,
-        image: image,
-        createdAt: createdAt,
-        updatedAt: createdAt,
-        comments: [],
-        user: user,
-      },
+  post(text: string, image: string, userId: number) {
+    return this.doRequest<PostCreated>('post', `/post`, {
+      text: text,
+      image: image,
+      userId: userId,
     });
   }
 
@@ -35,6 +30,6 @@ export class PostRepository extends Repository {
    * @returns Observable that returns all the posts
    */
   getPosts() {
-    return this.doRequest<any>('get', '/post');
+    return this.doRequest<Post[]>('get', '/post');
   }
 }

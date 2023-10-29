@@ -1,10 +1,11 @@
 import { Injectable, WritableSignal } from '@angular/core';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignalsService {
-  userSignal!: WritableSignal<any>;
+  userSignal!: WritableSignal<User>;
 
   constructor() {}
 
@@ -12,7 +13,7 @@ export class SignalsService {
    *
    * @param userSignal Signal that will be used to store the user
    */
-  public setUserSignal(userSignal: WritableSignal<any>) {
+  public setUserSignal(userSignal: WritableSignal<User>) {
     this.userSignal = userSignal;
   }
 

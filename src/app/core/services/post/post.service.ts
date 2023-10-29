@@ -11,17 +11,11 @@ export class PostService {
    * This method is used to post a post
    * @param text Text of the post
    * @param image Image of the post
-   * @param createdAt Created at of the post
-   * @param user User that posts
+   * @param userId Id of the user that posted the post
    * @returns Observable that tells if the post was posted or not
    */
-  public post(
-    text: string,
-    image: string,
-    createdAt: Date | string,
-    user: any
-  ) {
-    return this.repo.post(text, image, createdAt, user);
+  public post(text: string, image: string, userId: number) {
+    return this.repo.post(text, image, userId);
   }
 
   /**

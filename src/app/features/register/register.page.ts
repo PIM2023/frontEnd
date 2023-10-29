@@ -4,7 +4,10 @@ import {
   LoadingController,
   AlertController,
   NavController,
+  ToastController,
 } from '@ionic/angular';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 
@@ -27,22 +30,14 @@ export class RegisterPage implements OnInit {
     private loadingCtrl: LoadingController,
     private alertController: AlertController,
     private userService: UserService,
-    private signalsService: SignalsService
+    private signalsService: SignalsService,
+    private toastCtrl: ToastController
   ) {
     this.checkForm().then(() => this.checkboxListener());
     this.userSignal = this.signalsService.getUserSignal();
   }
 
-  ngOnInit() {
-    this.userService.register('a', 'b', 'c', 'd', 'e', new Date()).subscribe(
-      (response) => {
-        console.log('response', response);
-      },
-      (error) => {
-        console.log('error', error);
-      }
-    );
-  }
+  ngOnInit() {}
 
   async checkForm() {
     this.registerForm = this.fb.group({
@@ -66,12 +61,8 @@ export class RegisterPage implements OnInit {
   }
 
   async checkboxListener() {
-    console.log('CHECKBOX LISTENER');
-    const check = document.querySelector('#condition');
     this.registerForm.get('termsAgreed')?.valueChanges.subscribe((value) => {
       if (this.registerForm.get('termsAgreed')!.value && !this.termsRead) {
-        console.log('ahora');
-        this.registerForm.value.termsAgreed = false;
         this.presentAlert();
       }
     });
@@ -83,7 +74,6 @@ export class RegisterPage implements OnInit {
 
   async presentAlert() {
     const check = document.querySelector('#condition');
-    console.log('check', check);
     const alert = await this.alertController.create({
       header: 'Términos y Condiciones de uso',
       buttons: [
@@ -91,6 +81,7 @@ export class RegisterPage implements OnInit {
           text: 'Cancelar',
           handler: async () => {
             this.registerForm.value.termsAgreed = false;
+            (<any>check).checked = false;
             alert.dismiss();
           },
         },
@@ -119,16 +110,35 @@ export class RegisterPage implements OnInit {
         this.registerForm.value.firstName,
         this.registerForm.value.lastName,
         this.registerForm.value.bornDate,
-        this.registerForm.value.avatar,
-        this.registerForm.value.height,
-        this.registerForm.value.weight
+        this.registerForm.value.avatar ?? null,
+        this.registerForm.value.height ?? null,
+        this.registerForm.value.weight ?? null
+      )
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
       )
       .subscribe((response) => {
-        console.log('response', response);
+        if (response.error) this.presentToast(response.error.message);
+        else {
+          //mi usuario, se ha de cambiar por response
+          this.userSignal.set(response);
+          this.navCtrl.navigateRoot('home');
+        }
       });
   }
 
   goTo(dest: string, extras?: any) {
     this.navCtrl.navigateRoot('login');
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    toast.present();
   }
 }

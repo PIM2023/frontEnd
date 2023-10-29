@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInput, IonicModule } from '@ionic/angular';
 import { CommentsComponent } from '../comments/comments.component';
+import { Post } from 'src/app/core/models/post';
 
 @Component({
   selector: 'post',
@@ -16,7 +17,7 @@ export class PostComponent implements OnInit {
   currentUser: any;
   comments: any[] = [];
   commentsOpen: boolean = false;
-  @Input() post!: any;
+  @Input() post!: Post;
   @ViewChild('commentInput', { static: true }) commentInput!: IonInput;
   constructor() {}
 

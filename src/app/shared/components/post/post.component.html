@@ -7,7 +7,7 @@
         </ion-avatar>
       </ion-col>
       <ion-col>
-        <strong>USER WHO POSTED</strong>
+        <strong>{{ post.username }}</strong>
       </ion-col>
       <!-- TO DO: Add options 
       <ion-col size="auto">
@@ -16,7 +16,11 @@
     </ion-row>
   </div>
   <div class="post-media">
-    <img src="https://picsum.photos/id/{{ i }}/1000/1000" alt="" />
+    <img
+      src="{{ post.image }}"
+      alt="Post {{ post.id }} de {{ post.username }}"
+      onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+    />
   </div>
   <div class="post-actions">
     <ion-row>
@@ -45,20 +49,30 @@
   </div>
 
   <div class="post-stats">
-    <strong>NUM LIKES</strong>
+    <strong>{{ post.likes }} likes</strong>
   </div>
 
   <div class="post-comments">
     <div class="comment-item">
-      <span class="username">USER POSTED</span>
-      DESCRIPTION
+      <span class="username">{{ post.username }}</span>
+      {{ post.text }}
     </div>
 
-    <div class="comment-expander text-muted" (click)="setOpen(true)">
-      NO COMMENTS / VIEW ALL (N COMMENTS) COMMENTS
+    <div
+      class="comment-expander text-muted"
+      (click)="setOpen(true)"
+      *ngIf="post.comments; else noComments"
+    >
+      Ver los {{ post.comments.length }} comentarios
     </div>
 
-    <div class="comment-item">
+    <ng-template #noComments>
+      <div class="comment-expander text-muted">
+        No hay comentarios
+      </div></ng-template
+    >
+
+    <div *ngIf="post.comments" class="comment-item">
       <span class="username">FIRST COMMENT USER</span>
       FIRST COMMENT
 

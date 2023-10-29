@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { IonModal, ToastController } from '@ionic/angular';
+import { IonModal } from '@ionic/angular';
 import { catchError, of } from 'rxjs';
 import { Post } from 'src/app/core/models/post';
 import { User } from 'src/app/core/models/user';
 import { PostService } from 'src/app/core/services/post/post.service';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -23,13 +24,12 @@ export class HomePage implements OnInit {
 
   constructor(
     private postService: PostService,
-    private toastCtrl: ToastController,
+    private toastService: ToastService,
     private router: Router,
     private signalsService: SignalsService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.user = this.signalsService.getUserSignal();
-    //TO DO: QUITAR ESTO CUANDO FUNCIONE EL LOGIN
   }
 
   ngOnInit() {
@@ -45,7 +45,8 @@ export class HomePage implements OnInit {
         })
       )
       .subscribe((response) => {
-        if (response.error) this.presentToast(response.error.message);
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
         else {
           console.log(response);
         }
@@ -61,7 +62,8 @@ export class HomePage implements OnInit {
         })
       )
       .subscribe((response) => {
-        if (response.error) this.presentToast(response.error.message);
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
         else {
           this.posts = response;
         }
@@ -80,19 +82,10 @@ export class HomePage implements OnInit {
       this.img = picture.dataUrl || '';
       console.log(this.img);
     } catch (_) {
-      this.presentToast(
+      this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'
       );
     }
-  }
-
-  async presentToast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: 2000,
-      position: 'bottom',
-    });
-    toast.present();
   }
 
   cancel() {
@@ -101,7 +94,7 @@ export class HomePage implements OnInit {
 
   async confirm() {
     if (!this.img) {
-      this.presentToast('Debes seleccionar una imagen');
+      this.toastService.presentToast('Debes seleccionar una imagen');
       return;
     }
     await this.post();

@@ -4,12 +4,12 @@ import {
   LoadingController,
   AlertController,
   NavController,
-  ToastController,
 } from '@ionic/angular';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +31,7 @@ export class RegisterPage implements OnInit {
     private alertController: AlertController,
     private userService: UserService,
     private signalsService: SignalsService,
-    private toastCtrl: ToastController
+    private toastService: ToastService
   ) {
     this.checkForm().then(() => this.checkboxListener());
     this.userSignal = this.signalsService.getUserSignal();
@@ -120,7 +120,8 @@ export class RegisterPage implements OnInit {
         })
       )
       .subscribe((response) => {
-        if (response.error) this.presentToast(response.error.message);
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
         else {
           //mi usuario, se ha de cambiar por response
           this.userSignal.set(response);
@@ -131,14 +132,5 @@ export class RegisterPage implements OnInit {
 
   goTo(dest: string, extras?: any) {
     this.navCtrl.navigateRoot('login');
-  }
-
-  async presentToast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: 2000,
-      position: 'bottom',
-    });
-    toast.present();
   }
 }

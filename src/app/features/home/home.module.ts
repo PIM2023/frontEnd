@@ -10,6 +10,7 @@ import { HomePage } from './home.page';
 import { HttpClientModule } from '@angular/common/http';
 import { PostService } from 'src/app/core/services/post/post.service';
 import { PostComponent } from 'src/app/shared/components/post/post.component';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
     HttpClientModule,
     PostComponent,
   ],
-  providers: [PostService],
+  providers: [PostService, ToastService],
   declarations: [HomePage],
 })
 export class HomePageModule {}

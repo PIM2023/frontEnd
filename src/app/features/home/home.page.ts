@@ -30,26 +30,6 @@ export class HomePage implements OnInit {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.user = this.signalsService.getUserSignal();
     //TO DO: QUITAR ESTO CUANDO FUNCIONE EL LOGIN
-    this.user.set({
-      username: 'marcel',
-      email: 'marceldeltoro23@gmail.com',
-      password: 'marcel',
-      profile: {
-        firstName: 'Marcel',
-        lastName: 'del Toro',
-        height: 189,
-        weight: 83,
-        bornDate: '2000-05-28T00:00:00.000Z',
-        age: 23,
-        avatar: null,
-        id: 5,
-        createdAt: '2023-10-29T09:10:46.935Z',
-        updatedAt: '2023-10-29T09:10:46.935Z',
-      },
-      id: 5,
-      createdAt: '2023-10-29T09:10:46.976Z',
-      updatedAt: '2023-10-29T09:10:46.976Z',
-    });
   }
 
   ngOnInit() {
@@ -113,13 +93,6 @@ export class HomePage implements OnInit {
       position: 'bottom',
     });
     toast.present();
-  }
-
-  formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 
   cancel() {

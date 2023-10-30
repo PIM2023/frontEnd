@@ -58,11 +58,10 @@ export class UserRepository extends Repository {
     email: string,
     password: string,
   ) {
-    return this.doRequest<any>('get', `/login`, {
-      params: {
+    return this.doRequest<User>('post', `/login`, {
         email: email,
         password: password,
-      },
+      
     });
   }
 

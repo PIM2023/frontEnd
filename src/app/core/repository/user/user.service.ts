@@ -54,14 +54,10 @@ export class UserRepository extends Repository {
    * @returns Observable that tells if the user was logged or not
    */
 
-  loginUser(
-    email: string,
-    password: string,
-  ) {
+  loginUser(email: string, password: string) {
     return this.doRequest<User>('post', `/login`, {
-        email: email,
-        password: password,
-      
+      email: email,
+      password: password,
     });
   }
 
@@ -69,10 +65,8 @@ export class UserRepository extends Repository {
    * @param id Id of the user
    * @returns User with the given id
    */
-  
-  getUserById(
-    id: number
-  ) {
+
+  getUserProfile(id: number) {
     return this.doRequest<User>('get', `/users/${id}/profile`);
   }
 }

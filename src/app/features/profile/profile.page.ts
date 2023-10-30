@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 
-import {
-  NavController,
-} from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +9,6 @@ import {
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
   username!: string;
   email!: string;
   firstname!: string;
@@ -19,22 +17,32 @@ export class ProfilePage implements OnInit {
   weight!: string;
   borndate!: string;
 
+  userSignal: WritableSignal<any>;
+
   constructor(
     private navCtrl: NavController,
-  ) { }
+    private signalsService: SignalsService
+  ) {
+    this.userSignal = this.signalsService.getUserSignal();
+  }
 
   ngOnInit() {
-    this.username = "Yoy"
-    this.email = "yoy@upv.es"
-    this.firstname = "Youcef"
-    this.lastname = "Benavente"
-    this.height = "185"
-    this.weight = "82"
-    this.borndate = "11/09/2001"
+    this.populateProfile();
   }
 
-  goTo(dest:string, extras?: any){
-    this.navCtrl.navigateForward(['profile',dest]);
+  goTo(dest: string, extras?: any) {
+    this.navCtrl.navigateForward(['profile', dest]);
   }
 
+  populateProfile() {
+    const user = this.userSignal();
+
+    this.username = user.username;
+    this.email = user.email;
+    this.firstname = user.firstName;
+    this.lastname = user.lastName;
+    this.height = user.height;
+    this.weight = user.weight;
+    this.borndate = user.bornDate;
+  }
 }

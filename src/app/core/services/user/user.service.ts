@@ -50,21 +50,11 @@ export class UserService {
    * @param password Password of the user
    * @returns Observable that tells if the user was logged or not
    */
-  public login(
-    email: string,
-    password: string,
-  ) {
-    return this.repo.loginUser(
-      email,
-      password
-    );
+  public login(email: string, password: string) {
+    return this.repo.loginUser(email, password);
   }
 
-  public getUserById(
-    id: number
-  ) {
-    return this.repo.getUserById(
-      id
-    );
+  public getUserProfile(id: number) {
+    return this.repo.getUserProfile(id);
   }
 }

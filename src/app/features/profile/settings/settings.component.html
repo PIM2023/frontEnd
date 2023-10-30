@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="registerForm">
+  <form [formGroup]="settingsForm">
     <ion-item>
       <ion-input
         required
@@ -91,7 +91,7 @@
         <ion-button
           class="but1"
           fill="solid"
-          [disabled]="!registerForm.valid"
+          [disabled]="!settingsForm.valid"
           (click)="onRegister()"
           >Guardar</ion-button
         >

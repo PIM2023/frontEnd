@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit {
   }
 
   goTo(dest:string, extras?: any){
-    this.navCtrl.navigateRoot(dest);
+    this.navCtrl.navigateForward(['profile',dest]);
   }
 
 }

@@ -8,6 +8,7 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
 import { HttpClientModule } from '@angular/common/http';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { HttpClientModule } from '@angular/common/http';
     ProfilePageRoutingModule,
     HttpClientModule,
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage, SettingsComponent]
 })
 export class ProfilePageModule {}

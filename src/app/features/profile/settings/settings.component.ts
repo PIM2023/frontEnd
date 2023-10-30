@@ -1,5 +1,5 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {
   NavController,
 } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent  implements OnInit {
-  registerForm!: FormGroup;
+  settingsForm!: FormGroup;
   userSignal: WritableSignal<any>;
 
   constructor(
@@ -24,23 +24,44 @@ export class SettingsComponent  implements OnInit {
     private signalsService: SignalsService,
     private toastService: ToastService
   ) { 
+    this.checkForm()
     this.userSignal = this.signalsService.getUserSignal();
   }
 
   ngOnInit() {}
 
+  async checkForm() {
+    this.settingsForm = this.fb.group({
+      username: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      bornDate: ['', Validators.required],
+      height: [''],
+      weight: [''],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ],
+      ],
+      password: ['', Validators.required],
+    });
+  }
+
   onRegister() {
     this.userService
       .register(
-        this.registerForm.value.username,
-        this.registerForm.value.email,
-        this.registerForm.value.password,
-        this.registerForm.value.firstName,
-        this.registerForm.value.lastName,
-        this.registerForm.value.bornDate,
-        this.registerForm.value.avatar ?? null,
-        this.registerForm.value.height ?? null,
-        this.registerForm.value.weight ?? null
+        this.settingsForm.value.username,
+        this.settingsForm.value.email,
+        this.settingsForm.value.password,
+        this.settingsForm.value.firstName,
+        this.settingsForm.value.lastName,
+        this.settingsForm.value.bornDate,
+        this.settingsForm.value.avatar ?? null,
+        this.settingsForm.value.height ?? null,
+        this.settingsForm.value.weight ?? null
       )
       .pipe(
         catchError((error) => {

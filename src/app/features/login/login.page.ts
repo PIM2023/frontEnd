@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   LoadingController,
   NavController,
 } from '@ionic/angular';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +17,7 @@ import { UserService } from 'src/app/core/services/user/user.service';
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
+  userSignal: WritableSignal<any>;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
     message: 'Iniciando sesión',
@@ -22,9 +27,12 @@ export class LoginPage implements OnInit {
     private readonly fb: FormBuilder,
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
-    private userService: UserService
+    private userService: UserService,
+    private signalsService: SignalsService,
+    private toastService: ToastService
   ) {
     this.checkForm();
+    this.userSignal = this.signalsService.getUserSignal();
   }
 
   ngOnInit() {}
@@ -53,8 +61,19 @@ export class LoginPage implements OnInit {
         this.loginForm.value.email,
         this.loginForm.value.password
       )
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
       .subscribe((response) => {
-        console.log('response', response);
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
+        else {
+          //mi usuario, se ha de cambiar por response
+          this.userSignal.set(response);
+          this.navCtrl.navigateRoot('home');
+        }
       });
   }
 

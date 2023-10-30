@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { OtherProfilePageRoutingModule } from './other-profile-routing.module';
 
 import { OtherProfilePage } from './other-profile.page';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { OtherProfilePage } from './other-profile.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    OtherProfilePageRoutingModule
+    OtherProfilePageRoutingModule,
+    HttpClientModule,
   ],
   declarations: [OtherProfilePage]
 })

@@ -20,6 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
   providers: [UserService],
-  declarations: [LoginPage]
+  declarations: [LoginPage],
 })
 export class LoginPageModule {}

@@ -39,16 +39,19 @@ export class CanActivateGuard {
     const encriptedId = localStorage.getItem('userId');
 
     if (encriptedId) {
+      console.log(encriptedId);
       return of(encriptedId).pipe(
         map((encriptedId) => this.encryptionService.decryptId(encriptedId!)),
-        switchMap((originalId) => this.userService.getUserById(+originalId)),
+        switchMap((originalId) => this.userService.getUserProfile(+originalId)),
         catchError((error) => {
           return of(error);
         }),
         map((response) => {
           if (response.error) {
+            console.log('pal login');
             return this.navCtrl.navigateRoot('/login');
           } else {
+            console.log('pal home');
             this.signalsService.setUserSignal(response);
             return true;
           }

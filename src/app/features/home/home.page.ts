@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   img!: string;
   description!: string;
   state: any;
-  user: WritableSignal<User>;
+  userSignal: WritableSignal<User>;
   posts: Post[] = [];
   @ViewChild(IonModal) modal!: IonModal;
 
@@ -29,7 +29,9 @@ export class HomePage implements OnInit {
     private signalsService: SignalsService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
-    this.user = this.signalsService.getUserSignal();
+    this.userSignal = this.signalsService.getUserSignal();
+    console.log('user', this.userSignal);
+    console.log('userSignal()', this.userSignal());
   }
 
   ngOnInit() {
@@ -37,8 +39,9 @@ export class HomePage implements OnInit {
   }
 
   async post() {
+    console.log(this.userSignal());
     this.postService
-      .post(this.description, this.img, this.user().id)
+      .post(this.description, this.img, this.userSignal().id)
       .pipe(
         catchError((error) => {
           return of(error);

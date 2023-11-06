@@ -39,7 +39,6 @@ export class HomePage implements OnInit {
   }
 
   async post() {
-    console.log(this.userSignal());
     this.postService
       .post(this.description, this.img, this.userSignal().id)
       .pipe(
@@ -51,7 +50,8 @@ export class HomePage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
-          console.log(response);
+          console.warn('LO QUE ENVIO ES: ', this.img);
+          console.log('LO QUE RECIBO DE LA RESPONSE ES: ', response);
         }
       });
   }
@@ -68,6 +68,7 @@ export class HomePage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
+          console.log('LO QUE ME LLEGA DE LOS POSTS ES ESTO: ', response);
           this.posts = response;
         }
       });
@@ -91,6 +92,9 @@ export class HomePage implements OnInit {
   }
 
   cancel() {
+    console.warn('JORGE MIRA AQUI ABAJO');
+    console.log(this.img);
+    console.warn('JORGE MIRA AQUI ARRIBA');
     this.modal.dismiss();
   }
 

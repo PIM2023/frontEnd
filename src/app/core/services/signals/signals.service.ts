@@ -1,6 +1,5 @@
 import { EffectRef, Injectable, WritableSignal, effect } from '@angular/core';
 import { User } from '../../models/user';
-import * as CryptoJs from 'crypto-js';
 import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 
 @Injectable({

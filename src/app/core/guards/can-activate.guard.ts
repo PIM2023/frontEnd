@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
@@ -10,17 +10,21 @@ import { SignalsService } from '../services/signals/signals.service';
 import { NavController } from '@ionic/angular';
 import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 import { UserService } from '../services/user/user.service';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanActivateGuard {
+  userSignal: WritableSignal<User>;
   constructor(
     private signalsService: SignalsService,
     private encryptionService: EncryptionService,
     private userService: UserService,
     private navCtrl: NavController
-  ) {}
+  ) {
+    this.userSignal = this.signalsService.getUserSignal();
+  }
 
   /**
    * Si hay un id de usuario en el localStorage, lo desencriptamos y lo usamos para obtener el usuario.
@@ -39,7 +43,6 @@ export class CanActivateGuard {
     const encriptedId = localStorage.getItem('userId');
 
     if (encriptedId) {
-      console.log(encriptedId);
       return of(encriptedId).pipe(
         map((encriptedId) => this.encryptionService.decryptId(encriptedId!)),
         switchMap((originalId) => this.userService.getUserProfile(+originalId)),
@@ -48,11 +51,9 @@ export class CanActivateGuard {
         }),
         map((response) => {
           if (response.error) {
-            console.log('pal login');
             return this.navCtrl.navigateRoot('/login');
           } else {
-            console.log('pal home');
-            this.signalsService.setUserSignal(response);
+            this.userSignal.set(response);
             return true;
           }
         })

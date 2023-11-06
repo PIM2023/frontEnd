@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   img!: string;
   description!: string;
   state: any;
-  user: WritableSignal<User>;
+  userSignal: WritableSignal<User>;
   posts: Post[] = [];
   @ViewChild(IonModal) modal!: IonModal;
 
@@ -29,7 +29,9 @@ export class HomePage implements OnInit {
     private signalsService: SignalsService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
-    this.user = this.signalsService.getUserSignal();
+    this.userSignal = this.signalsService.getUserSignal();
+    console.log('user', this.userSignal);
+    console.log('userSignal()', this.userSignal());
   }
 
   ngOnInit() {
@@ -38,7 +40,7 @@ export class HomePage implements OnInit {
 
   async post() {
     this.postService
-      .post(this.description, this.img, this.user().id)
+      .post(this.description, this.img, this.userSignal().id)
       .pipe(
         catchError((error) => {
           return of(error);
@@ -48,7 +50,8 @@ export class HomePage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
-          console.log(response);
+          console.warn('LO QUE ENVIO ES: ', this.img);
+          console.log('LO QUE RECIBO DE LA RESPONSE ES: ', response);
         }
       });
   }
@@ -65,6 +68,7 @@ export class HomePage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
+          console.log('LO QUE ME LLEGA DE LOS POSTS ES ESTO: ', response);
           this.posts = response;
         }
       });
@@ -88,6 +92,9 @@ export class HomePage implements OnInit {
   }
 
   cancel() {
+    console.warn('JORGE MIRA AQUI ABAJO');
+    console.log(this.img);
+    console.warn('JORGE MIRA AQUI ARRIBA');
     this.modal.dismiss();
   }
 

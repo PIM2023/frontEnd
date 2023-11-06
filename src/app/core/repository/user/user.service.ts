@@ -48,11 +48,31 @@ export class UserRepository extends Repository {
   }
 
   /**
-   *
+   * This method is used to login a user
+   * @param email Email of the user
+   * @param password Password of the user
+   * @returns Observable that tells if the user was logged or not
+   */
+
+  loginUser(
+    email: string,
+    password: string,
+  ) {
+    return this.doRequest<User>('post', `/login`, {
+        email: email,
+        password: password,
+      
+    });
+  }
+
+  /**
    * @param id Id of the user
    * @returns User with the given id
    */
-  getUserById(id: number) {
+  
+  getUserById(
+    id: number
+  ) {
     return this.doRequest<User>('get', `/users/${id}/profile`);
   }
 }

@@ -44,7 +44,27 @@ export class UserService {
     );
   }
 
-  public getUserById(id: number) {
-    return this.repo.getUserById(id);
+  /**
+   * This method is used to login a user
+   * @param email Email of the user
+   * @param password Password of the user
+   * @returns Observable that tells if the user was logged or not
+   */
+  public login(
+    email: string,
+    password: string,
+  ) {
+    return this.repo.loginUser(
+      email,
+      password
+    );
+  }
+
+  public getUserById(
+    id: number
+  ) {
+    return this.repo.getUserById(
+      id
+    );
   }
 }

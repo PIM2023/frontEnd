@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="loginForm">
+    <ion-item>
+      <ion-input
+        required
+        label="Email"
+        labelPlacement="floating"
+        formControlName="email"
+        type="text"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        required
+        label="Contraseña"
+        labelPlacement="floating"
+        formControlName="password"
+        type="password"
+        minlength="6"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+    <div class="flex">
+      <div class="bot">
+        <ion-button
+          class="but1"
+          fill="solid"
+          [disabled]="!loginForm.valid"
+          (click)="onRegister()"
+          >Iniciar sesión</ion-button
+        >
+      </div>
+      <ion-row>
+        <ion-label class="lab"
+          >No tienes cuenta? Regístrate aquí</ion-label
+        >
+      </ion-row>
+      <div>
+        <ion-row>
+          <ion-button class="but2" fill="outline" (click)="goTo('register')"
+            >Registrarse</ion-button
+          >
+        </ion-row>
+      </div>
+    </div>
+  </form>
+</ion-content>

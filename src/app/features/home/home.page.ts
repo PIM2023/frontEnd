@@ -98,6 +98,10 @@ export class HomePage implements OnInit {
     this.modal.dismiss();
   }
 
+  goTo(dest: string, extras?: any) {
+    this.router.navigate([dest], { state: extras });
+  }
+
   async confirm() {
     if (!this.img) {
       this.toastService.presentToast('Debes seleccionar una imagen');

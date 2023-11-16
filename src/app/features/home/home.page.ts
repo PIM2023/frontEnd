@@ -92,9 +92,6 @@ export class HomePage implements OnInit {
   }
 
   cancel() {
-    console.warn('JORGE MIRA AQUI ABAJO');
-    console.log(this.img);
-    console.warn('JORGE MIRA AQUI ARRIBA');
     this.modal.dismiss();
   }
 

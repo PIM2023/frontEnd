@@ -1,0 +1,124 @@
+<div class="post-item">
+  <div class="post-header">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="auto">
+        <ion-avatar class="avatar-md">
+          <img src="https://picsum.photos/id/{{ i * 20 }}/1000/1000" alt="" />
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <strong>{{ post.username }}</strong>
+      </ion-col>
+      <!-- TO DO: Add options 
+      <ion-col size="auto">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-col> -->
+    </ion-row>
+  </div>
+  <div class="post-media">
+    <img
+      src="{{ post.image }}"
+      alt="Post {{ post.id }} de {{ post.username }}"
+      onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+    />
+  </div>
+  <div class="post-actions">
+    <ion-row>
+      <ion-col>
+        <ion-button size="small" fill="clear" color="dark">
+          <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+        </ion-button>
+        <ion-button
+          size="small"
+          fill="clear"
+          color="dark"
+          (click)="setOpen(true)"
+        >
+          <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+        </ion-button>
+        <ion-button size="small" fill="clear" color="dark">
+          <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button size="small" fill="clear" color="dark">
+          <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="post-stats">
+    <strong>{{ post.likes }} likes</strong>
+  </div>
+
+  <div class="post-comments">
+    <div class="comment-item">
+      <span class="username">{{ post.username }}</span>
+      {{ post.text }}
+    </div>
+
+    <div
+      class="comment-expander text-muted"
+      (click)="setOpen(true)"
+      *ngIf="post.comments; else noComments"
+    >
+      Ver los {{ post.comments.length }} comentarios
+    </div>
+
+    <ng-template #noComments>
+      <div class="comment-expander text-muted">
+        No hay comentarios
+      </div></ng-template
+    >
+
+    <div *ngIf="post.comments" class="comment-item">
+      <span class="username">FIRST COMMENT USER</span>
+      FIRST COMMENT
+
+      <div class="comment-item reply">
+        <span class="username">(IF) USER REPLIED TO FIRST COMMENT</span>
+        USER POSTED REPLY
+      </div>
+    </div>
+
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="auto">
+        <ion-avatar class="avatar-sm">
+          <img
+            src="https://picsum.photos/id/{{ i + 200 }}/1000/1000"
+            alt="Foto de perfil del usuario activo"
+          />
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-input
+            #commentInput
+            label="Escribe un comentario"
+            labelPlacement="floating"
+          ></ion-input>
+          <ion-button (click)="sendComment()">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>
+
+<ion-modal mode="ios" [isOpen]="commentsOpen" [backdropDismiss]="false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="setOpen(false)">Atrás</ion-button>
+        </ion-buttons>
+        <ion-title>Comentarios</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <comments></comments>
+    </ion-content>
+  </ng-template>
+</ion-modal>

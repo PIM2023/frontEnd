@@ -4,6 +4,12 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInput, IonicModule } from '@ionic/angular';
 import { CommentsComponent } from '../comments/comments.component';
 import { Post } from 'src/app/core/models/post';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
+import { User } from 'src/app/core/models/user';
+import { PostService } from 'src/app/core/services/post/post.service';
+import { ToastService } from '../../utils/toast.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'post',
@@ -17,11 +23,22 @@ export class PostComponent implements OnInit {
   currentUser: any;
   comments: any[] = [];
   commentsOpen: boolean = false;
+  editOpen: boolean = false;
+  user!: User;
   @Input() post!: Post;
   @ViewChild('commentInput', { static: true }) commentInput!: IonInput;
-  constructor() {}
+  @ViewChild('postInput') postInput!: IonInput;
+  constructor(
+    private signalsService: SignalsService,
+    private postService: PostService,
+    private toastService: ToastService
+  ) {
+    this.user = this.signalsService.getUserSignal()();
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('POst', this.post);
+  }
 
   goToComments(post: any) {
     console.log('post ', post);
@@ -36,7 +53,31 @@ export class PostComponent implements OnInit {
 
   sendComment() {
     if (this.commentInput.value == '') return;
-    console.log(this.commentInput.value);
     this.commentInput.value = '';
+  }
+
+  editPost(boolean: boolean) {
+    this.editOpen = boolean;
+  }
+
+  edit() {
+    if (this.postInput.value == '') {
+      this.toastService.presentToast('No puedes dejar el campo vacío');
+      return;
+    }
+    this.editOpen = false;
+    this.postService
+      .editPost(this.post.id, (this.postInput.value as string)!)
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((res) => {
+        if (res.error) {
+          this.toastService.presentToast(res.error.message);
+          return;
+        } else this.post.text = (this.postInput.value as string)!;
+      });
   }
 }

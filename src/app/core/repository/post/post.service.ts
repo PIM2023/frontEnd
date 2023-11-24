@@ -32,4 +32,16 @@ export class PostRepository extends Repository {
   getPosts() {
     return this.doRequest<Post[]>('get', '/post');
   }
+
+  /**
+   *
+   * @param postId Id of the post to edit
+   * @param text New text of the post
+   * @returns Observable that tells if the post was edited or not
+   */
+  editPost(postId: number, text: string) {
+    return this.doRequest<Post>('put', `/post/${postId}`, {
+      text: text,
+    });
+  }
 }

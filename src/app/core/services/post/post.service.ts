@@ -25,4 +25,14 @@ export class PostService {
   public getPosts() {
     return this.repo.getPosts();
   }
+
+  /**
+   *
+   * @param postId Id of the post to edit
+   * @param text New text of the post
+   * @returns Observable that tells if the post was edited or not
+   */
+  public editPost(postId: number, text: string) {
+    return this.repo.editPost(postId, text);
+  }
 }

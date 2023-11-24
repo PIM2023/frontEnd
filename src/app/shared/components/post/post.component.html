@@ -9,10 +9,13 @@
       <ion-col>
         <strong>{{ post.username }}</strong>
       </ion-col>
-      <!-- TO DO: Add options 
-      <ion-col size="auto">
-        <ion-icon name="ellipsis-vertical"></ion-icon>
-      </ion-col> -->
+      <ion-col
+        *ngIf="post.username === user.username"
+        (click)="editPost(true)"
+        size="auto"
+      >
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-col>
     </ion-row>
   </div>
   <div class="post-media">
@@ -119,6 +122,30 @@
     </ion-header>
     <ion-content class="ion-padding">
       <comments></comments>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal mode="ios" [isOpen]="editOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="editPost(false)">Atrás</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="edit()" [strong]="true">Editar</ion-button>
+        </ion-buttons>
+        <ion-title>Editar la descripción</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-input
+        label="Escribe la nueva descripción"
+        labelPlacement="floating"
+        value="{{ post.text }}"
+        #postInput
+      ></ion-input>
     </ion-content>
   </ng-template>
 </ion-modal>

@@ -5,7 +5,7 @@ import { CanActivateGuard } from './core/guards/can-activate.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'profile',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -18,22 +18,20 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => 
-      import('./features/login/login.module').then( 
-        (m) => m.LoginPageModule
-      ),
+    loadChildren: () =>
+      import('./features/login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'other-profile',
-    loadChildren: () => 
-      import('./features/other-profile/other-profile.module').then( 
+    loadChildren: () =>
+      import('./features/other-profile/other-profile.module').then(
         (m) => m.OtherProfilePageModule
       ),
   },
   {
     path: 'profile',
-    loadChildren: () => 
-      import('./features/profile/profile.module').then( 
+    loadChildren: () =>
+      import('./features/profile/profile.module').then(
         (m) => m.ProfilePageModule
       ),
   },
@@ -42,9 +40,7 @@ const routes: Routes = [
     title: 'Página principal',
     canActivate: [CanActivateGuard],
     loadChildren: () =>
-      import('./features/home/home.module').then(
-        (m) => m.HomePageModule
-      ),
+      import('./features/home/home.module').then((m) => m.HomePageModule),
   },
 ];
 

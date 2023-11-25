@@ -41,7 +41,11 @@ const routes: Routes = [
     canActivate: [CanActivateGuard],
     loadChildren: () =>
       import('./features/home/home.module').then((m) => m.HomePageModule),
+  },  {
+    path: 'calendar',
+    loadChildren: () => import('./features/calendar/calendar.module').then( m => m.CalendarPageModule)
   },
+
 ];
 
 @NgModule({

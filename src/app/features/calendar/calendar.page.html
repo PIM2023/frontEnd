@@ -1,0 +1,33 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-toolbar>
+    <ion-title mode="ios">{{ viewTitle }}</ion-title>
+  </ion-toolbar>
+
+  <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)"
+    (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onTimeSelected)="onTimeSelected($event)"
+    [step]="calendar.step"
+    [noEventsLabel]="calendar.noEventsLabel"
+    [startingDayWeek]="calendar.startingDayWeek"
+    [startingDayMonth]="calendar.startingDayMonth"
+    [monthviewDisplayEventTemplate]="template"
+  >
+  </calendar>
+
+  <ng-template #template let-view="view" let-row="row" let-col="col">
+    {{view.dates[row * 7 + col].label}}
+    <div class="indicator-container">
+      <div
+        class="event-indicator"
+        *ngIf="view.dates[row * 7 + col].events.length"
+      >
+        .
+      </div>
+    </div>
+  </ng-template>
+</ion-content>

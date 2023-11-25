@@ -8,14 +8,15 @@ import {
 
 @Component({
   selector: 'my-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  templateUrl: './calendar.page.html',
+  styleUrls: ['./calendar.page.scss'],
 })
-export class MyCalendarComponent {
+export class CalendarPage {
   @ViewChild(CalendarComponent) myCalendar!: CalendarComponent;
 
   constructor() {
     this.isToday = false;
+    this.loadEvents();
   }
 
   eventSource: any = [];
@@ -60,8 +61,8 @@ export class MyCalendarComponent {
     formatWeekViewDayHeader: "'Day' EEE d",
     formatHourColumn: "'hour' ha",
     showEventDetail: false,
-    startingDayMonth: 2,
-    startingDayWeek: 2,
+    startingDayMonth: 1,
+    startingDayWeek: 1,
     allDayLabel: 'testallday',
     noEventsLabel: 'No hay ningun evento',
     timeInterval: 15,
@@ -73,8 +74,6 @@ export class MyCalendarComponent {
     lockSwipeToPrev: true,
     lockSwipeToNext: true,
     lockSwipes: true,
-    startHour: 9,
-    endHour: 16,
     sliderOptions: {
       spaceBetween: 10,
     },
@@ -139,7 +138,6 @@ export class MyCalendarComponent {
     today.setHours(0, 0, 0, 0);
     ev.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === ev.getTime();
-    console.log('Currently viewed date: ' + ev);
   }
 
   createRandomEvents() {
@@ -200,6 +198,7 @@ export class MyCalendarComponent {
         });
       }
     }
+    console.warn('events: ', events);
     return events;
   }
 

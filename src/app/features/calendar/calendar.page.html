@@ -23,7 +23,16 @@
   <ng-template #events>
     <div class="indicator-container">
       <div *ngIf="currentEvents.length" class="event">
-        (Aqui ha de ir la lista de posts)
+        <div *ngFor="let post of currentEvents" class="post-container">
+          <div class="post-media">
+            <img
+              src="{{ post.image }}"
+              alt="Post {{ post.id }} de {{ post.username }}"
+              onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+            />
+          </div>
+          <span>{{ post.text }}</span>
+        </div>
       </div>
       <div *ngIf="!currentEvents.length" class="event">
         {{calendar.noEventsLabel}}

@@ -28,7 +28,9 @@ export class CalendarRepository extends Repository {
   public getCreatedPostsByDate(userId: number, date: Date) {
     return this.doRequest<Post[]>(
       'get',
-      `/calendar/${userId}/date/${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
+      `/calendar/${userId}/date/${date.getFullYear()}/${
+        date.getMonth() + 1
+      }/${date.getDate()}`
     );
   }
 }

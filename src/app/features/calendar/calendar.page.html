@@ -16,8 +16,20 @@
     [startingDayWeek]="calendar.startingDayWeek"
     [startingDayMonth]="calendar.startingDayMonth"
     [monthviewDisplayEventTemplate]="template"
+    [monthviewEventDetailTemplate]="events"
   >
   </calendar>
+
+  <ng-template #events>
+    <div class="indicator-container">
+      <div *ngIf="currentEvents.length" class="event">
+        (Aqui ha de ir la lista de posts)
+      </div>
+      <div *ngIf="!currentEvents.length" class="event">
+        {{calendar.noEventsLabel}}
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template #template let-view="view" let-row="row" let-col="col">
     {{view.dates[row * 7 + col].label}}

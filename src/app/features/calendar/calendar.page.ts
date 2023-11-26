@@ -15,6 +15,7 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
   styleUrls: ['./calendar.page.scss'],
 })
 export class CalendarPage {
+  currentEvents: any[] = [];
   @ViewChild(CalendarComponent) myCalendar!: CalendarComponent;
 
   constructor(
@@ -70,7 +71,7 @@ export class CalendarPage {
     startingDayMonth: 1,
     startingDayWeek: 1,
     allDayLabel: 'testallday',
-    noEventsLabel: 'No hay ningun evento',
+    noEventsLabel: 'No hay ningun post creado este día',
     timeInterval: 15,
     autoSelect: false,
     locale: 'es-ES',
@@ -159,6 +160,7 @@ export class CalendarPage {
         ', disabled: ' +
         ev.disabled
     );
+    this.currentEvents = ev.events;
   }
 
   onCurrentDateChanged(ev: Date) {

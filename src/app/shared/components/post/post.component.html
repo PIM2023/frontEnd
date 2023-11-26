@@ -31,7 +31,7 @@
         <ion-button 
           size="small" 
           fill="clear" 
-          [color]="isLiked ? 'danger' : 'dark'"
+          [ngClass]="{'like-button-filled': isLiked, 'like-button-empty': !isLiked}"
           (click)="toggleLike()"
         >
         <ion-icon slot="icon-only" [name]="isLiked ? 'heart' : 'heart-outline'" [style.color]="isLiked ? 'red' : 'initial'"></ion-icon>

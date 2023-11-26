@@ -54,6 +54,13 @@
       }
     }
   }
+  .like-button-filled {
+    background-image: url('/assets/icons/ic-heart-filled.svg');
+  }
+
+  .like-button-empty {
+    background-image: url('/assets/icons/ic-heart-empty.svg');
+  }
 
 }
 

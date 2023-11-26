@@ -52,6 +52,7 @@ export class HomePage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
+          this.posts.push(response);
           console.warn('LO QUE ENVIO ES: ', this.img);
           console.log('LO QUE RECIBO DE LA RESPONSE ES: ', response);
         }

@@ -16,7 +16,7 @@ export class CalendarRepository extends Repository {
    * @returns An observable that returns all the posts created by the user
    */
   public getAllPostsCreatedByUser(userId: number) {
-    return this.doRequest<Post[]>('get', `/calendar/${userId}`);
+    return this.doRequest<any>('get', `/calendar/${userId}`);
   }
 
   /**

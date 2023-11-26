@@ -129,3 +129,14 @@ table {
 .event-detail-container {
   border: none !important;
 }
+
+ion-icon::part(icon-inner) {
+  font-size: 1.5rem;
+  background-color: red;
+  filter: contrast(0.5);
+}
+
+.icon-inner {
+  background-color: red;
+  filter: contrast(0.5);
+}

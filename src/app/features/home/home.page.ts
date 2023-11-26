@@ -18,6 +18,7 @@ export class HomePage implements OnInit {
   img!: string;
   description!: string;
   state: any;
+  postsArrived: boolean = false;
   userSignal: WritableSignal<User>;
   posts: Post[] = [];
   @ViewChild(IonModal) modal!: IonModal;
@@ -70,6 +71,7 @@ export class HomePage implements OnInit {
         else {
           console.log('LO QUE ME LLEGA DE LOS POSTS ES ESTO: ', response);
           this.posts = response;
+          this.postsArrived = true;
         }
       });
   }

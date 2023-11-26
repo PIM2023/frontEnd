@@ -18,6 +18,7 @@ export class HomePage implements OnInit {
   img!: string;
   description!: string;
   state: any;
+  postsArrived: boolean = false;
   userSignal: WritableSignal<User>;
   posts: Post[] = [];
   @ViewChild(IonModal) modal!: IonModal;
@@ -39,8 +40,9 @@ export class HomePage implements OnInit {
   }
 
   async post() {
+    const imgToSend = this.img.replace('data:image/jpeg;base64,', '');
     this.postService
-      .post(this.description, this.img, this.userSignal().id)
+      .post(this.description, imgToSend, this.userSignal().id)
       .pipe(
         catchError((error) => {
           return of(error);
@@ -50,6 +52,7 @@ export class HomePage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
+          this.posts.push(response);
           console.warn('LO QUE ENVIO ES: ', this.img);
           console.log('LO QUE RECIBO DE LA RESPONSE ES: ', response);
         }
@@ -70,6 +73,7 @@ export class HomePage implements OnInit {
         else {
           console.log('LO QUE ME LLEGA DE LOS POSTS ES ESTO: ', response);
           this.posts = response;
+          this.postsArrived = true;
         }
       });
   }
@@ -84,6 +88,7 @@ export class HomePage implements OnInit {
         source: CameraSource.Prompt,
       });
       this.img = picture.dataUrl || '';
+      console.log('img', this.img);
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'
@@ -92,10 +97,11 @@ export class HomePage implements OnInit {
   }
 
   cancel() {
-    console.warn('JORGE MIRA AQUI ABAJO');
-    console.log(this.img);
-    console.warn('JORGE MIRA AQUI ARRIBA');
     this.modal.dismiss();
+  }
+
+  goTo(dest: string, extras?: any) {
+    this.router.navigate([dest], { state: extras });
   }
 
   async confirm() {

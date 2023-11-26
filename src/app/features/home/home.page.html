@@ -1,10 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -16,6 +10,17 @@
   <ion-list>
     <post *ngFor="let post of posts" [post]="post"></post>
   </ion-list>
+  <div *ngIf="!posts.length && !postsArrived">
+    <div class="center-spinner">
+      <span>Cargando los posts</span>
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="!posts.length && postsArrived">
+    <div class="center-spinner">
+      <span>Actualmente no hay ningún post</span>
+    </div>
+  </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
@@ -41,7 +46,7 @@
     <ion-content class="ion-padding">
       <div class="wrapper">
         <ion-button fill="clear" (click)="takePicture()">
-          <ion-label>Img</ion-label>
+          <ion-label>Imagen</ion-label>
         </ion-button>
         <img *ngIf="img" [src]="img" alt="Foto" />
       </div>

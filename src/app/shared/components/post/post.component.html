@@ -64,7 +64,7 @@
     <div
       class="comment-expander text-muted"
       (click)="setOpen(true)"
-      *ngIf="post.comments; else noComments"
+      *ngIf="post.comments.length != 0; else noComments"
     >
       Ver los {{ post.comments.length }} comentarios
     </div>
@@ -75,7 +75,7 @@
       </div></ng-template
     >
 
-    <div *ngIf="post.comments" class="comment-item">
+    <div *ngIf="post.comments.length != 0" class="comment-item">
       <span class="username">FIRST COMMENT USER</span>
       FIRST COMMENT
 

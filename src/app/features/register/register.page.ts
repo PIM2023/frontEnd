@@ -124,7 +124,6 @@ export class RegisterPage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
-          //mi usuario, se ha de cambiar por response
           this.userSignal.set(response);
           this.navCtrl.navigateRoot('home');
         }

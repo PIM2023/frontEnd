@@ -40,8 +40,9 @@ export class HomePage implements OnInit {
   }
 
   async post() {
+    const imgToSend = this.img.replace('data:image/jpeg;base64,', '');
     this.postService
-      .post(this.description, this.img, this.userSignal().id)
+      .post(this.description, imgToSend, this.userSignal().id)
       .pipe(
         catchError((error) => {
           return of(error);
@@ -86,6 +87,7 @@ export class HomePage implements OnInit {
         source: CameraSource.Prompt,
       });
       this.img = picture.dataUrl || '';
+      console.log('img', this.img);
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'

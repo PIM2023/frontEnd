@@ -5,6 +5,9 @@ import {
   QueryMode,
   Step,
 } from 'ionic2-calendar';
+import { catchError, of } from 'rxjs';
+import { CalendarService } from 'src/app/core/services/calendar/calendar.service';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
   selector: 'my-calendar',
@@ -14,7 +17,10 @@ import {
 export class CalendarPage {
   @ViewChild(CalendarComponent) myCalendar!: CalendarComponent;
 
-  constructor() {
+  constructor(
+    private calendarService: CalendarService,
+    private toastService: ToastService
+  ) {
     this.isToday = false;
     this.loadEvents();
   }
@@ -78,6 +84,28 @@ export class CalendarPage {
       spaceBetween: 10,
     },
   };
+
+  ionViewWillEnter() {
+    this.getEvents();
+  }
+
+  getEvents() {
+    this.calendarService
+      .getAllPostsCreatedByUser(1)
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response) => {
+        if (response.error) {
+          console.warn('error: ', response);
+          this.toastService.presentToast(response.error.message);
+          return;
+        }
+        console.log('response: ', response);
+      });
+  }
 
   loadEvents() {
     this.eventSource = this.createRandomEvents();

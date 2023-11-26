@@ -51,6 +51,14 @@
     </ion-row>
   </div>
 
+  <div class="post-tags">
+    <ion-row>
+      <ion-col>
+        <ion-badge *ngFor="let etiqueta of post.etiquetas">{{etiqueta}}</ion-badge>
+      </ion-col>
+    </ion-row>
+  </div>
+
   <div class="post-stats">
     <strong>{{ post.likes }} likes</strong>
   </div>

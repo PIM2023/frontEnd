@@ -5,7 +5,7 @@ import { CanActivateGuard } from './core/guards/can-activate.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'profile',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {

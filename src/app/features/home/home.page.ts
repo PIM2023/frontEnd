@@ -15,11 +15,18 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  etiquetas = [
+    { value: 'comida', label: 'Comida' },
+    { value: 'viaje', label: 'Viaje' },
+    { value: 'tecnología', label: 'Tecnología' },
+  ];
+
   img!: string;
   description!: string;
   state: any;
   userSignal: WritableSignal<User>;
   posts: Post[] = [];
+  selectedEtiquetas: string[] = [];
   @ViewChild(IonModal) modal!: IonModal;
 
   constructor(
@@ -40,7 +47,7 @@ export class HomePage implements OnInit {
 
   async post() {
     this.postService
-      .post(this.description, this.img, this.userSignal().id)
+      .post(this.description, this.img, this.userSignal().id, this.selectedEtiquetas)
       .pipe(
         catchError((error) => {
           return of(error);
@@ -51,6 +58,7 @@ export class HomePage implements OnInit {
           this.toastService.presentToast(response.error.message);
         else {
           console.warn('LO QUE ENVIO ES: ', this.img);
+          console.warn('Etiquetas seleccionadas:', this.selectedEtiquetas);
           console.log('LO QUE RECIBO DE LA RESPONSE ES: ', response);
         }
       });

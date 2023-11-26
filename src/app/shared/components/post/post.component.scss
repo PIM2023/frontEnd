@@ -42,6 +42,19 @@
       vertical-align: middle;
     }
   }
+  .post-tags {
+    ion-row {
+      ion-col {
+        ion-badge {
+          background-color: #ffcc00;  
+          color: #333;               
+          margin-right: 4px;       
+          font-size: 14px;            
+        }
+      }
+    }
+  }
+
 }
 
 .text-muted {

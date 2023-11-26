@@ -18,32 +18,21 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => 
-      import('./features/login/login.module').then( 
-        (m) => m.LoginPageModule
-      ),
-  },
-  {
-    path: 'other-profile',
-    loadChildren: () => 
-      import('./features/other-profile/other-profile.module').then( 
-        (m) => m.OtherProfilePageModule
-      ),
-  },
-  {
-    path: 'profile',
-    loadChildren: () => 
-      import('./features/profile/profile.module').then( 
-        (m) => m.ProfilePageModule
-      ),
-  },
-  {
-    path: 'home',
-    title: 'Página principal',
-    canActivate: [CanActivateGuard],
     loadChildren: () =>
-      import('./features/home/home.module').then(
-        (m) => m.HomePageModule
+      import('./features/login/login.module').then((m) => m.LoginPageModule),
+  },
+  {
+    path: '',
+    canActivate: [CanActivateGuard],
+    title: 'Clout',
+    loadChildren: () =>
+      import('./features/main/main.module').then((m) => m.MainPageModule),
+  },
+  {
+    path: 'main-profile',
+    loadChildren: () =>
+      import('./features/main-profile/main-profile.module').then(
+        (m) => m.MainProfilePageModule
       ),
   },
 ];

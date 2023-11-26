@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -19,6 +19,6 @@ import { SettingsComponent } from './settings/settings.component';
     ProfilePageRoutingModule,
     HttpClientModule,
   ],
-  declarations: [ProfilePage, SettingsComponent]
+  declarations: [ProfilePage, SettingsComponent],
 })
 export class ProfilePageModule {}

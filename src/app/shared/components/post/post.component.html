@@ -28,8 +28,13 @@
   <div class="post-actions">
     <ion-row>
       <ion-col>
-        <ion-button size="small" fill="clear" color="dark">
-          <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+        <ion-button 
+          size="small" 
+          fill="clear" 
+          [color]="isLiked ? 'danger' : 'dark'"
+          (click)="toggleLike()"
+        >
+        <ion-icon slot="icon-only" [name]="isLiked ? 'heart' : 'heart-outline'" [style.color]="isLiked ? 'red' : 'initial'"></ion-icon>
         </ion-button>
         <ion-button
           size="small"

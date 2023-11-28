@@ -5,6 +5,7 @@ export interface Post {
   likes: number;
   username: string;
   comments?: any;
+  etiquetas: string[];
 }
 
 export interface PostCreated {

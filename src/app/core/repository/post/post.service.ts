@@ -15,13 +15,15 @@ export class PostRepository extends Repository {
    * @param text Text of the post
    * @param image Image of the post
    * @param userId Id of the user that posted the post
+   * @param etiquetas Tag of the post
    * @returns Observable that tells if the post was posted or not
    */
-  post(text: string, image: string, userId: number) {
+  post(text: string, image: string, userId: number, etiquetas: string[]) {
     return this.doRequest<PostCreated>('post', `/post`, {
       text: text,
       image: image,
       userId: userId,
+      etiquetas: etiquetas,
     });
   }
 

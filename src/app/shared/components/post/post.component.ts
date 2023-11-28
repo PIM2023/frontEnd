@@ -25,6 +25,7 @@ export class PostComponent implements OnInit {
   commentsOpen: boolean = false;
   editOpen: boolean = false;
   user!: User;
+  isLiked: boolean = false;
   @Input() post!: Post;
   @ViewChild('commentInput', { static: true }) commentInput!: IonInput;
   @ViewChild('postInput') postInput!: IonInput;
@@ -79,5 +80,10 @@ export class PostComponent implements OnInit {
           return;
         } else this.post.text = (this.postInput.value as string)!;
       });
+  }
+
+  toggleLike() {
+    this.isLiked = !this.isLiked;
+    this.post.likes += this.isLiked ? 1 : -1;
   }
 }

@@ -28,8 +28,13 @@
   <div class="post-actions">
     <ion-row>
       <ion-col>
-        <ion-button size="small" fill="clear" color="dark">
-          <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+        <ion-button 
+          size="small" 
+          fill="clear" 
+          [ngClass]="{'like-button-filled': isLiked, 'like-button-empty': !isLiked}"
+          (click)="toggleLike()"
+        >
+        <ion-icon slot="icon-only" [name]="isLiked ? 'heart' : 'heart-outline'" [style.color]="isLiked ? 'red' : 'initial'"></ion-icon>
         </ion-button>
         <ion-button
           size="small"
@@ -47,6 +52,14 @@
         <ion-button size="small" fill="clear" color="dark">
           <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
         </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="post-tags">
+    <ion-row>
+      <ion-col>
+        <ion-badge *ngFor="let etiqueta of post.etiquetas">{{etiqueta}}</ion-badge>
       </ion-col>
     </ion-row>
   </div>

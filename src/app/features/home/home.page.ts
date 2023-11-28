@@ -16,9 +16,9 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
 })
 export class HomePage implements OnInit {
   etiquetas = [
-    { value: 'comida', label: 'Comida' },
-    { value: 'viaje', label: 'Viaje' },
-    { value: 'tecnología', label: 'Tecnología' },
+    { value: 'comida', label: 'Verano' },
+    { value: 'viaje', label: 'Invierno' },
+    { value: 'tecnología', label: 'Y2k' },
   ];
 
   img!: string;
@@ -49,7 +49,12 @@ export class HomePage implements OnInit {
   async post() {
     const imgToSend = this.img.replace('data:image/jpeg;base64,', '');
     this.postService
-      .post(this.description, this.img, this.userSignal().id, this.selectedEtiquetas)
+      .post(
+        this.description,
+        this.img,
+        this.userSignal().id,
+        this.selectedEtiquetas
+      )
       .pipe(
         catchError((error) => {
           return of(error);

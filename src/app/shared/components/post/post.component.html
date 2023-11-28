@@ -28,13 +28,16 @@
   <div class="post-actions">
     <ion-row>
       <ion-col>
-        <ion-button 
-          size="small" 
-          fill="clear" 
-          [ngClass]="{'like-button-filled': isLiked, 'like-button-empty': !isLiked}"
-          (click)="toggleLike()"
-        >
-        <ion-icon slot="icon-only" [name]="isLiked ? 'heart' : 'heart-outline'" [style.color]="isLiked ? 'red' : 'initial'"></ion-icon>
+        <ion-button size="small" fill="clear" (click)="toggleLike()">
+          <ion-icon
+            slot="icon-only"
+            [src]="
+              isLiked
+                ? '../../../../assets/icons/ic-heart-empty.svg'
+                : '../../../../assets/icons/ic-heart-filled.svg'
+            "
+            [style.color]="isLiked ? 'red' : 'initial'"
+          ></ion-icon>
         </ion-button>
         <ion-button
           size="small"
@@ -59,7 +62,9 @@
   <div class="post-tags">
     <ion-row>
       <ion-col>
-        <ion-badge *ngFor="let etiqueta of post.etiquetas">{{etiqueta}}</ion-badge>
+        <ion-badge *ngFor="let etiqueta of post.etiquetas">{{
+          etiqueta
+        }}</ion-badge>
       </ion-col>
     </ion-row>
   </div>
@@ -77,7 +82,7 @@
     <div
       class="comment-expander text-muted"
       (click)="setOpen(true)"
-      *ngIf="post.comments.length != 0; else noComments"
+      *ngIf="post.comments.length; else noComments"
     >
       Ver los {{ post.comments.length }} comentarios
     </div>

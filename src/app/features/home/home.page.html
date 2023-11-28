@@ -2,11 +2,6 @@
   <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <ion-list>
     <post *ngFor="let post of posts" [post]="post"></post>
   </ion-list>
@@ -61,8 +56,17 @@
       </ion-item>
       <ion-list>
         <ion-item>
-          <ion-select aria-label="Etiquetas" placeholder="Elige algunas de estas etiquetas" [multiple]="true" [(ngModel)]="selectedEtiquetas">
-            <ion-select-option *ngFor="let etiqueta of etiquetas" [value]="etiqueta.value">{{etiqueta.label}}</ion-select-option>
+          <ion-select
+            aria-label="Etiquetas"
+            placeholder="Elige algunas de estas etiquetas"
+            [multiple]="true"
+            [(ngModel)]="selectedEtiquetas"
+          >
+            <ion-select-option
+              *ngFor="let etiqueta of etiquetas"
+              [value]="etiqueta.value"
+              >{{etiqueta.label}}</ion-select-option
+            >
           </ion-select>
         </ion-item>
       </ion-list>

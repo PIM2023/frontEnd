@@ -3,7 +3,7 @@ import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export abstract class Repository {
-  protected basePath = `https://api.jorma28j.upv.edu.es`;
+  protected basePath = `https://api-pin.crazyjmb.com`;
   protected http: HttpClient = this.injector.get(HttpClient);
 
   constructor(protected injector: Injector) {}

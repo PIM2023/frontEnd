@@ -6,7 +6,10 @@ import {
   Step,
 } from 'ionic2-calendar';
 import { catchError, of } from 'rxjs';
+import { CalendarEvent } from 'src/app/core/models/calendar';
+import { User } from 'src/app/core/models/user';
 import { CalendarService } from 'src/app/core/services/calendar/calendar.service';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
@@ -16,14 +19,16 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
 })
 export class CalendarPage {
   currentEvents: any[] = [];
+  user: User;
   @ViewChild(CalendarComponent) myCalendar!: CalendarComponent;
 
   constructor(
     private calendarService: CalendarService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private signalsService: SignalsService
   ) {
     this.isToday = false;
-    this.loadEvents();
+    this.user = this.signalsService.getUserSignal()();
   }
 
   eventSource: any = [];
@@ -92,7 +97,7 @@ export class CalendarPage {
 
   getEvents() {
     this.calendarService
-      .getAllPostsCreatedByUser(1)
+      .getAllPostsCreatedByUser(this.user.id)
       .pipe(
         catchError((error) => {
           return of(error);
@@ -105,24 +110,18 @@ export class CalendarPage {
           return;
         }
         console.log('response: ', response);
+        const events: CalendarEvent[] = [];
+        response.forEach((date: string, index: number) => {
+          const event: CalendarEvent = {
+            title: 'Eventasdasdasd - ' + index,
+            startTime: new Date(date),
+            endTime: new Date(date),
+            allDay: false,
+          };
+          events.push(event);
+        });
+        this.eventSource = events;
       });
-  }
-
-  loadEvents() {
-    this.eventSource = this.createRandomEvents();
-  }
-
-  loadDynamicEvents() {
-    let startTime = new Date('2023-01-20T03:00:40');
-    let endTime = new Date('2023-01-22T05:39:22');
-
-    this.eventSource.push({
-      title: 'test',
-      startTime: startTime,
-      endTime: endTime,
-      allDay: false,
-    });
-    this.myCalendar.loadEvents();
   }
 
   onViewTitleChanged(title: string) {
@@ -143,24 +142,28 @@ export class CalendarPage {
     );
   }
 
-  changeMode(mode: any) {
-    this.calendar.mode = mode;
-  }
-
   today() {
     this.calendar.currentDate = new Date();
   }
 
   onTimeSelected(ev: any) {
-    console.log(
-      'Selected time: ' +
-        ev.selectedTime +
-        ', hasEvents: ' +
-        (ev.events !== undefined && ev.events.length !== 0) +
-        ', disabled: ' +
-        ev.disabled
-    );
-    this.currentEvents = ev.events;
+    console.log('EV: ', ev);
+    this.calendarService
+      .getCreatedPostsByDate(this.user.id, ev.selectedTime)
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response) => {
+        if (response.error) {
+          console.warn('error: ', response);
+          this.toastService.presentToast(response.error.message);
+          return;
+        }
+        console.log('response: ', response);
+        this.currentEvents = response;
+      });
   }
 
   onCurrentDateChanged(ev: Date) {
@@ -168,75 +171,6 @@ export class CalendarPage {
     today.setHours(0, 0, 0, 0);
     ev.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === ev.getTime();
-  }
-
-  createRandomEvents() {
-    var events = [];
-    for (var i = 0; i < 100; i += 1) {
-      var date = new Date();
-      var eventType = Math.floor(Math.random() * 2);
-      var startDay = Math.floor(Math.random() * 90) - 45;
-      var endDay = Math.floor(Math.random() * 2) + startDay;
-      var startTime;
-      var endTime;
-      if (eventType === 0) {
-        startTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + startDay
-          )
-        );
-        if (endDay === startDay) {
-          endDay += 1;
-        }
-        endTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + endDay
-          )
-        );
-        events.push({
-          title: 'All Day - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: true,
-        });
-      } else {
-        var startMinute = Math.floor(Math.random() * 24 * 60);
-        var endMinute = Math.floor(Math.random() * 180) + startMinute;
-        startTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + startDay,
-          0,
-          date.getMinutes() + startMinute
-        );
-        endTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + endDay,
-          0,
-          date.getMinutes() + endMinute
-        );
-        events.push({
-          title: 'Event - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: false,
-        });
-      }
-    }
-    console.warn('events: ', events);
-    return events;
-  }
-
-  onRangeChanged(ev: any) {
-    console.log(
-      'range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime
-    );
-    this.eventSource = this.createRandomEvents();
   }
 
   onDayHeaderSelected = (ev: {

@@ -13,7 +13,7 @@ if (environment.production) {
   disableLogs();
 }
 
-disableLogs();
+// disableLogs();
 
 function disableLogs() {
   window.console.log = function () {};

@@ -39,6 +39,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit() {
     console.log('POst', this.post);
+    this.post.image = this.post.image.replace('https:/', 'https://');
   }
 
   goToComments(post: any) {
@@ -85,5 +86,9 @@ export class PostComponent implements OnInit {
   toggleLike() {
     this.isLiked = !this.isLiked;
     this.post.likes += this.isLiked ? 1 : -1;
+  }
+
+  log(post: Post) {
+    console.log(post);
   }
 }

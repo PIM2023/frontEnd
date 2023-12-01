@@ -30,6 +30,11 @@ const routes: Routes = [
         (m) => m.MainProfilePageModule
       ),
   },
+  {
+    path: 'post/:id',
+    loadChildren: () =>
+      import('./features/post/post.module').then((m) => m.PostPageModule),
+  },
 ];
 
 @NgModule({

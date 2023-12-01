@@ -37,6 +37,15 @@ export class PostRepository extends Repository {
 
   /**
    *
+   * @param postId If of the post that we want to get
+   * @returns Post with the id postId
+   */
+  getPostById(postId: number) {
+    return this.doRequest<Post>('get', `/post/${postId}`);
+  }
+
+  /**
+   *
    * @param postId Id of the post to edit
    * @param text New text of the post
    * @returns Observable that tells if the post was edited or not

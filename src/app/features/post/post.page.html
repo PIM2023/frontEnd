@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>post</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goHome()">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!loading;else loadingTemplate">
+    <post *ngIf="post; else noPost" [post]="post"></post>
+    <ng-template #noPost>
+      <div class="center-spinner ion-padding">
+        <span>No se ha podido obtener ningun post con esa id</span>
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #loadingTemplate>
+    <div class="center-spinner">
+      <span>Cargando post</span>
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-template>
+</ion-content>

@@ -15,7 +15,12 @@ export class PostService {
    * @param etiquetas Tag of the post
    * @returns Observable that tells if the post was posted or not
    */
-  public post(text: string, image: string, userId: number, etiquetas: string[]) {
+  public post(
+    text: string,
+    image: string,
+    userId: number,
+    etiquetas: string[]
+  ) {
     return this.repo.post(text, image, userId, etiquetas);
   }
 
@@ -25,6 +30,15 @@ export class PostService {
    */
   public getPosts() {
     return this.repo.getPosts();
+  }
+
+  /**
+   *
+   * @param postId If of the post that we want to get
+   * @returns Post with the id postId
+   */
+  public getPostById(postId: number) {
+    return this.repo.getPostById(postId);
   }
 
   /**

@@ -23,6 +23,7 @@
       src="{{ post.image }}"
       alt="Post {{ post.id }} de {{ post.username }}"
       onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+      (click)="log(post)"
     />
   </div>
   <div class="post-actions">

@@ -69,4 +69,12 @@ export class UserRepository extends Repository {
   getUserProfile(id: number) {
     return this.doRequest<User>('get', `/users/${id}/profile`);
   }
+
+  /**
+   * @param username Username of the user
+   * @returns User with the given username
+   */
+  getUserProfileWithUsername(username: string) {
+    return this.doRequest<User>('get', `/users/${username}/profile`);
+  }
 }

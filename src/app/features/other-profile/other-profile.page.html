@@ -5,8 +5,28 @@
 </ion-header>
 
 <ion-content>
-  <div class = "other">
-    <img src="avatar.jpg" alt="Avatar" onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'" class="user-avatar">
-    <h2 class="user-name">{{username}}</h2>
+  <div *ngIf="loading; else finishedLoading">
+    <div class="center-spinner">
+      <span>Buscando el usuario</span>
+      <ion-spinner></ion-spinner>
+    </div>
   </div>
+  <ng-template #finishedLoading>
+    <div *ngIf="!userFound; else found">
+      <h2 class="ion-padding center-spinner user-name error">
+        Lo sentimos, no hemos encontrado ningun usuario con ese nombre
+      </h2>
+    </div>
+    <ng-template #found>
+      <div class="other">
+        <img
+          src="avatar.jpg"
+          alt="Avatar"
+          onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+          class="user-avatar"
+        />
+        <h2 class="user-name">{{username}}</h2>
+      </div>
+    </ng-template>
+  </ng-template>
 </ion-content>

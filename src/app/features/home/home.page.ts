@@ -142,12 +142,13 @@ export class HomePage implements OnInit {
         })
       )
       .subscribe((response) => {
-        if (response.error)
-          this.toastService.presentToast(response.error.message);
-        else {
+        if (!response.error) {
           console.log('LO QUE ME LLEGA DE LOS TAGS ES ESTO: ', response);
           this.etiquetas = response;
+          return;
         }
+        if (response.error.message)
+          this.toastService.presentToast(response.error.message);
       });
   }
 }

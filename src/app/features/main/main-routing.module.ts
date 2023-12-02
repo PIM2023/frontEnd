@@ -22,16 +22,24 @@ const routes: Routes = [
             (m) => m.CalendarPageModule
           ),
       },
+      // {
+      //   path: 'profile',
+      //   loadChildren: () =>
+      //     import('../profile/profile.module').then((m) => m.ProfilePageModule),
+      // },
+      // {
+      //   path: 'other-profile',
+      //   loadChildren: () =>
+      //     import('../other-profile/other-profile.module').then(
+      //       (m) => m.OtherProfilePageModule
+      //     ),
+      // },
       {
         path: 'profile',
+        title: 'Clout - Perfil',
         loadChildren: () =>
-          import('../profile/profile.module').then((m) => m.ProfilePageModule),
-      },
-      {
-        path: 'other-profile',
-        loadChildren: () =>
-          import('../other-profile/other-profile.module').then(
-            (m) => m.OtherProfilePageModule
+          import('../main-profile/main-profile.module').then(
+            (m) => m.MainProfilePageModule
           ),
       },
       {

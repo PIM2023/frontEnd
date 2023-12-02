@@ -57,4 +57,8 @@ export class UserService {
   public getUserProfile(id: number) {
     return this.repo.getUserProfile(id);
   }
+
+  public getUserProfileWithUsername(username: string) {
+    return this.repo.getUserProfileWithUsername(username);
+  }
 }

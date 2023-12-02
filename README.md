@@ -12,4 +12,8 @@ Aplicacion de front
 
 # Deploy
 
-` npm run deploy`
+`npm run deploy`
+
+# Ejecutar test e2e
+
+`npm run cypress`

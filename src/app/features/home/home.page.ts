@@ -44,6 +44,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.getPosts();
+    this.getTags();
   }
 
   async post() {
@@ -130,5 +131,23 @@ export class HomePage implements OnInit {
   async refreshPage(ev: any) {
     await this.getPosts();
     ev.target.complete();
+  }
+
+  private getTags() {
+    this.postService
+      .getTags()
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response) => {
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
+        else {
+          console.log('LO QUE ME LLEGA DE LOS TAGS ES ESTO: ', response);
+          this.etiquetas = response;
+        }
+      });
   }
 }

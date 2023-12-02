@@ -55,4 +55,12 @@ export class PostRepository extends Repository {
       text: text,
     });
   }
+
+  /**
+   *
+   * @returns Observable that returns all the tags
+   */
+  getTags() {
+    return this.doRequest<string[]>('get', '/tag');
+  }
 }

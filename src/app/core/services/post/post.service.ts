@@ -50,4 +50,12 @@ export class PostService {
   public editPost(postId: number, text: string) {
     return this.repo.editPost(postId, text);
   }
+
+  /**
+   *
+   * @returns Observable that returns all the tags
+   */
+  public getTags() {
+    return this.repo.getTags();
+  }
 }

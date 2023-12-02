@@ -88,7 +88,10 @@ export class PostComponent implements OnInit {
     this.post.likes += this.isLiked ? 1 : -1;
   }
 
-  log(post: Post) {
-    console.log(post);
+  copyUrlToPost() {
+    navigator.clipboard.writeText(
+      `https://clout-pin.web.app/post/${this.post.id}`
+    );
+    this.toastService.presentToast('URL copiada al portapapeles');
   }
 }

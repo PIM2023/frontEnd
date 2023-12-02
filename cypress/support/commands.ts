@@ -35,3 +35,20 @@
 //     }
 //   }
 // }
+
+declare namespace Cypress {
+  interface Chainable<Subject> {
+    login(email: string, password: string): Chainable<void>;
+  }
+}
+
+Cypress.Commands.add('login', (email, password) => {
+  cy.visit('/login');
+  cy.get('ion-input[formControlName="email"]').type(email);
+  cy.get('ion-input[formControlName="password"]').type(password);
+  cy.get('ion-button[id="login"]').click();
+  cy.request('POST', 'https://api-pin.crazyjmb.com/login', {
+    email: email,
+    password: password,
+  }).as('loginRequest');
+});

@@ -16,9 +16,9 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
 })
 export class HomePage implements OnInit {
   etiquetas = [
-    { value: 'comida', label: 'Verano' },
-    { value: 'viaje', label: 'Invierno' },
-    { value: 'tecnología', label: 'Y2k' },
+    { value: 'verano', label: 'Verano' },
+    { value: 'invierno', label: 'Invierno' },
+    { value: 'y2k', label: 'Y2k' },
   ];
 
   img!: string;

@@ -1,8 +1,6 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {
-  NavController,
-} from '@ionic/angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
@@ -13,7 +11,7 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent  implements OnInit {
+export class SettingsComponent implements OnInit {
   settingsForm!: FormGroup;
   userSignal: WritableSignal<any>;
 
@@ -23,8 +21,8 @@ export class SettingsComponent  implements OnInit {
     private userService: UserService,
     private signalsService: SignalsService,
     private toastService: ToastService
-  ) { 
-    this.checkForm()
+  ) {
+    this.checkForm();
     this.userSignal = this.signalsService.getUserSignal();
   }
 
@@ -32,21 +30,20 @@ export class SettingsComponent  implements OnInit {
 
   async checkForm() {
     this.settingsForm = this.fb.group({
-      username: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      bornDate: ['', Validators.required],
+      username: [''],
+      firstName: [''],
+      lastName: [''],
+      bornDate: [''],
       height: [''],
       weight: [''],
       email: [
         '',
         [
-          Validators.required,
           Validators.email,
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ],
       ],
-      password: ['', Validators.required],
+      password: [''],
     });
   }
 
@@ -79,8 +76,37 @@ export class SettingsComponent  implements OnInit {
       });
   }
 
+  onEditUser() {
+    this.userService
+      .updateUserProfile(
+        this.userSignal().id,
+        this.settingsForm.value.username ?? null,
+        this.settingsForm.value.email ?? null,
+        this.settingsForm.value.password ?? null,
+        this.settingsForm.value.firstName ?? null,
+        this.settingsForm.value.lastName ?? null,
+        this.settingsForm.value.bornDate ?? null,
+        this.settingsForm.value.avatar ?? null,
+        this.settingsForm.value.height ?? null,
+        this.settingsForm.value.weight ?? null
+      )
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response) => {
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
+        else {
+          //mi usuario, se ha de cambiar por response
+          this.userSignal.set(response);
+          this.navCtrl.navigateRoot('profile');
+        }
+      });
+  }
+
   goTo(dest: string, extras?: any) {
     this.navCtrl.navigateRoot(dest);
   }
-
 }

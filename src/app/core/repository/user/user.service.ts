@@ -77,4 +77,43 @@ export class UserRepository extends Repository {
   getUserProfileWithUsername(username: string) {
     return this.doRequest<User>('get', `/users/${username}/profile`);
   }
+
+  /**
+   * This method is used to edit a user
+   * @param id Id of the user
+   * @param username Username of the user
+   * @param email Email of the user
+   * @param password Password of the user
+   * @param firstName First name of the user
+   * @param lastName Last name of the user
+   * @param bornDate Born date of the user
+   * @param avatar Avatar of the user
+   * @param height Height of the user
+   * @param weight Weight of the user
+   * @returns edited user
+   */
+  updateUserProfile(
+    id: number,
+    username?: string,
+    email?: string,
+    password?: string,
+    firstName?: string,
+    lastName?: string,
+    bornDate?: Date,
+    avatar?: any,
+    height?: number,
+    weight?: number
+  ) {
+    return this.doRequest<User>('put', `/users/${id}`, {
+      username: username,
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      bornDate: bornDate,
+      avatar: avatar,
+      height: height,
+      weight: weight,
+    });
+  }
 }

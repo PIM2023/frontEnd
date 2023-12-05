@@ -1,7 +1,6 @@
 require('cypress-iframe');
 
 describe('Create and edit user', () => {
-  /*
   it('Create user', () => {
     cy.visit('https://clout-pin.web.app/register');
     cy.get('#ion-input-0').type('Edwin');
@@ -23,7 +22,6 @@ describe('Create and edit user', () => {
 
     cy.url().should('eq', 'https://clout-pin.web.app/login');
   });
-*/
 
   it('Edit user', () => {
     cy.visit('https://clout-pin.web.app/login');
@@ -39,16 +37,20 @@ describe('Create and edit user', () => {
     cy.wait(2000);
 
     let username = 'Eeedwin';
-    if (cy.get('.user-firstname').invoke('text').contains(username)) {
-      username = 'Edwin';
-    }
-
+    cy.get('.user-firstname')
+      .invoke('text')
+      .then((username2) => {
+        if (username2 === 'Nombre: ' + username) {
+          username = 'Edwin';
+        }
+      });
     cy.get('ion-button').contains('Editar Perfil').click();
     cy.wait(1000);
 
     cy.get('#ion-input-2').type('edwin123');
     cy.get('#ion-input-3').type('edwin@gmail.com');
     cy.get('#ion-input-4').type(username);
+
     cy.get('#ion-input-5').type('Makoveev Routskaia');
     cy.get('#ion-input-8').type('2002-10-28');
     cy.get('#ion-input-9').type('Edwin123.');

@@ -1,5 +1,3 @@
-require('cypress-iframe');
-
 describe('Create and edit user', () => {
   /*
   it('Create user', () => {

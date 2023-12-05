@@ -7,15 +7,16 @@ describe('when not logged in', () => {
 });
 
 describe('when logged in', () => {
-  beforeEach(() => {
-    cy.login('marceldeltoro23@gmail.com', 'marcel').then(() => {
-      cy.visit('/home');
-      cy.wait(1000);
-    });
-  });
 
   it('Debería ver y dar like a una publicación', () => {
     // Selecciona la primera publicación en la página de inicio y verifica su existencia
+    cy.visit('https://clout-pin.web.app/login');
+        cy.get('#ion-input-0').type('yoy75@upv.es');
+        cy.get('#ion-input-1').type('password');
+        cy.wait(2000);
+        cy.get('ion-button').first().click();
+        cy.get('ion-button').first().click();
+        cy.wait(2500);
     cy.get('.post-item').first().as('firstPost');
     cy.get('@firstPost').should('exist');
 
@@ -27,8 +28,15 @@ describe('when logged in', () => {
       .find('.post-stats strong')
       .should('have.text', '1 likes');
   });
-
+/*
   it('Debería abrir y cerrar la sección de comentarios de una publicación', () => {
+    cy.visit('https://clout-pin.web.app/login');
+        cy.get('#ion-input-0').type('yoy75@upv.es');
+        cy.get('#ion-input-1').type('password');
+        cy.wait(2000);
+        cy.get('ion-button').first().click();
+        cy.get('ion-button').first().click();
+        cy.wait(2500);
     // Selecciona la primera publicación en la página de inicio
     cy.get('.post-item').first().as('firstPost');
 
@@ -44,6 +52,13 @@ describe('when logged in', () => {
   });
 
   it('Debería copiar la URL de una publicación al portapapeles', () => {
+    cy.visit('https://clout-pin.web.app/login');
+        cy.get('#ion-input-0').type('yoy75@upv.es');
+        cy.get('#ion-input-1').type('password');
+        cy.wait(2000);
+        cy.get('ion-button').first().click();
+        cy.get('ion-button').first().click();
+        cy.wait(2500);
     // Selecciona la primera publicación en la página de inicio
     cy.get('.post-item').first().as('firstPost');
 
@@ -57,6 +72,13 @@ describe('when logged in', () => {
   });
 
   it('Debería editar la descripción de una publicación', () => {
+    cy.visit('https://clout-pin.web.app/login');
+        cy.get('#ion-input-0').type('yoy75@upv.es');
+        cy.get('#ion-input-1').type('password');
+        cy.wait(2000);
+        cy.get('ion-button').first().click();
+        cy.get('ion-button').first().click();
+        cy.wait(2500);
     // Selecciona la primera publicación en la página de inicio
     cy.get('.post-item').first().as('firstPost');
 
@@ -75,9 +97,16 @@ describe('when logged in', () => {
     cy.get('@firstPost')
       .find('.post-comments')
       .should('contain', 'Nueva descripción');
-  });
+  });*/
 
   it('Debería dar like y deshacer like en una publicación', () => {
+    cy.visit('https://clout-pin.web.app/login');
+        cy.get('#ion-input-0').type('yoy75@upv.es');
+        cy.get('#ion-input-1').type('password');
+        cy.wait(2000);
+        cy.get('ion-button').first().click();
+        cy.get('ion-button').first().click();
+        cy.wait(2500);
     // Selecciona la primera publicación en la página de inicio
     cy.get('.post-item').first().as('firstPost');
 

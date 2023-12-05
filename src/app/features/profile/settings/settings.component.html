@@ -14,7 +14,7 @@
         formControlName="username"
         type="text"
         minlength="3"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -24,7 +24,7 @@
         labelPlacement="floating"
         formControlName="email"
         type="text"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -34,7 +34,7 @@
         labelPlacement="floating"
         formControlName="firstName"
         type="text"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -44,7 +44,7 @@
         labelPlacement="floating"
         formControlName="lastName"
         type="text"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -53,7 +53,7 @@
         labelPlacement="floating"
         formControlName="height"
         type="number"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -62,7 +62,7 @@
         labelPlacement="floating"
         formControlName="weight"
         type="number"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -72,7 +72,7 @@
         labelPlacement="floating"
         formControlName="bornDate"
         type="date"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -83,7 +83,7 @@
         formControlName="password"
         type="password"
         minlength="6"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onEditUser()"
       ></ion-input>
     </ion-item>
     <div class="flex">
@@ -92,7 +92,7 @@
           class="but1"
           fill="solid"
           [disabled]="!settingsForm.valid"
-          (click)="onRegister()"
+          (click)="onEditUser()"
           >Guardar</ion-button
         >
       </div>

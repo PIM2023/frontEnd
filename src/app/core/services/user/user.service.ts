@@ -61,4 +61,30 @@ export class UserService {
   public getUserProfileWithUsername(username: string) {
     return this.repo.getUserProfileWithUsername(username);
   }
+
+  public updateUserProfile(
+    id: number,
+    username?: string,
+    email?: string,
+    password?: string,
+    firstName?: string,
+    lastName?: string,
+    bornDate?: Date,
+    avatar?: any,
+    height?: number,
+    weight?: number
+  ) {
+    return this.repo.updateUserProfile(
+      id,
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      bornDate,
+      avatar,
+      height,
+      weight
+    );
+  }
 }

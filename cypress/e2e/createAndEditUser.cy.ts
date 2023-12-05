@@ -25,8 +25,8 @@ describe('Create and edit user', () => {
 
   it('Edit user', () => {
     cy.visit('https://clout-pin.web.app/login');
-    cy.get('#ion-input-0').type('edwin@gmail.com');
-    cy.get('#ion-input-1').type('Edwin123.');
+    cy.get('#ion-input-0').type('yoy75@upv.es');
+    cy.get('#ion-input-1').type('password');
 
     cy.wait(2000);
     cy.get('ion-button').first().click();

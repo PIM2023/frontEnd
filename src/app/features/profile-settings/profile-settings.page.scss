@@ -1,0 +1,153 @@
+* {
+  --background: #000000;
+}
+
+ion-col {
+  padding: 0;
+}
+
+ion-toggle {
+  margin-left: 9px;
+}
+
+img {
+  z-index: 0;
+  width: 78px;
+  height: 78px;
+  flex-shrink: 0;
+  fill: #d9d9d9;
+  margin-top: 45px;
+  margin-left: 38px;
+  border-radius: 50%;
+}
+
+input {
+  display: block;
+  width: 140px;
+  border: none;
+  background: #000000;
+}
+
+hr {
+  width: 290px;
+  height: 1px;
+  background: #3c3c3c;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.name-holder {
+  margin-top: 38px;
+  margin-left: 35px;
+  padding: 0;
+}
+
+.prompt {
+  color: #868686;
+  font-family: JetBrains Mono;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  width: 146px;
+  height: 21px;
+}
+
+.information {
+  color: #fff;
+  font-family: JetBrains Mono;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  opacity: 0.8;
+  margin-bottom: 12px;
+  //width: fit-content;
+  height: 21px;
+  fill: none;
+}
+
+.edit-icon {
+  margin-left: 14px;
+  margin-top: 3px;
+  width: 12px;
+  height: 12px;
+}
+
+.margin-left {
+  margin-left: 50px;
+}
+
+.margin-top {
+  margin-top: 20px;
+}
+
+.margin-top-bottom {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.text {
+  color: #fff;
+  font-family: JetBrains Mono;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.icons {
+  margin-right: 12px;
+  width: 18px;
+  height: 18px;
+}
+
+.arrow-holder {
+  flex: content;
+  flex-direction: row-reverse;
+  margin-right: 53px;
+}
+
+#close-icon {
+  margin-top: 70px;
+  margin-right: 38px;
+  height: 18px;
+  width: 18px;
+  border: 2px;
+  flex-shrink: 0;
+  stroke-width: 2px;
+  stroke: #fff;
+}
+
+#camera-elipse-icon {
+  position: absolute;
+  z-index: 5;
+  margin-top: 104px;
+  margin-left: 94px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+#camera-icon {
+  position: absolute;
+  z-index: 10;
+  margin-top: 108px;
+  margin-left: 98px;
+  width: 9px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+#bio {
+  margin-top: 3px;
+  margin-bottom: 0px;
+  width: 256px;
+  height: auto;
+  --padding-top: none;
+  --padding-bottom: none;
+  padding: 5px;
+  border-radius: 15px;
+  border: 0.5px solid #868686;
+}

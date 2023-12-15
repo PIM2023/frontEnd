@@ -20,14 +20,18 @@
           alt="Avatar"
           onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
           class="user-avatar"
+          id="avatar"
+          (click)="setNewProfilePicture()"
         />
         <ion-icon
           src="../../../assets/icons/ic-camera-elipse.svg"
           id="camera-elipse-icon"
+          (click)="setNewProfilePicture()"
         ></ion-icon>
         <ion-icon
           src="../../../assets/icons/ic-camera.svg"
           id="camera-icon"
+          (click)="setNewProfilePicture()"
         ></ion-icon>
 
         <ion-col class="name-holder">
@@ -154,7 +158,7 @@
 
       <ion-row>
         <ion-col class="margin-left">
-          <ion-row (click)="setInstagramUsername()">
+          <ion-row id="instagram" (click)="createAlert('instagram')">
             <ion-icon
               src="../../../assets/icons/ic-instagram.svg"
               class="icons"
@@ -170,7 +174,11 @@
             </ion-row>
           </ion-row>
 
-          <ion-row class="margin-top" (click)="setTwitterUsername()">
+          <ion-row
+            class="margin-top"
+            id="twitter"
+            (click)="createAlert('twitter')"
+          >
             <ion-icon src="../../../assets/icons/ic-twitter.svg" class="icons">
             </ion-icon>
             <label class="text"> Twitter </label>
@@ -183,7 +191,11 @@
             </ion-row>
           </ion-row>
 
-          <ion-row class="margin-top-bottom" (click)="setPinterestUsername()">
+          <ion-row
+            class="margin-top-bottom"
+            id="pinterest"
+            (click)="createAlert('pinterest')"
+          >
             <ion-icon
               src="../../../assets/icons/ic-pinterest.svg"
               class="icons"

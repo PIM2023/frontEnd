@@ -15,6 +15,13 @@ const routes: Routes = [
         (m) => m.ProfileSettingsPageModule
       ),
   },
+  {
+    path: 'following',
+    loadChildren: () =>
+      import('../profile-following/profile-following.module').then(
+        (m) => m.ProfileFollowingPageModule
+      ),
+  },
 ];
 
 @NgModule({

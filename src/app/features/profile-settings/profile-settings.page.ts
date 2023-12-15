@@ -96,6 +96,7 @@ export class ProfileSettingsPage implements OnInit {
           },
         },
       ],
+      cssClass: 'alertita',
     });
     await alert.present();
   }
@@ -213,6 +214,7 @@ export class ProfileSettingsPage implements OnInit {
 
   goToFollowing() {
     //redirigir a la página de usuarios seguidos
+    this.navCtrl.navigateForward(['profile', 'following']);
   }
 
   setInstagramUsername(username: string) {

@@ -85,11 +85,11 @@ export class ProfileSettingsPage implements OnInit {
           handler: (alertData) => {
             console.log(alertData.input1);
             if (alertData.input1 !== '') {
-              if (socialSiteName === 'Instagram') {
+              if (socialSiteName === 'intagram') {
                 this.setInstagramUsername(alertData.input1);
-              } else if (socialSiteName === 'Twitter') {
+              } else if (socialSiteName === 'twitter') {
                 this.setTwitterUsername(alertData.input1);
-              } else if (socialSiteName === 'Pinterest') {
+              } else if (socialSiteName === 'pinterest') {
                 this.setPinterestUsername(alertData.input1);
               }
             }

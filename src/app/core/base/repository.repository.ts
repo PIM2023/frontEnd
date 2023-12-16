@@ -7,7 +7,7 @@ export abstract class Repository {
     dev: 'https://api.jorma28j.upv.edu.es',
     prod: 'https://api-pin.crazyjmb.com',
   });
-  protected basePath = this.paths.prod;
+  protected basePath = this.paths.dev;
   protected http: HttpClient = this.injector.get(HttpClient);
 
   constructor(protected injector: Injector) {}

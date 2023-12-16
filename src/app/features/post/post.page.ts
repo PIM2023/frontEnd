@@ -14,6 +14,9 @@ export class PostPage implements OnInit {
   state: any;
   post!: Post;
   loading: boolean = true;
+  username!: string;
+  uploadDate!: string;
+  description!: string;
 
   constructor(
     private router: Router,
@@ -58,5 +61,17 @@ export class PostPage implements OnInit {
 
   goHome() {
     this.router.navigate(['/']);
+  }
+
+  copyUrlToPost() {
+    navigator.clipboard.writeText(
+      'https://clout-pin.web.app/post/${this.post.id}'
+    );
+    this.toastService.presentToast('URL copiada al portapapeles');
+  }
+
+  toggleLike() {
+    // this.isLiked = !this.isLiked;
+    // this.post.likes += this.isLiked ? 1 : -1;
   }
 }

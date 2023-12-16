@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
@@ -19,6 +20,7 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
   termsRead = false;
+  termsAgreed: boolean = false;
   userSignal: WritableSignal<any>;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
@@ -31,9 +33,10 @@ export class RegisterPage implements OnInit {
     private alertController: AlertController,
     private userService: UserService,
     private signalsService: SignalsService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private encryptionService: EncryptionService
   ) {
-    this.checkForm().then(() => this.checkboxListener());
+    this.checkForm();
     this.userSignal = this.signalsService.getUserSignal();
   }
 
@@ -56,16 +59,11 @@ export class RegisterPage implements OnInit {
         ],
       ],
       password: ['', Validators.required],
-      termsAgreed: [false, Validators.requiredTrue],
     });
   }
 
-  async checkboxListener() {
-    this.registerForm.get('termsAgreed')?.valueChanges.subscribe((value) => {
-      if (this.registerForm.get('termsAgreed')!.value && !this.termsRead) {
-        this.presentAlert();
-      }
-    });
+  async checkboxListener(value: any) {
+    this.termsAgreed = value.detail.checked;
   }
 
   async showLoading() {
@@ -80,7 +78,7 @@ export class RegisterPage implements OnInit {
         {
           text: 'Cancelar',
           handler: async () => {
-            this.registerForm.value.termsAgreed = false;
+            this.termsAgreed = false;
             (<any>check).checked = false;
             alert.dismiss();
           },
@@ -89,6 +87,7 @@ export class RegisterPage implements OnInit {
           text: 'Acepto',
           handler: async () => {
             this.termsRead = true;
+            this.termsAgreed = true;
             alert.dismiss();
             (<any>check).checked = true;
           },
@@ -98,36 +97,40 @@ export class RegisterPage implements OnInit {
         Los datos que nos proporciones serán tratados de forma confidencial y no serán compartidos con terceros. \n
         Solo usaremos tus datos para almacenarlos temporalmente en el almacenamiento local del navegador para permitir que sigas con la sesión iniciada al recargar la página \n`,
     });
-
-    alert.present();
+    await alert.present();
   }
 
   onRegister() {
-    this.userService
-      .register(
-        this.registerForm.value.username,
-        this.registerForm.value.email,
-        this.registerForm.value.password,
-        this.registerForm.value.firstName,
-        this.registerForm.value.lastName,
-        this.registerForm.value.bornDate,
-        this.registerForm.value.avatar ?? null,
-        this.registerForm.value.height ?? null,
-        this.registerForm.value.weight ?? null
-      )
-      .pipe(
-        catchError((error) => {
-          return of(error);
-        })
-      )
-      .subscribe((response) => {
-        if (response.error)
-          this.toastService.presentToast(response.error.message);
-        else {
-          this.userSignal.set(response);
-          this.navCtrl.navigateRoot('home');
-        }
-      });
+    // this.userService
+    //   .register(
+    //     this.registerForm.value.username,
+    //     this.registerForm.value.email,
+    //     this.registerForm.value.password,
+    //     this.registerForm.value.firstName,
+    //     this.registerForm.value.lastName,
+    //     this.registerForm.value.bornDate,
+    //     this.registerForm.value.avatar ?? null,
+    //     this.registerForm.value.height ?? null,
+    //     this.registerForm.value.weight ?? null
+    //   )
+    //   .pipe(
+    //     catchError((error) => {
+    //       return of(error);
+    //     })
+    //   )
+    //   .subscribe((response) => {
+    //     if (response.error)
+    //       this.toastService.presentToast(response.error.message);
+    //     else {
+    //       this.userSignal.set(response);
+    //       this.userSignal.set(response);
+    //       const encriptedId = this.encryptionService.encryptId(
+    //         this.userSignal().id
+    //       );
+    //       localStorage.setItem('userId', encriptedId);
+    //       this.navCtrl.navigateRoot('home');
+    //     }
+    //   });
   }
 
   goTo(dest: string, extras?: any) {

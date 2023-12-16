@@ -17,7 +17,7 @@
         labelPlacement="floating"
         formControlName="email"
         type="text"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onLogin()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -28,7 +28,7 @@
         formControlName="password"
         type="password"
         minlength="6"
-        (keyup.enter)="onRegister()"
+        (keyup.enter)="onLogin()"
       ></ion-input>
     </ion-item>
     <div class="flex">
@@ -38,7 +38,7 @@
           fill="solid"
           id="login"
           [disabled]="!loginForm.valid"
-          (click)="onRegister()"
+          (click)="onLogin()"
           >Iniciar sesión</ion-button
         >
       </div>

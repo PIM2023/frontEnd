@@ -72,6 +72,15 @@
         minlength="6"
       ></ion-input>
     </ion-item>
+    <ion-item class="photo" lines="none">
+      <div class="circle-wrapper" *ngIf="img">
+        <img class="circular-image" [src]="img" alt="Foto de perfil" />
+      </div>
+      <ion-label class="photo" (click)="takePicture()"
+        >Seleccionar foto de perfil
+      </ion-label>
+      <ion-badge id="photo-info">i</ion-badge>
+    </ion-item>
     <div class="checkbox-wrap">
       <ion-checkbox
         slot="start"
@@ -111,3 +120,12 @@
     </div>
   </form>
 </ion-content>
+
+<ion-popover trigger="photo-info" triggerAction="click">
+  <ng-template>
+    <ion-content class="ion-padding"
+      >Si no seleccionas una foto de perfil, se te asignará una por
+      defecto</ion-content
+    >
+  </ng-template>
+</ion-popover>

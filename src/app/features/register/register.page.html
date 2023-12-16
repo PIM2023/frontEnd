@@ -7,7 +7,6 @@
         labelPlacement="floating"
         formControlName="firstName"
         type="text"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -17,7 +16,6 @@
         labelPlacement="floating"
         formControlName="lastName"
         type="text"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -26,7 +24,6 @@
         labelPlacement="floating"
         formControlName="height"
         type="number"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -36,7 +33,6 @@
         labelPlacement="floating"
         formControlName="bornDate"
         type="date"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -45,7 +41,6 @@
         labelPlacement="floating"
         formControlName="weight"
         type="number"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -55,7 +50,6 @@
         labelPlacement="floating"
         formControlName="email"
         type="text"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -66,7 +60,6 @@
         formControlName="username"
         type="text"
         minlength="3"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -77,7 +70,6 @@
         formControlName="password"
         type="password"
         minlength="6"
-        (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
     <div class="checkbox-wrap">
@@ -85,10 +77,13 @@
         slot="start"
         id="condition"
         labelPlacement="end"
-        formControlName="termsAgreed"
-        ><span class="ion-text-wrap"
-          >Acepto los Términos y Condiciones de uso</span
-        ></ion-checkbox
+        (ionChange)="checkboxListener($event)"
+      ></ion-checkbox>
+      <ion-label class="ion-text-wrap"
+        >Acepto
+        <span class="terms" (click)="presentAlert()">
+          los Términos y Condiciones de uso
+        </span></ion-label
       >
     </div>
     <div class="flex">
@@ -96,7 +91,7 @@
         <ion-button
           class="register"
           fill="solid"
-          [disabled]="!registerForm.valid"
+          [disabled]="!registerForm.valid || termsAgreed === false"
           (click)="onRegister()"
           >Registrarme</ion-button
         >

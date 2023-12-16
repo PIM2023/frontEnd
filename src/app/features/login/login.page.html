@@ -1,11 +1,15 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+<ion-content [fullscreen]="true">
+  <div class="flex">
+    <div>
+      <img src="assets/icon/clout.png" class="logo" alt="logo" />
+    </div>
+  </div>
   <form [formGroup]="loginForm">
+    <ion-row>
+      <ion-label class="ion-padding lab"
+        >Introduce tus datos para iniciar sesión</ion-label
+      >
+    </ion-row>
     <ion-item>
       <ion-input
         required
@@ -30,7 +34,7 @@
     <div class="flex">
       <div class="bot">
         <ion-button
-          class="but1"
+          class="login"
           fill="solid"
           id="login"
           [disabled]="!loginForm.valid"
@@ -39,11 +43,13 @@
         >
       </div>
       <ion-row>
-        <ion-label class="lab">No tienes cuenta? Regístrate aquí</ion-label>
+        <ion-label class="ion-padding lab"
+          >No tienes cuenta? Regístrate aquí</ion-label
+        >
       </ion-row>
       <div>
         <ion-row>
-          <ion-button class="but2" fill="outline" (click)="goTo('register')"
+          <ion-button class="register" fill="outline" (click)="goTo('register')"
             >Registrarse</ion-button
           >
         </ion-row>

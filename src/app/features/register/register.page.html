@@ -1,10 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+<ion-content [fullscreen]="true">
   <form [formGroup]="registerForm">
     <ion-item>
       <ion-input
@@ -86,19 +80,21 @@
         (keyup.enter)="onRegister()"
       ></ion-input>
     </ion-item>
-    <ion-item>
+    <div class="checkbox-wrap">
       <ion-checkbox
         slot="start"
         id="condition"
         labelPlacement="end"
         formControlName="termsAgreed"
-        >Acepto los Términos y Condiciones de uso</ion-checkbox
+        ><span class="ion-text-wrap"
+          >Acepto los Términos y Condiciones de uso</span
+        ></ion-checkbox
       >
-    </ion-item>
+    </div>
     <div class="flex">
       <div class="bot">
         <ion-button
-          class="but1"
+          class="register"
           fill="solid"
           [disabled]="!registerForm.valid"
           (click)="onRegister()"
@@ -106,13 +102,13 @@
         >
       </div>
       <ion-row>
-        <ion-label class="lab"
+        <ion-label class="ion-padding lab"
           >No querías registrarte? Inicia sesión aquí</ion-label
         >
       </ion-row>
       <div>
         <ion-row>
-          <ion-button class="but2" fill="outline" (click)="goTo('login')"
+          <ion-button class="login" fill="outline" (click)="goTo('login')"
             >Iniciar sesión</ion-button
           >
         </ion-row>

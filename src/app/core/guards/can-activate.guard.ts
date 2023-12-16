@@ -51,7 +51,7 @@ export class CanActivateGuard {
         }),
         map((response) => {
           if (response.error) {
-            return this.navCtrl.navigateRoot('/login');
+            return this.navCtrl.navigateRoot('/welcome');
           } else {
             this.userSignal.set(response);
             return true;
@@ -59,7 +59,7 @@ export class CanActivateGuard {
         })
       );
     } else {
-      return this.navCtrl.navigateRoot('/login');
+      return this.navCtrl.navigateRoot('/welcome');
     }
   }
 }

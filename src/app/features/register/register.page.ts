@@ -1,5 +1,6 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import {
   LoadingController,
   AlertController,
@@ -22,6 +23,7 @@ export class RegisterPage implements OnInit {
   termsRead = false;
   termsAgreed: boolean = false;
   userSignal: WritableSignal<any>;
+  img: any;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
     message: 'Registrando la cuenta...',
@@ -101,39 +103,61 @@ export class RegisterPage implements OnInit {
   }
 
   onRegister() {
-    // this.userService
-    //   .register(
-    //     this.registerForm.value.username,
-    //     this.registerForm.value.email,
-    //     this.registerForm.value.password,
-    //     this.registerForm.value.firstName,
-    //     this.registerForm.value.lastName,
-    //     this.registerForm.value.bornDate,
-    //     this.registerForm.value.avatar ?? null,
-    //     this.registerForm.value.height ?? null,
-    //     this.registerForm.value.weight ?? null
-    //   )
-    //   .pipe(
-    //     catchError((error) => {
-    //       return of(error);
-    //     })
-    //   )
-    //   .subscribe((response) => {
-    //     if (response.error)
-    //       this.toastService.presentToast(response.error.message);
-    //     else {
-    //       this.userSignal.set(response);
-    //       this.userSignal.set(response);
-    //       const encriptedId = this.encryptionService.encryptId(
-    //         this.userSignal().id
-    //       );
-    //       localStorage.setItem('userId', encriptedId);
-    //       this.navCtrl.navigateRoot('home');
-    //     }
-    //   });
+    this.userService
+      .register(
+        this.registerForm.value.username,
+        this.registerForm.value.email,
+        this.registerForm.value.password,
+        this.registerForm.value.firstName,
+        this.registerForm.value.lastName,
+        this.registerForm.value.bornDate,
+        this.registerForm.value.avatar ?? null,
+        this.registerForm.value.height ?? null,
+        this.registerForm.value.weight ?? null
+      )
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response) => {
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
+        else {
+          this.userSignal.set(response);
+          this.userSignal.set(response);
+          const encriptedId = this.encryptionService.encryptId(
+            this.userSignal().id
+          );
+          localStorage.setItem('userId', encriptedId);
+          this.navCtrl.navigateRoot('home');
+        }
+      });
   }
 
   goTo(dest: string, extras?: any) {
     this.navCtrl.navigateRoot(dest);
+  }
+
+  async takePicture() {
+    try {
+      const picture = await Camera.getPhoto({
+        quality: 100,
+        allowEditing: true,
+        resultType: CameraResultType.DataUrl,
+        saveToGallery: true,
+        promptLabelHeader: 'Selecciona de donde quieres obtener la foto',
+        promptLabelCancel: 'Cancelar',
+        promptLabelPicture: 'Hacer foto',
+        promptLabelPhoto: 'Seleccionar de la galería',
+        source: CameraSource.Prompt,
+      });
+      this.img = picture.dataUrl || '';
+      console.log('img', this.img);
+    } catch (_) {
+      this.toastService.presentToast(
+        'Parece que ha habido un problema al seleccionar la foto'
+      );
+    }
   }
 }

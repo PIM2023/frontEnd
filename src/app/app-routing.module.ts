@@ -24,16 +24,16 @@ const routes: Routes = [
       import('./features/main/main.module').then((m) => m.MainPageModule),
   },
   {
-    path: 'main-profile',
-    loadChildren: () =>
-      import('./features/main-profile/main-profile.module').then(
-        (m) => m.MainProfilePageModule
-      ),
-  },
-  {
     path: 'post/:id',
     loadChildren: () =>
       import('./features/post/post.module').then((m) => m.PostPageModule),
+  },
+  {
+    path: 'welcome',
+    loadChildren: () =>
+      import('./features/landing/landing.module').then(
+        (m) => m.LandingPageModule
+      ),
   },
 ];
 

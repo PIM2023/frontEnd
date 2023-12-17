@@ -1,23 +1,20 @@
-<ion-header [translucent]="true">
+<ion-header mode="ios" [translucent]="true">
   <ion-toolbar id="close-placeholder">
     <ion-buttons slot="start" (click)="goToProfileSettings()">
-      <ion-button fill="clear">
+      <ion-button slot="icon-only" fill="clear">
         <ion-icon
           src="../../../assets/icons/ic-arrow.svg"
           id="arrow-icon"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-title>Siguiendo</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-col>
-      <ion-row>
-        <label id="title"> Siguiendo </label>
-      </ion-row>
-
       <ion-row>
         <ion-list lines="none">
           <ion-item *ngFor="let user of followingList">

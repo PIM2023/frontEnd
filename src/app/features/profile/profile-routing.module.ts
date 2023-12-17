@@ -2,23 +2,27 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProfilePage } from './profile.page';
-import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfilePage
-    
+    component: ProfilePage,
   },
-
   {
     path: 'settings',
-    component: SettingsComponent
-    
-  }
+    loadChildren: () =>
+      import('../profile-settings/profile-settings.module').then(
+        (m) => m.ProfileSettingsPageModule
+      ),
+  },
+  {
+    path: 'following',
+    loadChildren: () =>
+      import('../profile-following/profile-following.module').then(
+        (m) => m.ProfileFollowingPageModule
+      ),
+  },
 ];
-
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

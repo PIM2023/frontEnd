@@ -4,20 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilePageRoutingModule } from './profile-routing.module';
+import { SearchPageRoutingModule } from './search-routing.module';
 
-import { ProfilePage } from './profile.page';
+import { SearchPage } from './search.page';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     IonicModule,
-    ProfilePageRoutingModule,
+    SearchPageRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
-  declarations: [ProfilePage],
+  declarations: [SearchPage],
 })
-export class ProfilePageModule {}
+export class SearchPageModule {}

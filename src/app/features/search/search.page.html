@@ -1,0 +1,28 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-searchbar
+        [debounce]="500"
+        placeholder="SEARCH USERS"
+        (ionInput)="searchUser($event)"
+      ></ion-searchbar>
+    </ion-row>
+
+    <ion-col>
+      <div *ngIf="currentEvents.length" class="event">
+        <div *ngFor="let user of currentEvents" class="user-container">
+          <div
+            class="user-media"
+            (click)="goToOtherUserProfile( user.username )"
+          >
+            <img
+              src="{{ user.avatar }}"
+              onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+            />
+            <span class="username">@{{ user.username }}</span>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-grid>
+</ion-content>

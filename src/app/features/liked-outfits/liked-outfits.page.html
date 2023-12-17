@@ -12,18 +12,33 @@
 </ion-header>
 
 <ion-content>
-  <h3>liked outfits</h3>
-  <ion-grid>
-    <div *ngFor="let posts of arrayOfArrays" class="post-container">
-      <div *ngFor="let post of posts" class="post-wrapper">
-        <img
-          [src]="post.image"
-          alt="Avatar"
-          onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
-          class="post-image"
-        />
-        <ion-label>{{post.username}}</ion-label>
+  <div *ngIf="!loading;else loadingTemplate">
+    <div *ngIf="arrayOfArrays; else noPost">
+      <h3>liked outfits</h3>
+      <ion-grid>
+        <div *ngFor="let posts of arrayOfArrays" class="post-container">
+          <div *ngFor="let post of posts" class="post-wrapper">
+            <img
+              [src]="post.image"
+              alt="Avatar"
+              onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+              class="post-image"
+            />
+            <ion-label>{{post.username}}</ion-label>
+          </div>
+        </div></ion-grid
+      >
+    </div>
+    <ng-template #noPost>
+      <div class="center-spinner ion-padding">
+        <span>Aún no ha dado ningún me gusta</span>
       </div>
-    </div></ion-grid
-  >
+    </ng-template>
+  </div>
+  <ng-template #loadingTemplate>
+    <div class="center-spinner">
+      <span>Cargando post</span>
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-template>
 </ion-content>

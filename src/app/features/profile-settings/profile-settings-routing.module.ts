@@ -6,6 +6,7 @@ import { ProfileSettingsPage } from './profile-settings.page';
 const routes: Routes = [
   {
     path: '',
+    title: 'Clout - Editar perfil',
     component: ProfileSettingsPage,
   },
 ];

@@ -21,7 +21,9 @@
       <h2 class="user-lastname">Apellido: {{lastname}}</h2>
       <h2 class="user-height">Altura: {{height}}</h2>
       <h2 class="user-weight">Peso: {{weight}}</h2>
-      <h2 class="user-borndate">Fecha de nacimiento: {{borndate}}</h2>
+      <h2 class="user-borndate">
+        Fecha de nacimiento: {{borndate | date : 'd/M/yyyy'}}
+      </h2>
     </div>
   </div>
   <ion-button class="but1" fill="solid" (click)="goTo('settings')"

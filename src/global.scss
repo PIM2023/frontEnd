@@ -149,3 +149,7 @@ ion-icon::part(icon-inner) {
 .alertita h2 {
   text-align: center;
 }
+
+ion-toolbar {
+  --border-color: transparent;
+}

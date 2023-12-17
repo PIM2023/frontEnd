@@ -14,6 +14,7 @@ import { AlertController } from '@ionic/angular';
 export class ProfileSettingsPage implements OnInit {
   username!: string;
   name!: string;
+  surname!: string;
   pronouns!: string;
   bio!: string;
   private!: boolean;
@@ -40,7 +41,8 @@ export class ProfileSettingsPage implements OnInit {
   populateProfileSettings() {
     const user = this.userSignal();
     this.username = user.username;
-    this.name = user.name;
+    this.name = user.firstName;
+    this.surname = user.lastName;
     this.pronouns = user.pronouns;
     this.bio = user.bio;
     this.private = user.private;
@@ -135,21 +137,19 @@ export class ProfileSettingsPage implements OnInit {
     }
   }
 
-  editPronouns() {
-    const pronounsInput = document.getElementById(
-      'pronouns'
-    ) as HTMLInputElement;
+  editSurname() {
+    const surnameInput = document.getElementById('surname') as HTMLInputElement;
     const saveButton = document.getElementById(
-      'edit-pronouns'
+      'edit-surname'
     ) as HTMLIonIconElement;
 
-    if (pronounsInput.readOnly) {
-      pronounsInput.readOnly = false;
+    if (surnameInput.readOnly) {
+      surnameInput.readOnly = false;
       saveButton.src = '../../../assets/icons/ic-save.svg';
     } else {
-      pronounsInput.readOnly = true;
+      surnameInput.readOnly = true;
       saveButton.src = '../../../assets/icons/ic-edit.svg';
-      //realizar la llamada a la api para actualizar los pronombres
+      //realizar la llamada a la api para actualizar el nombre
     }
   }
 
@@ -188,6 +188,10 @@ export class ProfileSettingsPage implements OnInit {
         allowEditing: true,
         resultType: CameraResultType.DataUrl,
         saveToGallery: true,
+        promptLabelHeader: 'Selecciona de donde quieres obtener la foto',
+        promptLabelCancel: 'Cancelar',
+        promptLabelPicture: 'Hacer foto',
+        promptLabelPhoto: 'Seleccionar de la galería',
         source: CameraSource.Prompt,
       });
       this.img = picture.dataUrl || '';

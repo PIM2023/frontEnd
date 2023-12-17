@@ -8,6 +8,7 @@ import { Post } from 'src/app/core/models/post';
   styleUrls: ['./liked-outfits.page.scss'],
 })
 export class LikedOutfitsPage implements OnInit {
+  loading: boolean = true;
   likedPosts: any[] = [
     {
       id: 11,
@@ -51,8 +52,7 @@ export class LikedOutfitsPage implements OnInit {
 
   getPosts() {
     //todo: llamar a endpoint
-    //Recorrer el array likedPosts y crear un array de arrays de 3 elementos
-    //Cada array de 3 elementos, se mete en arrayOfArrays
+    this.loading = false;
     this.likedPosts.forEach((post, index) => {
       if (index % 3 == 0) {
         this.arrayOfArrays.push([post]);

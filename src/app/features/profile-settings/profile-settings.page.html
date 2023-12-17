@@ -41,6 +41,8 @@
               class="information"
               id="username"
               value="{{username}}"
+              minlength="3"
+              maxlength="15"
               readonly
             />
             <ion-icon
@@ -53,7 +55,14 @@
 
           <ion-label class="prompt" id="prompt-name"> Nombre </ion-label>
           <ion-row>
-            <input class="information" id="name" value="{{name}}" readonly />
+            <input
+              class="information"
+              minlength="2"
+              maxlength="30"
+              id="name"
+              value="{{name}}"
+              readonly
+            />
             <ion-icon
               src="../../../assets/icons/ic-edit-white.svg"
               class="edit-icon"
@@ -67,6 +76,7 @@
               class="information"
               id="surname"
               value="{{surname}}"
+              maxlength="50"
               readonly
             />
             <ion-icon
@@ -78,26 +88,6 @@
           </ion-row>
         </ion-col>
       </ion-row>
-
-      <!-- <ion-row>
-        <ion-col class="margin-left">
-          <ion-label class="prompt" id="prompt-pronouns"> Pronouns </ion-label>
-          <ion-row>
-            <input
-              class="information"
-              id="pronouns"
-              value="{{pronouns}}"
-              readonly
-            />
-            <ion-icon
-              src="../../../assets/icons/ic-edit-white.svg"
-              class="edit-icon"
-              id="edit-pronouns"
-              (click)="editPronouns()"
-            ></ion-icon>
-          </ion-row>
-        </ion-col>
-      </ion-row> -->
 
       <ion-row>
         <ion-col class="margin-left">

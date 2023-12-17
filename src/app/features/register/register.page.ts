@@ -46,7 +46,10 @@ export class RegisterPage implements OnInit {
 
   async checkForm() {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
+      username: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9@\-_*#]+$/)],
+      ],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       bornDate: ['', Validators.required],

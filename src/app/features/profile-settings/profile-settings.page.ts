@@ -58,7 +58,7 @@ export class ProfileSettingsPage implements OnInit {
 
   async createAlert(socialSiteName: string) {
     const alert = await this.alertController.create({
-      header: 'Put your ' + socialSiteName + ' username',
+      header: 'Introduce tu nombre de usuario de ' + socialSiteName,
       inputs: [
         {
           name: 'input1',
@@ -111,6 +111,17 @@ export class ProfileSettingsPage implements OnInit {
       'edit-username'
     ) as HTMLIonIconElement;
 
+    if (usernameInput.value.length < 3 || usernameInput.value.length > 15) {
+      this.toastService.presentToast(
+        'El nombre de usuario debe tener entre 3 y 15 caracteres'
+      );
+      this.username = this.userSignal().username;
+      usernameInput.value = this.username;
+      usernameInput.readOnly = true;
+      saveButton.src = '../../../assets/icons/ic-edit.svg';
+      return;
+    }
+
     if (usernameInput.readOnly) {
       usernameInput.readOnly = false;
       saveButton.src = '../../../assets/icons/ic-save.svg';
@@ -119,6 +130,11 @@ export class ProfileSettingsPage implements OnInit {
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar el nombre de usuario
     }
+
+    this.userSignal.set({
+      ...this.userSignal(),
+      username: usernameInput.value,
+    });
   }
 
   editName() {
@@ -126,6 +142,17 @@ export class ProfileSettingsPage implements OnInit {
     const saveButton = document.getElementById(
       'edit-name'
     ) as HTMLIonIconElement;
+
+    if (nameInput.value.length < 2 || nameInput.value.length > 30) {
+      this.toastService.presentToast(
+        'El nombre debe tener entre 2 y 30 caracteres'
+      );
+      this.name = this.userSignal().firstName;
+      nameInput.value = this.name;
+      nameInput.readOnly = true;
+      saveButton.src = '../../../assets/icons/ic-edit.svg';
+      return;
+    }
 
     if (nameInput.readOnly) {
       nameInput.readOnly = false;
@@ -135,6 +162,10 @@ export class ProfileSettingsPage implements OnInit {
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar el nombre
     }
+    this.userSignal.set({
+      ...this.userSignal(),
+      firstName: nameInput.value,
+    });
   }
 
   editSurname() {
@@ -142,6 +173,17 @@ export class ProfileSettingsPage implements OnInit {
     const saveButton = document.getElementById(
       'edit-surname'
     ) as HTMLIonIconElement;
+
+    if (surnameInput.value.length > 50) {
+      this.toastService.presentToast(
+        'El apellido debe como máximo 50 caracteres'
+      );
+      this.surname = this.userSignal().lastName;
+      surnameInput.value = this.surname;
+      surnameInput.readOnly = true;
+      saveButton.src = '../../../assets/icons/ic-edit.svg';
+      return;
+    }
 
     if (surnameInput.readOnly) {
       surnameInput.readOnly = false;
@@ -151,6 +193,11 @@ export class ProfileSettingsPage implements OnInit {
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar el nombre
     }
+
+    this.userSignal.set({
+      ...this.userSignal(),
+      lastName: surnameInput.value,
+    });
   }
 
   editBio() {
@@ -166,18 +213,6 @@ export class ProfileSettingsPage implements OnInit {
       bioInput.readonly = true;
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar la bio
-    }
-  }
-
-  setPrivateAccount() {
-    const privateAccount = document.getElementById(
-      'private-account'
-    ) as HTMLIonToggleElement;
-
-    if (privateAccount.checked) {
-      //realizar la llamada a la api para actualizar el estado de la cuenta
-    } else {
-      //realizar la llamada a la api para actualizar el estado de la cuenta
     }
   }
 
@@ -199,6 +234,10 @@ export class ProfileSettingsPage implements OnInit {
 
       const avatar = document.getElementById('avatar') as HTMLImageElement;
       avatar.src = this.img;
+      this.userSignal.set({
+        ...this.userSignal(),
+        img: this.img,
+      });
 
       //realizar la llamada a la api para actualizar la foto de perfil
     } catch (_) {
@@ -214,6 +253,7 @@ export class ProfileSettingsPage implements OnInit {
 
   goToLikedOutfits() {
     //redirigir a la página de outfits guardados
+    this.navCtrl.navigateForward(['profile', 'likes']);
   }
 
   goToFollowing() {

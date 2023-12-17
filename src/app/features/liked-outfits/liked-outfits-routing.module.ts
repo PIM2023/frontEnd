@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProfileFollowingPage } from './profile-following.page';
+import { LikedOutfitsPage } from './liked-outfits.page';
 
 const routes: Routes = [
   {
     path: '',
-    title: 'Clout - Siguiendo',
-    component: ProfileFollowingPage,
+    title: 'Clout - Mis me gusta',
+    component: LikedOutfitsPage,
   },
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProfileFollowingPageRoutingModule {}
+export class LikedOutfitsPageRoutingModule {}

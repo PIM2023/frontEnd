@@ -99,6 +99,10 @@ export class HomePage implements OnInit {
         allowEditing: true,
         resultType: CameraResultType.DataUrl,
         saveToGallery: true,
+        promptLabelHeader: 'Selecciona de donde quieres obtener la foto',
+        promptLabelCancel: 'Cancelar',
+        promptLabelPicture: 'Hacer foto',
+        promptLabelPhoto: 'Seleccionar de la galería',
         source: CameraSource.Prompt,
       });
       this.img = picture.dataUrl || '';

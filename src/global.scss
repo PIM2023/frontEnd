@@ -140,3 +140,16 @@ ion-icon::part(icon-inner) {
   background-color: red;
   filter: contrast(0.5);
 }
+
+.alertita {
+  --background: #090909;
+  background-blend-mode: multiply, multiply;
+}
+
+.alertita h2 {
+  text-align: center;
+}
+
+ion-toolbar {
+  --border-color: transparent;
+}

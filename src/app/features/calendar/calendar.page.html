@@ -34,7 +34,7 @@
           <span>{{ post.text }}</span>
         </div>
       </div>
-      <div *ngIf="!currentEvents.length" class="event">
+      <div *ngIf="!currentEvents.length" class="event" id="no-posts">
         {{calendar.noEventsLabel}}
       </div>
     </div>

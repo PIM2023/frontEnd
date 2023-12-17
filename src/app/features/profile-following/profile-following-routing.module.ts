@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProfileSettingsPage } from './profile-settings.page';
+import { ProfileFollowingPage } from './profile-following.page';
 
 const routes: Routes = [
   {
     path: '',
-    title: 'Clout - Editar perfil',
-    component: ProfileSettingsPage,
-  },
+    component: ProfileFollowingPage
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProfileSettingsPageRoutingModule {}
+export class ProfileFollowingPageRoutingModule {}

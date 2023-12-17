@@ -41,8 +41,10 @@ export class CanActivateGuard {
     | Observable<true | Promise<boolean>>
     | UrlTree {
     const encriptedId = localStorage.getItem('userId');
+    console.warn('encriptedId', encriptedId);
 
     if (encriptedId) {
+      console.warn('if');
       return of(encriptedId).pipe(
         map((encriptedId) => this.encryptionService.decryptId(encriptedId!)),
         switchMap((originalId) => this.userService.getUserProfile(+originalId)),
@@ -50,8 +52,9 @@ export class CanActivateGuard {
           return of(error);
         }),
         map((response) => {
+          console.warn('response', response);
           if (response.error) {
-            return this.navCtrl.navigateRoot('/login');
+            return this.navCtrl.navigateRoot('/welcome');
           } else {
             this.userSignal.set(response);
             return true;
@@ -59,7 +62,8 @@ export class CanActivateGuard {
         })
       );
     } else {
-      return this.navCtrl.navigateRoot('/login');
+      console.warn('else');
+      return this.navCtrl.navigateRoot('/welcome');
     }
   }
 }

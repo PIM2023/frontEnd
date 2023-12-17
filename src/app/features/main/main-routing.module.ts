@@ -49,6 +49,7 @@ const routes: Routes = [
       },
       {
         path: 'search',
+        title: 'Clout - Buscar',
         loadChildren: () =>
           import('../search/search.module').then((m) => m.SearchPageModule),
       },

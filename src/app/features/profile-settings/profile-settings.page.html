@@ -51,7 +51,7 @@
             ></ion-icon>
           </ion-row>
 
-          <ion-label class="prompt" id="prompt-name"> Name </ion-label>
+          <ion-label class="prompt" id="prompt-name"> Nombre </ion-label>
           <ion-row>
             <input class="information" id="name" value="{{name}}" readonly />
             <ion-icon
@@ -61,10 +61,25 @@
               (click)="editName()"
             ></ion-icon>
           </ion-row>
+          <ion-label class="prompt" id="prompt-name"> Apellido(s) </ion-label>
+          <ion-row>
+            <input
+              class="information"
+              id="surname"
+              value="{{surname}}"
+              readonly
+            />
+            <ion-icon
+              src="../../../assets/icons/ic-edit-white.svg"
+              class="edit-icon"
+              id="edit-surname"
+              (click)="editSurname()"
+            ></ion-icon>
+          </ion-row>
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <!-- <ion-row>
         <ion-col class="margin-left">
           <ion-label class="prompt" id="prompt-pronouns"> Pronouns </ion-label>
           <ion-row>
@@ -82,11 +97,11 @@
             ></ion-icon>
           </ion-row>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
       <ion-row>
         <ion-col class="margin-left">
-          <ion-label class="prompt" id="prompt-bio"> Profile bio </ion-label>
+          <ion-label class="prompt" id="prompt-bio"> Biografía </ion-label>
           <ion-row>
             <ion-textarea
               class="information"
@@ -111,25 +126,13 @@
 
       <ion-row>
         <ion-col class="margin-left">
-          <ion-row>
-            <label class="text"> Private account </label>
-            <ion-toggle
-              class="toggle"
-              id="private-account"
-              checked="{{private}}"
-              color="success"
-              (click)="setPrivateAccount()"
-            >
-            </ion-toggle>
-          </ion-row>
-
-          <ion-row class="margin-top" (click)="goToLikedOutfits()">
+          <ion-row class="margin" (click)="goToLikedOutfits()">
             <ion-icon
               src="../../../assets/icons/ic-heart-filled.svg"
               class="icons"
             >
             </ion-icon>
-            <label class="text"> Liked outfits </label>
+            <label class="text">Mis me gusta</label>
             <ion-row class="arrow-holder">
               <ion-icon
                 src="../../../assets/icons/ic-arrow.svg"
@@ -142,7 +145,7 @@
           <ion-row class="margin-top" (click)="goToFollowing()">
             <ion-icon src="../../../assets/icons/ic-people.svg" class="icons">
             </ion-icon>
-            <label class="text"> Following </label>
+            <label class="text"> Siguiendo </label>
             <ion-row class="arrow-holder">
               <ion-icon
                 src="../../../assets/icons/ic-arrow.svg"

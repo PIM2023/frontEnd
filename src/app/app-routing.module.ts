@@ -5,7 +5,7 @@ import { CanActivateGuard } from './core/guards/can-activate.guard';
 const routes: Routes = [
   {
     path: 'register',
-    title: 'Registro',
+    title: 'Clout - Registro',
     loadChildren: () =>
       import('./features/register/register.module').then(
         (m) => m.RegisterPageModule
@@ -13,6 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    title: 'Clout - Iniciar sesión',
     loadChildren: () =>
       import('./features/login/login.module').then((m) => m.LoginPageModule),
   },
@@ -30,6 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'welcome',
+    title: 'Clout - Bienvenido',
     loadChildren: () =>
       import('./features/landing/landing.module').then(
         (m) => m.LandingPageModule
@@ -37,6 +39,7 @@ const routes: Routes = [
   },
   {
     path: 'not-found',
+    title: 'Clout - Página no encontrada',
     loadChildren: () =>
       import('./features/not-found/not-found.module').then(
         (m) => m.NotFoundPageModule

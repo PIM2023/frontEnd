@@ -6,6 +6,8 @@ import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 import { AlertController } from '@ionic/angular';
 import { catchError, of } from 'rxjs';
+import { UserService } from 'src/app/core/services/user/user.service';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-profile-settings',
@@ -25,23 +27,29 @@ export class ProfileSettingsPage implements OnInit {
   img!: string;
 
   userSignal: WritableSignal<any>;
-  userService: any;
 
   constructor(
     private navCtrl: NavController,
     private signalsService: SignalsService,
     private toastService: ToastService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private userService: UserService
   ) {
     this.userSignal = this.signalsService.getUserSignal();
   }
 
   ngOnInit() {
+    console.log('entra en profile settings');
+    console.warn('');
+    console.log(this.userSignal());
     this.populateProfileSettings();
   }
 
   populateProfileSettings() {
     const user = this.userSignal();
+    console.warn();
+    console.log(user);
+    console.warn();
     this.username = user.username;
     this.name = user.firstName;
     this.surname = user.lastName;
@@ -151,11 +159,6 @@ export class ProfileSettingsPage implements OnInit {
         null
       );
     }
-
-    this.userSignal.set({
-      ...this.userSignal(),
-      username: usernameInput.value,
-    });
   }
 
   editName() {
@@ -201,10 +204,6 @@ export class ProfileSettingsPage implements OnInit {
         null
       );
     }
-    this.userSignal.set({
-      ...this.userSignal(),
-      firstName: nameInput.value,
-    });
   }
 
   editSurname() {
@@ -249,10 +248,7 @@ export class ProfileSettingsPage implements OnInit {
         null,
         null
       );
-    this.userSignal.set({
-      ...this.userSignal(),
-      lastName: surnameInput.value,
-    });
+    }
   }
 
   editBio() {
@@ -287,10 +283,6 @@ export class ProfileSettingsPage implements OnInit {
         null
       );
     }
-    this.userSignal.set({
-      ...this.userSignal(),
-      bio: bioInput.value,
-    });
   }
 
   async setNewProfilePicture() {
@@ -311,10 +303,6 @@ export class ProfileSettingsPage implements OnInit {
 
       const avatar = document.getElementById('avatar') as HTMLImageElement;
       avatar.src = this.img;
-      this.userSignal.set({
-        ...this.userSignal(),
-        img: this.img,
-      });
 
       //realizar la llamada a la api para actualizar la foto de perfil
       this.apiEditProfile(
@@ -376,11 +364,6 @@ export class ProfileSettingsPage implements OnInit {
       null,
       null
     );
-
-    this.userSignal.set({
-      ...this.userSignal(),
-      instagram_username: username,
-    });
   }
 
   setTwitterUsername(username: string) {
@@ -403,11 +386,6 @@ export class ProfileSettingsPage implements OnInit {
       null,
       null
     );
-
-    this.userSignal.set({
-      ...this.userSignal(),
-      twitter_username: username,
-    });
   }
 
   setPinterestUsername(username: string) {
@@ -430,11 +408,6 @@ export class ProfileSettingsPage implements OnInit {
       null,
       null
     );
-
-    this.userSignal.set({
-      ...this.userSignal(),
-      pinterest_username: username,
-    });
   }
 
   apiEditProfile(
@@ -480,11 +453,28 @@ export class ProfileSettingsPage implements OnInit {
         })
       )
       .subscribe((response: any) => {
+        console.log('response', response);
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
+          console.log('SIGNAL ANTES: ', this.userSignal());
+          console.log('RESPONSE: ', response);
+
+          const newUserData = {
+            id: response.id,
+            username: response.username,
+            email: response.email,
+            avatar: response.profile.avatar,
+            firstName: response.profile.firstName,
+            lastName: response.profile.lastName,
+            age: response.profile.age,
+            height: response.profile.height,
+            weight: response.profile.weight,
+            bornDate: response.profile.bornDate,
+          };
+
           //mi usuario, se ha de cambiar por response
-          this.userSignal.set(response);
+          this.userSignal.set(newUserData);
         }
       });
   }

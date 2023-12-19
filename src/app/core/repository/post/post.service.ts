@@ -71,7 +71,7 @@ export class PostRepository extends Repository {
    * @returns
    */
   likePost(postId: number, userId: number) {
-    return this.doRequest<Post>('put', `/post/${postId}/like`, {
+    return this.doRequest<Post>('post', `/post/${postId}/like`, {
       userId: userId,
     });
   }
@@ -83,8 +83,32 @@ export class PostRepository extends Repository {
    * @returns
    */
   dislikePost(postId: number, userId: number) {
-    return this.doRequest<Post>('put', `/post/${postId}/dislike`, {
+    return this.doRequest<Post>('post', `/post/${postId}/dislike`, {
       userId: userId,
+    });
+  }
+
+  /**
+   * This method is used to follow a user
+   * @param userId Id of the user to follow
+   * @param followerId Id of the user that follows
+   * @returns
+   */
+  followUser(userId: number, followerId: number) {
+    return this.doRequest<Post>('post', `/followers/${userId}/follow`, {
+      followerId: followerId,
+    });
+  }
+
+  /**
+   * This method is used to unfollow a user
+   * @param userId Id of the user to unfollow
+   * @param followerId Id of the user that unfollows
+   * @returns
+   */
+  unfollowUser(userId: number, followerId: number) {
+    return this.doRequest<Post>('delete', `/followers/${userId}/unfollow`, {
+      followerId: followerId,
     });
   }
 }

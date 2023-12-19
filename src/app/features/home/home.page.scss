@@ -1,3 +1,11 @@
+* {
+  --background: #000000;
+}
+
+ion-col {
+  padding: 0;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -11,3 +19,108 @@
   width: auto;
   margin-top: 40vh;
 }
+
+#publish-button {
+  margin-top: 70px;
+  border: 2px;
+  flex-shrink: 0;
+  stroke-width: 2px;
+  stroke: #fff;
+}
+
+#close-icon {
+  margin-top: 70px;
+  height: 18px;
+  width: 18px;
+  border: 2px;
+  flex-shrink: 0;
+  stroke-width: 2px;
+  stroke: #fff;
+}
+
+.text{
+  margin-top: 41px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 145px;
+  height: 17px;
+  flex-shrink: 0;
+  color: #FFF;
+  text-align: center;
+  font-family: JetBrains Mono;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  opacity: 0.7;
+}
+
+#outfit-button{
+  width: 180px;
+  height: 232px;
+  flex-shrink: 0;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 33px;
+  border: 1px solid #FFF;
+  color: #FFFFFF;
+  background-image: url("../../../assets/icon/ropa.png");
+  background-size: cover;
+  background-position: center;
+}
+
+#add-icon{
+  width: 54.357px;
+  height: 54.357px;
+  flex-shrink: 0;
+  color: #FFFFFF;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#button-text{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 92px;
+  height: 18px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #FFF;
+  text-align: center;
+  font-family: JetBrains Mono;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  text-transform: lowercase;
+}
+
+#text-descripcion {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #FFF;
+  width: 210px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid #808080;
+  padding: 10px;
+}
+
+#text-etiquetas {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #FFF;
+  width: 210px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid #808080;
+  padding: 10px;
+}
+

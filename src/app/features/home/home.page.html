@@ -30,26 +30,37 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="cancel()">Cancelar</ion-button>
+          <ion-button (click)="cancel()">
+            <ion-icon
+              src="../../../assets/icons/ic-close.svg"
+              id="close-icon"
+            ></ion-icon>
+          </ion-button>
         </ion-buttons>
         <ion-title>Nuevo post</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Publicar</ion-button>
+          <ion-button (click)="confirm()" [strong]="true" id="publish-button">Publicar</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <div class="wrapper">
-        <ion-button fill="clear" (click)="takePicture()">
-          <ion-label>Imagen</ion-label>
+        <p class="text"> Añade tu outfit </p>
+        <ion-button fill="clear" (click)="takePicture()" shape="round" id="outfit-button">
+          <ion-col>
+            <ion-icon
+              src="../../../assets/icons/ic-add.svg"
+              id="add-icon"
+            ></ion-icon>
+            <span id="button-text">add outfit</span>
+          </ion-col>
         </ion-button>
         <img *ngIf="img" [src]="img" alt="Foto" />
       </div>
       <ion-item>
         <ion-input
-          label="Introduce una descripción"
-          labelPlacement="stacked"
           type="text"
+          id = "text-descripcion"
           placeholder="Descripción del post"
           [(ngModel)]="description"
         ></ion-input>
@@ -57,6 +68,7 @@
       <ion-list>
         <ion-item>
           <ion-select
+            id = "text-etiquetas"
             aria-label="Etiquetas"
             placeholder="Elige algunas de estas etiquetas"
             [multiple]="true"

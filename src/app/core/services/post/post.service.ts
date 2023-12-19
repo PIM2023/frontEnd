@@ -58,4 +58,24 @@ export class PostService {
   public getTags() {
     return this.repo.getTags();
   }
+
+  /**
+   *  This method is used to like a post
+   * @param postId Id of the post to like
+   * @param userId Id of the user that liked the post
+   * @returns
+   */
+  public likePost(postId: number, userId: number) {
+    return this.repo.likePost(postId, userId);
+  }
+
+  /**
+   * This method is used to dislike a post
+   * @param postId Id of the post to dislike
+   * @param userId Id of the user that disliked the post
+   * @returns
+   */
+  public dislikePost(postId: number, userId: number) {
+    return this.repo.dislikePost(postId, userId);
+  }
 }

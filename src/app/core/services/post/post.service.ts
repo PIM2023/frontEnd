@@ -78,4 +78,11 @@ export class PostService {
   public dislikePost(postId: number, userId: number) {
     return this.repo.dislikePost(postId, userId);
   }
+
+  /**
+   * This method is used to let the user log out of the app
+   */
+  public logOut() {
+    return localStorage.removeItem('userId');
+  }
 }

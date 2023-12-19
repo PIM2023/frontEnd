@@ -26,6 +26,7 @@ export class SignalsService {
    * @param userSignal Signal that will be used to store the user
    */
   public setUserSignal(userSignal: WritableSignal<User>) {
+    console.warn('set');
     this.userSignal = userSignal;
   }
 
@@ -34,6 +35,7 @@ export class SignalsService {
    * @returns Signal that stores the user
    */
   public getUserSignal(): WritableSignal<User> {
+    console.log('entra aqui');
     return this.userSignal;
   }
 }

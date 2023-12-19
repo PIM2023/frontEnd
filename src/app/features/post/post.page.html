@@ -37,7 +37,14 @@
           </div>
           <div>
             <ion-icon
+              *ngIf="!isLiked"
               src="../../../assets/icons/ic-heart-filled.svg"
+              id="heart-icon"
+              (click)="toggleLike()"
+            ></ion-icon>
+            <ion-icon
+              *ngIf="isLiked"
+              src="../../../assets/icons/ic-heart-empty.svg"
               id="heart-icon"
               (click)="toggleLike()"
             ></ion-icon>

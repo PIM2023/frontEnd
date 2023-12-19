@@ -17,6 +17,7 @@ export class PostPage implements OnInit {
   username!: string;
   uploadDate!: string;
   description!: string;
+  isLiked: boolean = false;
 
   constructor(
     private router: Router,
@@ -72,6 +73,7 @@ export class PostPage implements OnInit {
   }
 
   toggleLike() {
+    this.isLiked = !this.isLiked;
     // this.isLiked = !this.isLiked;
     // this.post.likes += this.isLiked ? 1 : -1;
   }

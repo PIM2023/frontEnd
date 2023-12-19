@@ -46,7 +46,10 @@ export class RegisterPage implements OnInit {
 
   async checkForm() {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
+      username: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9@\-_*#]+$/)],
+      ],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       bornDate: ['', Validators.required],
@@ -111,7 +114,9 @@ export class RegisterPage implements OnInit {
         this.registerForm.value.firstName,
         this.registerForm.value.lastName,
         this.registerForm.value.bornDate,
-        this.registerForm.value.avatar ?? null,
+        this.img && this.img !== ''
+          ? this.img.replace('data:image/jpeg;base64,', '')
+          : null,
         this.registerForm.value.height ?? null,
         this.registerForm.value.weight ?? null
       )
@@ -153,7 +158,6 @@ export class RegisterPage implements OnInit {
         source: CameraSource.Prompt,
       });
       this.img = picture.dataUrl || '';
-      console.log('img', this.img);
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'

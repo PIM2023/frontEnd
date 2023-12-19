@@ -67,7 +67,9 @@ export class LoginPage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
+          console.log(response);
           this.userSignal.set(response);
+          console.warn(this.userSignal());
           const encriptedId = this.encryptionService.encryptId(
             this.userSignal().id
           );

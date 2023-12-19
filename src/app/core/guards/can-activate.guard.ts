@@ -52,7 +52,7 @@ export class CanActivateGuard {
           return of(error);
         }),
         map((response) => {
-          console.warn('response', response);
+          console.warn('response guard', response);
           if (response.error) {
             return this.navCtrl.navigateRoot('/welcome');
           } else {

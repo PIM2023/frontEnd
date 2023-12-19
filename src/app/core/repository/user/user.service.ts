@@ -136,6 +136,8 @@ export class UserRepository extends Repository {
       twitter_username: twitter_username,
       pinterest_username: pinterest_username,
     });
+  }
+  /*
       
    * This method is used to follow a user
    * @param userId Id of the user to follow

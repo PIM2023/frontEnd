@@ -5,6 +5,7 @@ import { get } from 'cypress/types/lodash';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 import { AlertController } from '@ionic/angular';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-profile-settings',
@@ -24,6 +25,7 @@ export class ProfileSettingsPage implements OnInit {
   img!: string;
 
   userSignal: WritableSignal<any>;
+  userService: any;
 
   constructor(
     private navCtrl: NavController,
@@ -129,6 +131,25 @@ export class ProfileSettingsPage implements OnInit {
       usernameInput.readOnly = true;
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar el nombre de usuario
+
+      this.apiEditProfile(
+        this.userSignal().id,
+        usernameInput.value,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
     }
 
     this.userSignal.set({
@@ -161,6 +182,24 @@ export class ProfileSettingsPage implements OnInit {
       nameInput.readOnly = true;
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar el nombre
+      this.apiEditProfile(
+        this.userSignal().id,
+        null,
+        null,
+        null,
+        nameInput.value,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
     }
     this.userSignal.set({
       ...this.userSignal(),
@@ -192,8 +231,24 @@ export class ProfileSettingsPage implements OnInit {
       surnameInput.readOnly = true;
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar el nombre
-    }
-
+      this.apiEditProfile(
+        this.userSignal().id,
+        null,
+        null,
+        null,
+        null,
+        surnameInput.value,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
     this.userSignal.set({
       ...this.userSignal(),
       lastName: surnameInput.value,
@@ -213,7 +268,29 @@ export class ProfileSettingsPage implements OnInit {
       bioInput.readonly = true;
       saveButton.src = '../../../assets/icons/ic-edit.svg';
       //realizar la llamada a la api para actualizar la bio
+      this.apiEditProfile(
+        this.userSignal().id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        bioInput.value?.toString(),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
     }
+    this.userSignal.set({
+      ...this.userSignal(),
+      bio: bioInput.value,
+    });
   }
 
   async setNewProfilePicture() {
@@ -240,6 +317,24 @@ export class ProfileSettingsPage implements OnInit {
       });
 
       //realizar la llamada a la api para actualizar la foto de perfil
+      this.apiEditProfile(
+        this.userSignal().id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        this.img,
+        null,
+        null
+      );
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'
@@ -263,13 +358,134 @@ export class ProfileSettingsPage implements OnInit {
 
   setInstagramUsername(username: string) {
     //realizar la llamada a la api para actualizar el nombre de usuario de instagram
+    this.apiEditProfile(
+      this.userSignal().id,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      username,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
+
+    this.userSignal.set({
+      ...this.userSignal(),
+      instagram_username: username,
+    });
   }
 
   setTwitterUsername(username: string) {
     //realizar la llamada a la api para actualizar el nombre de usuario de twitter
+    this.apiEditProfile(
+      this.userSignal().id,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      username,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
+
+    this.userSignal.set({
+      ...this.userSignal(),
+      twitter_username: username,
+    });
   }
 
   setPinterestUsername(username: string) {
     //realizar la llamada a la api para actualizar el nombre de usuario de pinterest
+    this.apiEditProfile(
+      this.userSignal().id,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      username,
+      null,
+      null,
+      null,
+      null
+    );
+
+    this.userSignal.set({
+      ...this.userSignal(),
+      pinterest_username: username,
+    });
+  }
+
+  apiEditProfile(
+    id: number,
+    username?: string | null,
+    email?: string | null,
+    password?: string | null,
+    firstName?: string | null,
+    lastName?: string | null,
+    pronouns?: string | null,
+    bio?: string | null,
+    isPrivate?: boolean | null,
+    instagram_username?: string | null,
+    twitter_username?: string | null,
+    pinterest_username?: string | null,
+    bornDate?: Date | null,
+    avatar?: any | null,
+    height?: number | null,
+    weight?: number | null
+  ) {
+    return this.userService
+      .updateUserProfile(
+        id,
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        pronouns,
+        bio,
+        isPrivate,
+        instagram_username,
+        twitter_username,
+        pinterest_username,
+        bornDate,
+        avatar,
+        height,
+        weight
+      )
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response: any) => {
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
+        else {
+          //mi usuario, se ha de cambiar por response
+          this.userSignal.set(response);
+        }
+      });
   }
 }

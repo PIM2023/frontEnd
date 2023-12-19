@@ -5,7 +5,7 @@ import { CanActivateGuard } from './core/guards/can-activate.guard';
 const routes: Routes = [
   {
     path: 'register',
-    title: 'Registro',
+    title: 'Clout - Registro',
     loadChildren: () =>
       import('./features/register/register.module').then(
         (m) => m.RegisterPageModule
@@ -13,6 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    title: 'Clout - Iniciar sesión',
     loadChildren: () =>
       import('./features/login/login.module').then((m) => m.LoginPageModule),
   },
@@ -24,16 +25,29 @@ const routes: Routes = [
       import('./features/main/main.module').then((m) => m.MainPageModule),
   },
   {
-    path: 'main-profile',
-    loadChildren: () =>
-      import('./features/main-profile/main-profile.module').then(
-        (m) => m.MainProfilePageModule
-      ),
-  },
-  {
     path: 'post/:id',
     loadChildren: () =>
       import('./features/post/post.module').then((m) => m.PostPageModule),
+  },
+  {
+    path: 'welcome',
+    title: 'Clout - Bienvenido',
+    loadChildren: () =>
+      import('./features/landing/landing.module').then(
+        (m) => m.LandingPageModule
+      ),
+  },
+  {
+    path: 'not-found',
+    title: 'Clout - Página no encontrada',
+    loadChildren: () =>
+      import('./features/not-found/not-found.module').then(
+        (m) => m.NotFoundPageModule
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];
 

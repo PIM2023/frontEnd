@@ -64,4 +64,31 @@ export class UserService {
   public getUserProfileWithUsername(username: string) {
     return this.repo.getUserProfileWithUsername(username);
   }
+
+  /**
+   * This method is used to follow a user
+   * @param userId Id of the user to follow
+   * @param followerId Id of the user that follows
+   * @returns
+   */
+  public followUser(userId: number, followerId: number) {
+    return this.repo.followUser(userId, followerId);
+  }
+
+  /**
+   * This method is used to unfollow a user
+   * @param userId Id of the user to unfollow
+   * @param followerId Id of the user that unfollows
+   * @returns
+   */
+  public unfollowUser(userId: number, followerId: number) {
+    return this.repo.unfollowUser(userId, followerId);
+  }
+
+  /**
+   * This method is used to let the user log out of the app
+   */
+  public logOut() {
+    return localStorage.removeItem('userId');
+  }
 }

@@ -61,4 +61,42 @@ export class UserService {
   public getUserProfileWithUsername(username: string) {
     return this.repo.getUserProfileWithUsername(username);
   }
+
+  public updateUserProfile(
+    id: number,
+    username?: string | null,
+    email?: string | null,
+    password?: string | null,
+    firstName?: string | null,
+    lastName?: string | null,
+    pronouns?: string | null,
+    bio?: string | null,
+    isPrivate?: boolean | null,
+    instagram_username?: string | null,
+    twitter_username?: string | null,
+    pinterest_username?: string | null,
+    bornDate?: Date | null,
+    avatar?: any | null,
+    height?: number | null,
+    weight?: number | null
+  ) {
+    return this.repo.updateUserProfile(
+      id,
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      pronouns,
+      bio,
+      isPrivate,
+      instagram_username,
+      twitter_username,
+      pinterest_username,
+      bornDate,
+      avatar,
+      height,
+      weight
+    );
+  }
 }

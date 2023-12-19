@@ -77,4 +77,61 @@ export class UserRepository extends Repository {
   getUserProfileWithUsername(username: string) {
     return this.doRequest<User>('get', `/users/${username}/profile`);
   }
+
+  /**
+   * This method is used to edit a user
+   * @param id Id of the user
+   * @param username Username of the user
+   * @param email Email of the user
+   * @param password Password of the user
+   * @param firstName First name of the user
+   * @param lastName Last name of the user
+   * @param bornDate Born date of the user
+   * @param avatar Avatar of the user
+   * @param height Height of the user
+   * @param weight Weight of the user
+   * @param pronouns Pronouns of the user
+   * @param bio Bio of the user
+   * @param isPrivate If the user is private or not
+   * @param instagram_username Instagram username of the user
+   * @param twitter_username Twitter username of the user
+   * @param pinterest_username Pinterest username of the user
+   * @returns edited user
+   */
+  updateUserProfile(
+    id: number,
+    username?: string | null,
+    email?: string | null,
+    password?: string | null,
+    firstName?: string | null,
+    lastName?: string | null,
+    pronouns?: string | null,
+    bio?: string | null,
+    isPrivate?: boolean | null,
+    instagram_username?: string | null,
+    twitter_username?: string | null,
+    pinterest_username?: string | null,
+    bornDate?: Date | null,
+    avatar?: any | null,
+    height?: number | null,
+    weight?: number | null
+  ) {
+    return this.doRequest<User>('put', `/users/${id}`, {
+      username: username,
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      bornDate: bornDate,
+      avatar: avatar,
+      height: height,
+      weight: weight,
+      pronouns: pronouns,
+      bio: bio,
+      isPrivate: isPrivate,
+      instagram_username: instagram_username,
+      twitter_username: twitter_username,
+      pinterest_username: pinterest_username,
+    });
+  }
 }

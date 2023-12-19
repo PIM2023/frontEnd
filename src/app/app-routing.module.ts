@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [CanActivateGuard],
+    //canActivate: [CanActivateGuard],
     title: 'Clout',
     loadChildren: () =>
       import('./features/main/main.module').then((m) => m.MainPageModule),

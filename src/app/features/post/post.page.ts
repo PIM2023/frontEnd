@@ -55,6 +55,7 @@ export class PostPage implements OnInit {
           return;
         }
         this.post = response;
+        console.warn(this.post);
         this.loading = false;
       });
   }

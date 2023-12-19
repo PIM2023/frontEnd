@@ -249,8 +249,6 @@ export class ProfileSettingsPage implements OnInit {
         null,
         null
       );
-    }
-
     this.userSignal.set({
       ...this.userSignal(),
       lastName: surnameInput.value,
@@ -289,7 +287,6 @@ export class ProfileSettingsPage implements OnInit {
         null
       );
     }
-
     this.userSignal.set({
       ...this.userSignal(),
       bio: bioInput.value,

@@ -12,8 +12,28 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
 })
 export class OtherProfilePage implements OnInit {
   username!: string;
+  bio!: string;
+  instagram_username!: string;
+  twitter_username!: string;
+  pinterest_username!: string;
   userFound: boolean = false;
   loading: boolean = true;
+  isFollowing = false;
+
+  outfits = [
+    {
+      imageUrl: 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
+      description: '“i’m a cool football player”'
+    },
+    {
+      imageUrl: 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
+      description: '“i’m a cool football player”'
+    },
+    {
+      imageUrl: 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
+      description: '“i’m a cool football player”'
+    },
+  ];
 
   constructor(
     private navCtrl: NavController,
@@ -52,5 +72,9 @@ export class OtherProfilePage implements OnInit {
         this.userFound = true;
         this.loading = false;
       });
+  }
+
+  toggleFollow() {
+    this.isFollowing = !this.isFollowing;
   }
 }

@@ -1,32 +1,153 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+<!--<ion-header [translucent]="true">
+  <ion-toolbar id="close-placeholder">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goTo('settings')">
+        <ion-icon
+          src="../../../assets/icons/ic-settings.svg"
+          id="settings-icon"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="profile">
-    <div class="avatar-section">
-      <img
-        src="avatar.jpg"
-        alt="Avatar"
-        onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
-        class="user-avatar"
-      />
-      <h2 class="user-name">{{username}}</h2>
-    </div>
-    <div class="info-profile">
-      <h2 class="user-email">Email: {{email}}</h2>
-      <h2 class="user-firstname">Nombre: {{firstname}}</h2>
-      <h2 class="user-lastname">Apellido: {{lastname}}</h2>
-      <h2 class="user-height">Altura: {{height}}</h2>
-      <h2 class="user-weight">Peso: {{weight}}</h2>
-      <h2 class="user-borndate">
-        Fecha de nacimiento: {{borndate | date : 'd/M/yyyy'}}
-      </h2>
-    </div>
-  </div>
-  <ion-button class="but1" fill="solid" (click)="goTo('settings')"
-    >Editar Perfil</ion-button
-  >
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <ion-col>
+          <h2 class="user-name">@painstar1.OO1O {{username}}</h2>
+          <h2 class="user-bio">I’m really into Y2K fashion and i love vintage thrifting ⋆｡°✩{{bio}}</h2>
+          <ion-row>
+            <a href = "https://www.instagram.com/{{instagram_username}}/">
+              <ion-icon 
+                src="../../../assets/icons/ic-instagram.svg"
+                id="instagram-icon"
+              ></ion-icon>
+            </a>
+            <a href = "https://twitter.com/{{twitter_username}}">
+              <ion-icon 
+                src="../../../assets/icons/ic-twitter.svg"
+                id="twitter-icon"
+              ></ion-icon>
+            </a>
+            <a href = "https://www.pinterest.es/{{pinterest_username}}">
+              <ion-icon 
+                src="../../../assets/icons/ic-pinterest.svg"
+                id="pinterest-icon"
+              ></ion-icon>
+            </a>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <img 
+            src="avatar.jpg" 
+            alt="Avatar" 
+            onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+            class="user-avatar" />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p class="text"> my outfits </p>
+          <ion-row>
+            <div class="horizontal-scroll"> 
+              <ion-col *ngFor="let outfit of outfits">
+                <img 
+                  src="{{outfit.imageUrl}}"
+                  alt="Post image"
+                  onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+                  class="post-avatar" />
+                <h2 class="post-description"> {{outfit.description}} </h2>
+              </ion-col>
+            </div>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+</ion-content>-->
+
+<ion-header [translucent]="true">
+  <ion-toolbar id="close-placeholder">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goTo('settings')">
+        <ion-icon
+          src="../../../assets/icons/ic-settings.svg"
+          id="settings-icon"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <ion-col>
+          <h2 class="user-name">@monicageller {{username}}</h2>
+          <h2 class="user-bio">i’m in love with the sky ๋࣭ ⭑☁.๋࣭ ⭑ ⋆˚✿˖°{{bio}}</h2>
+          <ion-row>
+            <ion-button (click) ="toggleFollow()" shape="round" id="follow-button">
+              <span id="button-text">{{ isFollowing ? '- unfollow' : '+ follow' }}</span>
+            </ion-button>
+            <ion-button shape="round" id="share-button">
+              <ion-row>
+                <ion-icon 
+                  src="../../../assets/icons/ic-share.svg"
+                  id="share-icon"
+                ></ion-icon>
+                <span id="button-text-share">share</span>
+              </ion-row>
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <a href = "https://www.instagram.com/{{instagram_username}}/">
+              <ion-icon 
+                src="../../../assets/icons/ic-instagram.svg"
+                id="instagram-icon"
+              ></ion-icon>
+            </a>
+            <a href = "https://twitter.com/{{twitter_username}}">
+              <ion-icon 
+                src="../../../assets/icons/ic-twitter.svg"
+                id="twitter-icon"
+              ></ion-icon>
+            </a>
+            <a href = "https://www.pinterest.es/{{pinterest_username}}">
+              <ion-icon 
+                src="../../../assets/icons/ic-pinterest.svg"
+                id="pinterest-icon"
+              ></ion-icon>
+            </a>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <img 
+            src="avatar.jpg" 
+            alt="Avatar" 
+            onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+            class="user-avatar" />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p class="text">outfits</p>
+          <ion-row>
+            <div class="horizontal-scroll"> 
+              <ion-col *ngFor="let outfit of outfits">
+                <img 
+                  src="{{outfit.imageUrl}}"
+                  alt="Post image"
+                  onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+                  class="post-avatar" />
+                <h2 class="post-description"> {{outfit.description}} </h2>
+              </ion-col>
+            </div>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
 </ion-content>

@@ -87,28 +87,4 @@ export class PostRepository extends Repository {
       userId: userId,
     });
   }
-
-  /**
-   * This method is used to follow a user
-   * @param userId Id of the user to follow
-   * @param followerId Id of the user that follows
-   * @returns
-   */
-  followUser(userId: number, followerId: number) {
-    return this.doRequest<Post>('post', `/followers/${userId}/follow`, {
-      followerId: followerId,
-    });
-  }
-
-  /**
-   * This method is used to unfollow a user
-   * @param userId Id of the user to unfollow
-   * @param followerId Id of the user that unfollows
-   * @returns
-   */
-  unfollowUser(userId: number, followerId: number) {
-    return this.doRequest<Post>('delete', `/followers/${userId}/unfollow`, {
-      followerId: followerId,
-    });
-  }
 }

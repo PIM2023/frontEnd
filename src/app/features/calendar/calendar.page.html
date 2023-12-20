@@ -24,7 +24,7 @@
     <div class="indicator-container">
       <div *ngIf="currentEvents.length" class="event">
         <div *ngFor="let post of currentEvents" class="post-container">
-          <div class="post-wrapper">
+          <div class="post-wrapper" (click)="goToPost(post.id)">
             <img
               [src]="post.image"
               alt="Post {{ post.id }} de {{ post.username }}"

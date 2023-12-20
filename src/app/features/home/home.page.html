@@ -54,7 +54,7 @@
           shape="round"
           id="outfit-button"
         >
-          <ion-col>
+          <ion-col id="add-outfit">
             <ion-icon
               src="../../../assets/icons/ic-add.svg"
               id="add-icon"
@@ -62,7 +62,9 @@
             <span id="button-text">add outfit</span>
           </ion-col>
         </ion-button>
-        <img *ngIf="img" [src]="img" alt="Foto" />
+        <!-- <div *ngIf="img" class="post-wrapper">
+          <img [src]="img" class="photo" alt="Foto" />
+        </div> -->
       </div>
       <ion-item lines="none">
         <ion-textarea

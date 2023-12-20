@@ -107,6 +107,12 @@ export class HomePage implements OnInit {
       });
       this.img = picture.dataUrl || '';
       console.log('img', this.img);
+      const button = document.getElementById('outfit-button')!;
+      const addOutfit = document.getElementById('add-outfit')!;
+      console.log(addOutfit);
+      button.style.backgroundImage = `url(${this.img.replace('&quot;', '')})`;
+      button.style.backgroundColor = 'none !important';
+      addOutfit.style.background = 'none !important';
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'

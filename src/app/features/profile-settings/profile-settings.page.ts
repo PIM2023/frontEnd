@@ -306,13 +306,9 @@ export class ProfileSettingsPage implements OnInit {
       });
 
       this.img = picture.dataUrl || '';
-      console.log('img', this.img);
-
-      const avatar = document.getElementById('avatar') as HTMLImageElement;
-      avatar.src = this.img;
 
       //realizar la llamada a la api para actualizar la foto de perfil
-      this.apiEditProfile(
+      const result = this.apiEditProfile(
         this.userSignal().id,
         null,
         null,
@@ -330,6 +326,11 @@ export class ProfileSettingsPage implements OnInit {
         null,
         null
       );
+
+      if (result) {
+        const avatar = document.getElementById('avatar') as HTMLImageElement;
+        avatar.src = this.img;
+      }
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'
@@ -473,10 +474,8 @@ export class ProfileSettingsPage implements OnInit {
           console.log('SIGNAL ANTES: ', this.userSignal());
           console.log('RESPONSE: ', response);
 
-          const newUserData = response.data;
-          
           //mi usuario, se ha de cambiar por response
-          this.userSignal.set(newUserData);
+          this.userSignal.set(response);
         }
       });
   }

@@ -23,24 +23,6 @@ export class ProfilePage implements OnInit {
     this.isFollowing = !this.isFollowing;
   }
 
-  outfits = [
-    {
-      imageUrl:
-        'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
-      description: '“i’m a cool football player”',
-    },
-    {
-      imageUrl:
-        'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
-      description: '“i’m a cool football player”',
-    },
-    {
-      imageUrl:
-        'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
-      description: '“i’m a cool football player”',
-    },
-  ];
-
   userSignal: WritableSignal<any>;
 
   constructor(

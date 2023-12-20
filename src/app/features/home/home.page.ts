@@ -82,9 +82,11 @@ export class HomePage implements OnInit {
         })
       )
       .subscribe((response) => {
-        if (response.error)
-          this.toastService.presentToast(response.error.message);
-        else {
+        this.postsArrived = true;
+        if (response.error) {
+          console.error('error', response.error);
+          return;
+        } else {
           console.log('LO QUE ME LLEGA DE LOS POSTS ES ESTO: ', response);
           this.posts = response;
           this.postsArrived = true;

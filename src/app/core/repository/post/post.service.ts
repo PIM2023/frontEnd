@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Repository } from '../../base/repository.repository';
-import { Post, PostCreated } from '../../models/post';
+import { Post, PostCreated, PostLiked } from '../../models/post';
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +92,9 @@ export class PostRepository extends Repository {
     });
   }
 
+  getPostsByUserId(userId: number) {
+    return this.doRequest<PostLiked[]>('post', `/post/${userId}`, {});
+  }
   /**
    *  This method is used to get the posts that a user liked
    * @param userId Id of the user that we want to get the liked posts

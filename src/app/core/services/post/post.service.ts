@@ -81,6 +81,9 @@ export class PostService {
     return this.repo.dislikePost(postId, userId);
   }
 
+  public getPostsByUserId(userId: number) {
+    return this.repo.getPostsByUserId(userId);
+  }
   /**
    *  This method is used to get the posts that a user liked
    * @param userId Id of the user that we want to get the liked posts

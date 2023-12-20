@@ -262,37 +262,43 @@ export class ProfileSettingsPage implements OnInit {
   }
 
   editBio() {
-    const bioInput = document.getElementById('bio') as HTMLIonTextareaElement;
+    const bioInput = document.getElementById(
+      'biografy'
+    ) as HTMLIonTextareaElement;
     const saveButton = document.getElementById(
       'edit-bio'
     ) as HTMLIonIconElement;
 
-    if (bioInput.readonly) {
-      bioInput.readonly = false;
-      saveButton.src = '../../../assets/icons/ic-save.svg';
-    } else {
-      bioInput.readonly = true;
-      saveButton.src = '../../../assets/icons/ic-edit.svg';
-      //realizar la llamada a la api para actualizar la bio
-      this.apiEditProfile(
-        this.userSignal().id,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        bioInput.value?.toString(),
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      );
-    }
+    if (bioInput) console.log('existe:', bioInput.readonly);
+
+    if (bioInput.readonly !== undefined)
+      if (bioInput.readonly) {
+        bioInput.readonly = false;
+        saveButton.src = '../../../assets/icons/ic-save.svg';
+      } else {
+        saveButton.src = '../../../assets/icons/ic-edit.svg';
+        bioInput.readonly = true;
+        //realizar la llamada a la api para actualizar la bio
+
+        this.apiEditProfile(
+          this.userSignal().id,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          bioInput.value?.toString(),
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        );
+      }
   }
 
   async setNewProfilePicture() {
@@ -310,13 +316,9 @@ export class ProfileSettingsPage implements OnInit {
       });
 
       this.img = picture.dataUrl || '';
-      console.log('img', this.img);
-
-      const avatar = document.getElementById('avatar') as HTMLImageElement;
-      avatar.src = this.img;
 
       //realizar la llamada a la api para actualizar la foto de perfil
-      this.apiEditProfile(
+      const result = this.apiEditProfile(
         this.userSignal().id,
         null,
         null,
@@ -334,6 +336,11 @@ export class ProfileSettingsPage implements OnInit {
         null,
         null
       );
+
+      if (result) {
+        const avatar = document.getElementById('avatar') as HTMLImageElement;
+        avatar.src = this.img;
+      }
     } catch (_) {
       this.toastService.presentToast(
         'Parece que ha habido un problema al seleccionar la foto'
@@ -477,7 +484,6 @@ export class ProfileSettingsPage implements OnInit {
         else {
           console.log('SIGNAL ANTES: ', this.userSignal());
           console.log('RESPONSE: ', response);
-
           const newUserData = response;
 
           this.userSignal.set(newUserData);

@@ -1,6 +1,5 @@
 <ion-header>
-  <ion-toolbar>
-  </ion-toolbar>
+  <ion-toolbar> </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -22,10 +21,16 @@
           <ion-row>
             <ion-col>
               <h2 class="user-name">@{{username}}</h2>
-              <h2 class="user-bio" id="bio">{{bio}}</h2>
+              <h2 class="user-bio">{{bio}}</h2>
               <ion-row>
-                <ion-button (click) ="toggleFollow()" shape="round" id="follow-button">
-                  <span id="button-text">{{ isFollowing ? '- unfollow' : '+ follow' }}</span>
+                <ion-button
+                  (click)="followOrUnfollow()"
+                  shape="round"
+                  id="follow-button"
+                >
+                  <span id="button-text"
+                    >{{ isFollowing ? '- unfollow' : '+ follow' }}</span
+                  >
                 </ion-button>
                 <ion-button (click) ="copyCurrentUrl()" shape="round" id="share-button">
                   <ion-icon 
@@ -44,7 +49,6 @@
                     onerror="src = 'www.instagram.com'"
                   ></ion-icon>
                 </a>
-                
                 <a *ngIf="twitter" href="{{twitter}}" target="_blank">
                   <ion-icon
                     class = "icon"
@@ -53,7 +57,6 @@
                     onerror="src = 'www.twitter.com'"
                   ></ion-icon>
                 </a>
-    
                 <a *ngIf="pinterest" href="{{pinterest}}" target="_blank">
                   <ion-icon
                     class = "icon"
@@ -69,7 +72,9 @@
                 src="{{avatar}}" 
                 alt="Avatar" 
                 onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
-                class="user-avatar" />
+                class="user-avatar"
+                id="avatar"
+              />
             </ion-col>
           </ion-row>
           <ion-row>
@@ -90,12 +95,13 @@
               <ion-row *ngIf="!outfits">
                 <div class="horizontal-scroll"> 
                   <ion-col *ngFor="let outfit of outfits">
-                    <img 
-                      src="{{outfit.imageUrl}}"
+                    <img
+                      src="{{outfit.image}}"
                       alt="Post image"
                       onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
-                      class="post-avatar" />
-                    <h2 class="post-description"> {{outfit.description}} </h2>
+                      class="post-avatar"
+                    />
+                    <h2 class="post-description">{{outfit.text}}</h2>
                   </ion-col>
                 </div>
               </ion-row>

@@ -16,7 +16,7 @@ export class FollowingRepository extends Repository {
    * @returns Observable that tells the following of the user
    */
   getFollowing(id: number) {
-    return this.doRequest<Following[]>('get', `/followers/${id}`);
+    return this.doRequest<Following[]>('get', `/followers/${id}/following`);
   }
 
   /**
@@ -35,5 +35,9 @@ export class FollowingRepository extends Repository {
     return this.doRequest<Following[]>('post', `/followers/${id}/follow`, {
       followerId: followerId,
     });
+  }
+
+  isFollowing(id: number, followerId: number) {
+    return this.doRequest<Following[]>('get', `/followers/${id}/${followerId}`);
   }
 }

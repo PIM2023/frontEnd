@@ -2,6 +2,17 @@ ion-col {
   padding: 0;
 }
 
+ion-icon {
+  margin-left: 52px;
+  margin-top: 15px;
+  width: 24px;
+  height: 24px;
+}
+
+img {
+  object-fit: cover;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -13,7 +24,66 @@ ion-col {
   justify-content: center;
   align-items: center;
   width: auto;
-  margin-top: 40vh;
+  margin-top: 30vh;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #fff;
+  margin-left: 44px;
+  margin-top: 124px;
+  margin-right: 22px;
+}
+
+.post-image {
+  width: 190px;
+  height: 265px;
+  border-radius: 22px;
+  border: 1px solid #fff;
+}
+
+.username {
+  color: #fff;
+  font-family: JetBrains Mono;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 101px;
+  height: 12px;
+  margin-top: 15px;
+  margin-bottom: 18px;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 80px;
+  margin-bottom: 48px;
+  color: rgba(188, 188, 188, 0.8);
+  text-align: center;
+  font-family: JetBrains Mono;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: lowercase;
+}
+
+#active {
+  color: #fff;
+  text-align: center;
+  font-family: JetBrains Mono;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: lowercase;
+  border-bottom: 1px solid #fff;
 }
 
 #publish-button {
@@ -102,6 +172,7 @@ ion-col {
   width: 100%;
   height: 100%;
   flex-shrink: 0;
+  border-radius: 20px;
 }
 
 #text-etiquetas {
@@ -120,7 +191,6 @@ ion-item {
   border-radius: 33px;
   margin-top: 20px;
 }
-
 ion-toolbar {
   --background: #000000;
 }

@@ -47,19 +47,22 @@ export class ProfileSettingsPage implements OnInit {
 
   populateProfileSettings() {
     const user = this.userSignal();
-    console.warn();
-    console.log(user);
-    console.warn();
     this.username = user.username;
-    this.name = user.firstName;
-    this.surname = user.lastName;
-    this.pronouns = user.pronouns;
-    this.bio = user.bio;
-    this.private = user.private;
-    this.instagram_username = user.instagram_username;
-    this.twitter_username = user.twitter_username;
-    this.pinterest_username = user.pinterest_username;
-    this.img = user.img;
+    this.name = user.profile.firstName;
+    this.surname = user.profile.lastName;
+    this.pronouns = user.profile.pronouns;
+    this.bio = user.profile.description;
+    this.private = user.profile.private;
+    this.instagram_username = user.profile.instagram
+      .toString()
+      .replace('https://www.instagram.com/', '');
+    this.twitter_username = user.profile.twitter
+      .toString()
+      .replace('https://www.twitter.com/', '');
+    this.pinterest_username = user.profile.pinterest
+      .toString()
+      .replace('https://www.pinterest.es/', '');
+    this.img = user.profile.avatar;
     if (this.img !== '') {
       const avatar = document.getElementById('avatar') as HTMLImageElement;
       avatar.src = this.img;
@@ -97,11 +100,11 @@ export class ProfileSettingsPage implements OnInit {
           handler: (alertData) => {
             console.log(alertData.input1);
             if (alertData.input1 !== '') {
-              if (socialSiteName === 'intagram') {
+              if (socialSiteName == 'instagram') {
                 this.setInstagramUsername(alertData.input1);
-              } else if (socialSiteName === 'twitter') {
+              } else if (socialSiteName == 'twitter') {
                 this.setTwitterUsername(alertData.input1);
-              } else if (socialSiteName === 'pinterest') {
+              } else if (socialSiteName == 'pinterest') {
                 this.setPinterestUsername(alertData.input1);
               }
             }
@@ -298,6 +301,7 @@ export class ProfileSettingsPage implements OnInit {
         promptLabelPhoto: 'Seleccionar de la galería',
         source: CameraSource.Prompt,
       });
+
       this.img = picture.dataUrl || '';
       console.log('img', this.img);
 
@@ -346,6 +350,8 @@ export class ProfileSettingsPage implements OnInit {
 
   setInstagramUsername(username: string) {
     //realizar la llamada a la api para actualizar el nombre de usuario de instagram
+    this.instagram_username = username;
+
     this.apiEditProfile(
       this.userSignal().id,
       null,
@@ -368,6 +374,8 @@ export class ProfileSettingsPage implements OnInit {
 
   setTwitterUsername(username: string) {
     //realizar la llamada a la api para actualizar el nombre de usuario de twitter
+    this.twitter_username = username;
+
     this.apiEditProfile(
       this.userSignal().id,
       null,
@@ -390,6 +398,8 @@ export class ProfileSettingsPage implements OnInit {
 
   setPinterestUsername(username: string) {
     //realizar la llamada a la api para actualizar el nombre de usuario de pinterest
+    this.pinterest_username = username;
+
     this.apiEditProfile(
       this.userSignal().id,
       null,
@@ -460,22 +470,13 @@ export class ProfileSettingsPage implements OnInit {
           console.log('SIGNAL ANTES: ', this.userSignal());
           console.log('RESPONSE: ', response);
 
-          const newUserData = {
-            id: response.id,
-            username: response.username,
-            email: response.email,
-            avatar: response.profile.avatar,
-            firstName: response.profile.firstName,
-            lastName: response.profile.lastName,
-            age: response.profile.age,
-            height: response.profile.height,
-            weight: response.profile.weight,
-            bornDate: response.profile.bornDate,
-          };
-
+          const newUserData = response.data;
           //mi usuario, se ha de cambiar por response
           this.userSignal.set(newUserData);
         }
       });
   }
+}
+function getBase64Image(img: string) {
+  throw new Error('Function not implemented.');
 }

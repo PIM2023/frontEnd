@@ -3,11 +3,11 @@ export interface Profile {
   firstName: string;
   lastName: string;
   pronouns?: string;
-  bio?: string;
+  description?: string;
   isPrivate?: boolean;
-  instagram_username?: string;
-  twitter_username?: string;
-  pinterest_username?: string;
+  instagram?: string;
+  twitter?: string;
+  pinterest?: string;
   avatar?: string;
   height: number;
   weight: number;

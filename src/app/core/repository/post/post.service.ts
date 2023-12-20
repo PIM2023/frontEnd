@@ -40,8 +40,10 @@ export class PostRepository extends Repository {
    * @param postId If of the post that we want to get
    * @returns Post with the id postId
    */
-  getPostById(postId: number) {
-    return this.doRequest<Post>('get', `/post/${postId}`);
+  getPostById(postId: number, userId?: number) {
+    return userId
+      ? this.doRequest<Post>('get', `/post/${postId}/${userId}`)
+      : this.doRequest<Post>('get', `/post/${postId}`);
   }
 
   /**
@@ -85,7 +87,7 @@ export class PostRepository extends Repository {
    */
   dislikePost(postId: number, userId: number) {
     console.warn(postId);
-    return this.doRequest<Post>('post', `/post/${postId}/dislike`, {
+    return this.doRequest<Post>('post', `/post/${postId}/unlike`, {
       userId: userId,
     });
   }

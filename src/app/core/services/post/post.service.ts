@@ -37,8 +37,10 @@ export class PostService {
    * @param postId If of the post that we want to get
    * @returns Post with the id postId
    */
-  public getPostById(postId: number) {
-    return this.repo.getPostById(postId);
+  public getPostById(postId: number, userId: number | null) {
+    return userId
+      ? this.repo.getPostById(postId, userId)
+      : this.repo.getPostById(postId);
   }
 
   /**

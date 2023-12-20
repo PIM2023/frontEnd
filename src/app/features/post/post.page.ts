@@ -1,12 +1,12 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
-import { Post } from 'src/app/core/models/post';
 import { PostService } from 'src/app/core/services/post/post.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { NavController } from '@ionic/angular';
+import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 
 @Component({
   selector: 'app-post',
@@ -29,7 +29,8 @@ export class PostPage implements OnInit {
     private route: ActivatedRoute,
     private toastService: ToastService,
     private signalsService: SignalsService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private encryptionService: EncryptionService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.getPost();
@@ -49,8 +50,11 @@ export class PostPage implements OnInit {
   }
 
   getPostById(postId: number) {
+    const userId = this.encryptionService.decryptId(
+      localStorage.getItem('userId')!
+    );
     this.postService
-      .getPostById(postId)
+      .getPostById(postId, +userId ?? null)
       .pipe(
         catchError((error) => {
           return of(error);
@@ -63,6 +67,7 @@ export class PostPage implements OnInit {
           return;
         }
         this.post = response;
+        this.isLiked = this.post.hasLiked;
         console.warn(this.post);
         this.loading = false;
       });
@@ -83,52 +88,55 @@ export class PostPage implements OnInit {
     //this.isLiked = !this.isLiked;
     // this.isLiked = !this.isLiked;
     // this.post.likes += this.isLiked ? 1 : -1;
-    const userId = localStorage.getItem('userId');
-    console.log(userId);
     console.log(this.post);
     const postId = this.route.snapshot.paramMap.get('id');
-    console.log(postId);
+    console.log('this.userSignal()', this.userSignal());
+    const userId = this.encryptionService.decryptId(
+      localStorage.getItem('userId')!
+    );
 
-    if (!localStorage.getItem('userId')) {
+    if (!userId) {
       this.toastService.presentToast(
         'No puedes dar me gusta a una publicación si no tienes la sesión iniciada'
       );
       return;
     }
     if (!this.isLiked) {
+      console.log('like');
       this.postService
-        .likePost(+postId!, +this.userSignal().id)
+        .likePost(+postId!, +userId)
         .pipe(
           catchError((error) => {
             return of(error);
           })
         )
         .subscribe((response) => {
+          console.log('response', response);
           if (response.error) {
             this.toastService.presentToast(response.error.message);
             this.loading = false;
             return;
           }
-          this.post = response;
           this.isLiked = true;
           console.warn(this.post);
           this.loading = false;
         });
     } else {
+      console.log('dislike');
       this.postService
-        .dislikePost(+postId!, +this.userSignal().id)
+        .dislikePost(+postId!, +userId)
         .pipe(
           catchError((error) => {
             return of(error);
           })
         )
         .subscribe((response) => {
+          console.log('aqui');
           if (response.error) {
             this.toastService.presentToast(response.error.message);
             this.loading = false;
             return;
           }
-          this.post = response;
           this.isLiked = false;
           console.warn(this.post);
           this.loading = false;

@@ -57,14 +57,18 @@ export class ProfileSettingsPage implements OnInit {
     this.bio = user.profile.description;
     this.private = user.profile.private;
     this.instagram_username = user.profile.instagram
-      .toString()
-      .replace('https://www.instagram.com/', '');
+      ? user.profile.instagram
+          .toString()
+          .replace('https://www.instagram.com/', '')
+      : '';
     this.twitter_username = user.profile.twitter
-      .toString()
-      .replace('https://www.twitter.com/', '');
+      ? user.profile.twitter.toString()
+      : ''.replace('https://www.twitter.com/', '');
     this.pinterest_username = user.profile.pinterest
-      .toString()
-      .replace('https://www.pinterest.es/', '');
+      ? user.profile.pinterest
+          .toString()
+          .replace('https://www.pinterest.es/', '')
+      : '';
     this.img = user.profile.avatar;
     if (this.img !== '') {
       const avatar = document.getElementById('avatar') as HTMLImageElement;
@@ -441,6 +445,7 @@ export class ProfileSettingsPage implements OnInit {
     height?: number | null,
     weight?: number | null
   ) {
+    console.log('entra en apiEditProfile');
     return this.userService
       .updateUserProfile(
         id,
@@ -473,9 +478,8 @@ export class ProfileSettingsPage implements OnInit {
           console.log('SIGNAL ANTES: ', this.userSignal());
           console.log('RESPONSE: ', response);
 
-          const newUserData = response.data;
-          
-          //mi usuario, se ha de cambiar por response
+          const newUserData = response;
+
           this.userSignal.set(newUserData);
         }
       });

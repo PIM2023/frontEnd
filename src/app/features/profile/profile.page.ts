@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   pinterest!: string;
   isFollowing = false;
 
-  outfits: any = [];
+  // outfits: any = [];
 
   toggleFollow() {
     this.isFollowing = !this.isFollowing;

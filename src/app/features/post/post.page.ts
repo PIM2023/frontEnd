@@ -6,6 +6,7 @@ import { PostService } from 'src/app/core/services/post/post.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-post',
@@ -27,7 +28,8 @@ export class PostPage implements OnInit {
     private postService: PostService,
     private route: ActivatedRoute,
     private toastService: ToastService,
-    private signalsService: SignalsService
+    private signalsService: SignalsService,
+    private navCtrl: NavController
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.getPost();
@@ -70,13 +72,9 @@ export class PostPage implements OnInit {
     this.router.navigate(['/']);
   }
 
-  goToProfile() {
-    this.router.navigate(['/profile', this.userSignal().id]);
-  }
-
   copyUrlToPost() {
     navigator.clipboard.writeText(
-      'https://clout-pin.web.app/post/${this.post.id}'
+      `https://clout-pin.web.app/post/${this.post.id}`
     );
     this.toastService.presentToast('URL copiada al portapapeles');
   }
@@ -136,5 +134,9 @@ export class PostPage implements OnInit {
           this.loading = false;
         });
     }
+  }
+
+  goToProfile() {
+    this.navCtrl.navigateForward(['profile', 'name', this.post.user.username]);
   }
 }

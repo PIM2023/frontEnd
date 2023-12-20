@@ -15,7 +15,7 @@
   <div *ngIf="!loading;else loadingTemplate">
     <ion-grid *ngIf="post; else noPost">
       <ion-col>
-        <ion-row>
+        <ion-row (click)="goToProfile()">
           <img
             src="{{post.user.avatar}}"
             alt="Avatar"
@@ -77,5 +77,3 @@
     </div>
   </ng-template>
 </ion-content>
-
-<ion-content> </ion-content>

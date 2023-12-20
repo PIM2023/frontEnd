@@ -1,9 +1,11 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>post</ion-title>
-    <ion-buttons slot="start">
-      <ion-button (click)="goHome()">
-        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+  <ion-toolbar id="close-placeholder">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goHome()">
+        <ion-icon
+          src="../../../assets/icons/ic-close.svg"
+          id="close-icon"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -11,7 +13,57 @@
 
 <ion-content>
   <div *ngIf="!loading;else loadingTemplate">
-    <post *ngIf="post; else noPost" [post]="post"></post>
+    <ion-grid *ngIf="post; else noPost">
+      <ion-col>
+        <ion-row (click)="goToProfile()">
+          <img
+            src="{{post.user.avatar}}"
+            alt="Avatar"
+            onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+            class="user-avatar"
+          />
+          <h2 class="user-name">{{post.user.username}}</h2>
+        </ion-row>
+        <ion-row>
+          <div class="post-wrapper">
+            <img src="{{post.image}}" class="post-image" />
+          </div>
+        </ion-row>
+        <!-- <img src="{{post.image}}" class="post-image" /> -->
+        <ion-row class="info">
+          <div>
+            <h2 class="biografia">{{post.text}}</h2>
+            <h2 class="fecha-creacion"></h2>
+          </div>
+          <div>
+            <ion-icon
+              *ngIf="!isLiked"
+              src="../../../assets/icons/ic-heart-filled.svg"
+              id="heart-icon"
+              (click)="toggleLike()"
+            ></ion-icon>
+            <ion-icon
+              *ngIf="isLiked"
+              src="../../../assets/icons/ic-heart-empty.svg"
+              id="heart-icon"
+              (click)="toggleLike()"
+            ></ion-icon>
+            <ion-icon
+              src="../../../assets/icons/ic-comments.svg"
+              id="comment-icon"
+            ></ion-icon>
+            <ion-icon
+              name="share-social-outline"
+              id="share-icon"
+              (click)="copyUrlToPost()"
+            ></ion-icon>
+          </div>
+        </ion-row>
+        <ion-row>
+          <h2 class="tags"></h2>
+        </ion-row>
+      </ion-col>
+    </ion-grid>
     <ng-template #noPost>
       <div class="center-spinner ion-padding">
         <span>No se ha podido obtener ningun post con esa id</span>

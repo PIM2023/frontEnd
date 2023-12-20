@@ -71,6 +71,7 @@ export class PostRepository extends Repository {
    * @returns
    */
   likePost(postId: number, userId: number) {
+    console.warn(postId);
     return this.doRequest<Post>('post', `/post/${postId}/like`, {
       userId: userId,
     });
@@ -83,6 +84,7 @@ export class PostRepository extends Repository {
    * @returns
    */
   dislikePost(postId: number, userId: number) {
+    console.warn(postId);
     return this.doRequest<Post>('post', `/post/${postId}/dislike`, {
       userId: userId,
     });

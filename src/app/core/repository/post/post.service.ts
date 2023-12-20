@@ -40,8 +40,10 @@ export class PostRepository extends Repository {
    * @param postId If of the post that we want to get
    * @returns Post with the id postId
    */
-  getPostById(postId: number) {
-    return this.doRequest<Post>('get', `/post/${postId}`);
+  getPostById(postId: number, userId?: number) {
+    return userId
+      ? this.doRequest<Post>('get', `/post/${postId}/${userId}`)
+      : this.doRequest<Post>('get', `/post/${postId}`);
   }
 
   /**
@@ -71,6 +73,7 @@ export class PostRepository extends Repository {
    * @returns
    */
   likePost(postId: number, userId: number) {
+    console.warn(postId);
     return this.doRequest<Post>('post', `/post/${postId}/like`, {
       userId: userId,
     });
@@ -83,12 +86,21 @@ export class PostRepository extends Repository {
    * @returns
    */
   dislikePost(postId: number, userId: number) {
-    return this.doRequest<Post>('post', `/post/${postId}/dislike`, {
+    console.warn(postId);
+    return this.doRequest<Post>('post', `/post/${postId}/unlike`, {
       userId: userId,
     });
   }
 
   getPostsByUserId(userId: number) {
     return this.doRequest<PostLiked[]>('post', `/post/${userId}`, {});
+  }
+  /**
+   *  This method is used to get the posts that a user liked
+   * @param userId Id of the user that we want to get the liked posts
+   * @returns
+   */
+  getLikedPosts(userId: number) {
+    return this.doRequest<Post[]>('post', `/post/${userId}/likes`);
   }
 }

@@ -18,25 +18,28 @@
         <ion-col>
           <h2 class="user-name">@{{username}}</h2>
           <h2 class="user-bio" id="bio">{{bio}}</h2>
-          <ion-row>
-            <a href="{{instagram}}" target="_blank">
+          <ion-row class="ion-padding">
+            <a *ngIf="instagram" href="{{instagram}}" target="_blank">
               <ion-icon
+                class="icon"
                 src="../../../assets/icons/ic-instagram.svg"
                 id="instagram-icon"
                 onerror="src = 'www.instagram.com'"
               ></ion-icon>
             </a>
 
-            <a href="{{twitter}}" target="_blank">
+            <a *ngIf="twitter" href="{{twitter}}" target="_blank">
               <ion-icon
+                class="icon"
                 src="../../../assets/icons/ic-twitter.svg"
                 id="twitter-icon"
                 onerror="src = 'www.twitter.com'"
               ></ion-icon>
             </a>
 
-            <a href="{{pinterest}}" target="_blank">
+            <a *ngIf="pinterest" href="{{pinterest}}" target="_blank">
               <ion-icon
+                class="icon"
                 src="../../../assets/icons/ic-pinterest.svg"
                 id="pinterest-icon"
                 onerror="src = 'www.pinterest.com'"
@@ -56,7 +59,7 @@
       <ion-row>
         <ion-col>
           <p class="text">my outfits</p>
-          <ion-row>
+          <ion-row *ngIf="outfits">
             <div class="horizontal-scroll">
               <ion-col *ngFor="let outfit of outfits">
                 <img
@@ -68,6 +71,9 @@
                 <h2 class="post-description">{{outfit.text}}</h2>
               </ion-col>
             </div>
+          </ion-row>
+          <ion-row *ngIf="!outfits">
+            <h2 class="post-description">No ha publicado ningun outfit</h2>
           </ion-row>
         </ion-col>
       </ion-row>

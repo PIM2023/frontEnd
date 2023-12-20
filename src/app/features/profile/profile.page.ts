@@ -18,14 +18,12 @@ export class ProfilePage implements OnInit {
   instagram!: string;
   twitter!: string;
   pinterest!: string;
-  isFollowing = false;
 
   outfits: any = [];
 
   toggleFollow() {
     this.isFollowing = !this.isFollowing;
   }
-
   userSignal: WritableSignal<any>;
 
   constructor(

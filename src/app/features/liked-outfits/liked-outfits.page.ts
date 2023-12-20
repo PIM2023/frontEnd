@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { catchError, map, of } from 'rxjs';
 import { Post } from 'src/app/core/models/post';
+import { PostService } from 'src/app/core/services/post/post.service';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
   selector: 'app-liked-outfits',
@@ -9,24 +13,43 @@ import { Post } from 'src/app/core/models/post';
 })
 export class LikedOutfitsPage implements OnInit {
   loading: boolean = true;
-  likedPosts: any[] = [];
+  likedPosts: any;
   arrayOfArrays: any[][] = [];
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private postService: PostService,
+    private signalsService: SignalsService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.getPosts();
   }
 
   getPosts() {
-    //todo: llamar a endpoint
-    this.loading = false;
-    this.likedPosts.forEach((post, index) => {
-      if (index % 3 == 0) {
-        this.arrayOfArrays.push([post]);
-      } else {
-        this.arrayOfArrays[this.arrayOfArrays.length - 1].push(post);
-      }
-    });
+    this.postService
+      .getLikedPosts(this.signalsService.getUserSignal()().id)
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response) => {
+        if (response.error) {
+          this.toastService.presentToast(response.error.message);
+          this.loading = false;
+          return;
+        }
+        this.likedPosts = response.data;
+        this.likedPosts.forEach((post: Post, index: number) => {
+          if (index % 3 == 0) {
+            this.arrayOfArrays.push([post]);
+          } else {
+            this.arrayOfArrays[this.arrayOfArrays.length - 1].push(post);
+          }
+        });
+        this.loading = false;
+      });
   }
 
   goToProfile() {

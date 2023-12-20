@@ -37,8 +37,10 @@ export class PostService {
    * @param postId If of the post that we want to get
    * @returns Post with the id postId
    */
-  public getPostById(postId: number) {
-    return this.repo.getPostById(postId);
+  public getPostById(postId: number, userId: number | null) {
+    return userId
+      ? this.repo.getPostById(postId, userId)
+      : this.repo.getPostById(postId);
   }
 
   /**
@@ -81,5 +83,13 @@ export class PostService {
 
   public getPostsByUserId(userId: number) {
     return this.repo.getPostsByUserId(userId);
+  }
+  /**
+   *  This method is used to get the posts that a user liked
+   * @param userId Id of the user that we want to get the liked posts
+   * @returns Observable that returns the posts that a user liked
+   */
+  public getLikedPosts(userId: number) {
+    return this.repo.getLikedPosts(userId);
   }
 }

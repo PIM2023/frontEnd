@@ -17,6 +17,7 @@ import { FollowingService } from 'src/app/core/services/following/following.serv
 export class OtherProfilePage implements OnInit {
   id!: number;
   username!: string;
+  avatar!: string;
   bio!: string;
   instagram_username!: string;
   twitter_username!: string;
@@ -171,4 +172,16 @@ export class OtherProfilePage implements OnInit {
         });
     }
   }
+
+  copyCurrentUrl() {
+
+    const currentUrl = window.location.href;
+    const tempInput = document.createElement('input');
+    tempInput.value = currentUrl;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    this.toastService.presentToast('URL copiada al portapapeles');
+}
 }

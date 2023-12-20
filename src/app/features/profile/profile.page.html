@@ -16,49 +16,57 @@
     <ion-col>
       <ion-row>
         <ion-col>
-          <h2 class="user-name">@painstar1.OO1O {{username}}</h2>
-          <h2 class="user-bio">I’m really into Y2K fashion and i love vintage thrifting ⋆｡°✩{{bio}}</h2>
+          <h2 class="user-name">@{{username}}</h2>
+          <h2 class="user-bio" id="bio">{{bio}}</h2>
           <ion-row>
-            <a href = "https://www.instagram.com/{{instagram_username}}/">
-              <ion-icon 
+            <a href="{{instagram}}" target="_blank">
+              <ion-icon
                 src="../../../assets/icons/ic-instagram.svg"
                 id="instagram-icon"
+                onerror="src = 'www.instagram.com'"
               ></ion-icon>
             </a>
-            <a href = "https://twitter.com/{{twitter_username}}">
-              <ion-icon 
+            
+            <a href="{{twitter}}" target="_blank">
+              <ion-icon
                 src="../../../assets/icons/ic-twitter.svg"
                 id="twitter-icon"
+                onerror="src = 'www.twitter.com'"
               ></ion-icon>
             </a>
-            <a href = "https://www.pinterest.es/{{pinterest_username}}">
-              <ion-icon 
+            
+
+            <a href="{{pinterest}}" target="_blank">
+              <ion-icon
                 src="../../../assets/icons/ic-pinterest.svg"
                 id="pinterest-icon"
+                onerror="src = 'www.pinterest.com'"
               ></ion-icon>
             </a>
           </ion-row>
         </ion-col>
         <ion-col>
-          <img 
-            src="avatar.jpg" 
-            alt="Avatar" 
+          <img
+            src="{{avatar}}"
+            alt="Avatar"
             onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
-            class="user-avatar" />
+            class="user-avatar"
+          />
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <p class="text"> my outfits </p>
+          <p class="text">my outfits</p>
           <ion-row>
-            <div class="horizontal-scroll"> 
+            <div class="horizontal-scroll">
               <ion-col *ngFor="let outfit of outfits">
-                <img 
+                <img
                   src="{{outfit.imageUrl}}"
                   alt="Post image"
                   onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
-                  class="post-avatar" />
-                <h2 class="post-description"> {{outfit.description}} </h2>
+                  class="post-avatar"
+                />
+                <h2 class="post-description">{{outfit.description}}</h2>
               </ion-col>
             </div>
           </ion-row>

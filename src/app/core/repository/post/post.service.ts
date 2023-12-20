@@ -87,4 +87,13 @@ export class PostRepository extends Repository {
       userId: userId,
     });
   }
+
+  /**
+   *  This method is used to get the posts that a user liked
+   * @param userId Id of the user that we want to get the liked posts
+   * @returns
+   */
+  getLikedPosts(userId: number) {
+    return this.doRequest<Post[]>('post', `/post/${userId}/likes`);
+  }
 }

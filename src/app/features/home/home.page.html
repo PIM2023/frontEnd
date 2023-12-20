@@ -39,14 +39,21 @@
         </ion-buttons>
         <ion-title>Nuevo post</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true" id="publish-button">Publicar</ion-button>
+          <ion-button (click)="confirm()" [strong]="true" id="publish-button"
+            >Publicar</ion-button
+          >
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <div class="wrapper">
-        <p class="text"> Añade tu outfit </p>
-        <ion-button fill="clear" (click)="takePicture()" shape="round" id="outfit-button">
+        <p class="text">Añade tu outfit</p>
+        <ion-button
+          fill="clear"
+          (click)="takePicture()"
+          shape="round"
+          id="outfit-button"
+        >
           <ion-col>
             <ion-icon
               src="../../../assets/icons/ic-add.svg"
@@ -60,7 +67,7 @@
       <ion-item lines="none">
         <ion-textarea
           type="text"
-          id = "text-descripcion"
+          id="text-descripcion"
           placeholder="Descripción del post"
           [(ngModel)]="description"
         ></ion-textarea>
@@ -68,7 +75,7 @@
       <ion-list>
         <ion-item lines="none">
           <ion-select
-            id = "text-etiquetas"
+            id="text-etiquetas"
             aria-label="Etiquetas"
             placeholder="Elige algunas de estas etiquetas"
             [multiple]="true"

@@ -65,6 +65,43 @@ export class UserService {
     return this.repo.getUserProfileWithUsername(username);
   }
 
+  public updateUserProfile(
+    id: number,
+    username?: string | null,
+    email?: string | null,
+    password?: string | null,
+    firstName?: string | null,
+    lastName?: string | null,
+    pronouns?: string | null,
+    description?: string | null,
+    isPrivate?: boolean | null,
+    instagram?: string | null,
+    twitter?: string | null,
+    pinterest?: string | null,
+    bornDate?: Date | null,
+    avatar?: any | null,
+    height?: number | null,
+    weight?: number | null
+  ) {
+    return this.repo.updateUserProfile(
+      id,
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      pronouns,
+      description,
+      isPrivate,
+      instagram,
+      twitter,
+      pinterest,
+      bornDate,
+      avatar,
+      height,
+      weight
+    );
+  }
   /**
    * This method is used to follow a user
    * @param userId Id of the user to follow
@@ -90,5 +127,13 @@ export class UserService {
    */
   public logOut() {
     return localStorage.removeItem('userId');
+  }
+
+  public getAllUsers() {
+    return this.repo.getAllUsers();
+  }
+
+  public matchUsernames(username: string) {
+    return this.repo.matchUsernames(username);
   }
 }

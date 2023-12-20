@@ -16,7 +16,7 @@
             (click)="goToOtherUserProfile( user.username )"
           >
             <img
-              src="{{ user.avatar }}"
+              src="{{ user.profile.avatar }}"
               onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
             />
             <span class="username">@{{ user.username }}</span>

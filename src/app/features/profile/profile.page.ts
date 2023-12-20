@@ -10,17 +10,14 @@ import { SignalsService } from 'src/app/core/services/signals/signals.service';
 })
 export class ProfilePage implements OnInit {
   username!: string;
+  avatar!: string;
   bio!: string;
-  email!: string;
-  firstname!: string;
-  lastname!: string;
-  height!: string;
-  weight!: string;
-  borndate!: string;
-  instagram_username!: string;
-  twitter_username!: string;
-  pinterest_username!: string;
+  instagram!: string;
+  twitter!: string;
+  pinterest!: string;
   isFollowing = false;
+
+  outfits: any = [];
 
   toggleFollow() {
     this.isFollowing = !this.isFollowing;
@@ -67,15 +64,12 @@ export class ProfilePage implements OnInit {
     const user = this.userSignal();
 
     this.username = user.username;
-    this.bio = user.bio;
-    this.email = user.email;
-    this.firstname = user.firstName;
-    this.lastname = user.lastName;
-    this.height = user.height;
-    this.weight = user.weight;
-    this.borndate = user.bornDate;
-    this.instagram_username = user.instagram_username;
-    this.twitter_username = user.twitter_username;
-    this.pinterest_username = user.pinterest_username;
+    this.avatar = user.profile.avatar;
+    this.bio = user.profile.description;
+    this.instagram = user.profile.instagram;
+    this.twitter = user.profile.twitter;
+    this.pinterest = user.profile.pinterest;
+
+    //Hacer llamada para obtener todoso los posts
   }
 }

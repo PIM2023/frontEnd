@@ -12,28 +12,16 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
 })
 export class OtherProfilePage implements OnInit {
   username!: string;
+  avatar!: string;
   bio!: string;
-  instagram_username!: string;
-  twitter_username!: string;
-  pinterest_username!: string;
+  instagram!: string;
+  twitter!: string;
+  pinterest!: string;
   userFound: boolean = false;
   loading: boolean = true;
   isFollowing = false;
 
-  outfits = [
-    {
-      imageUrl: 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
-      description: '“i’m a cool football player”'
-    },
-    {
-      imageUrl: 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
-      description: '“i’m a cool football player”'
-    },
-    {
-      imageUrl: 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680',
-      description: '“i’m a cool football player”'
-    },
-  ];
+  outfits: any = [];
 
   constructor(
     private navCtrl: NavController,
@@ -77,4 +65,16 @@ export class OtherProfilePage implements OnInit {
   toggleFollow() {
     this.isFollowing = !this.isFollowing;
   }
+
+  copyCurrentUrl() {
+
+    const currentUrl = window.location.href;
+    const tempInput = document.createElement('input');
+    tempInput.value = currentUrl;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    this.toastService.presentToast('URL copiada al portapapeles');
+}
 }

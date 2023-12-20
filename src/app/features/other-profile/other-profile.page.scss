@@ -6,6 +6,10 @@ ion-col {
   padding: 0;
 }
 
+img {
+  object-fit: cover;
+}
+
 #settings-icon {
   margin-top: 68px;
   margin-right: 30px;
@@ -40,35 +44,33 @@ ion-col {
   font-style: normal;
   font-weight: 100;
   line-height: normal;
-  text-transform: lowercase;
+  //text-transform: lowercase;
 }
 
 #instagram-icon {
-  margin-top: 9px;
-  margin-left: 41px;
   width: 15px;
   height: 15px;
   flex-shrink: 0;
-  opacity: 0.7;
 }
 
 #twitter-icon {
-  margin-top: 10px;
-  margin-left: 12px;
   width: 14px;
   height: 13px;
   flex-shrink: 0;
   border-radius: 4px;
-  border: 0.8px solid #FFF;
+  border: 0.8px solid #fff;
+  opacity: 0.7;
 }
 
 #pinterest-icon {
-  margin-top: 9px;
-  margin-left: 12px;
   width: 15px;
   height: 15px;
   flex-shrink: 0;
   opacity: 0.7;
+}
+
+.icon{
+  margin: 10px;
 }
 
 .user-avatar {

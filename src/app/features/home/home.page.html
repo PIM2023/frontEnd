@@ -64,20 +64,20 @@
         </ion-button>
         <img *ngIf="img" [src]="img" alt="Foto" />
       </div>
-      <ion-item>
-        <ion-input
+      <ion-item lines="none">
+        <ion-textarea
           type="text"
           id="text-descripcion"
           placeholder="Descripción del post"
           [(ngModel)]="description"
-        ></ion-input>
+        ></ion-textarea>
       </ion-item>
       <ion-list>
-        <ion-item>
+        <ion-item lines="none">
           <ion-select
             id="text-etiquetas"
             aria-label="Etiquetas"
-            placeholder="Elige algunas de estas etiquetas"
+            placeholder="Añade algunas etiquetas"
             [multiple]="true"
             [(ngModel)]="selectedEtiquetas"
           >

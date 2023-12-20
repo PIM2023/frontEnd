@@ -47,6 +47,9 @@ export class ProfileSettingsPage implements OnInit {
 
   populateProfileSettings() {
     const user = this.userSignal();
+    console.warn();
+    console.log(user);
+    console.warn();
     this.username = user.username;
     this.name = user.profile.firstName;
     this.surname = user.profile.lastName;
@@ -471,6 +474,7 @@ export class ProfileSettingsPage implements OnInit {
           console.log('RESPONSE: ', response);
 
           const newUserData = response.data;
+          
           //mi usuario, se ha de cambiar por response
           this.userSignal.set(newUserData);
         }

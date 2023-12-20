@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import {
   CalendarComponent,
   CalendarMode,
@@ -25,7 +26,8 @@ export class CalendarPage {
   constructor(
     private calendarService: CalendarService,
     private toastService: ToastService,
-    private signalsService: SignalsService
+    private signalsService: SignalsService,
+    private navCtrl: NavController
   ) {
     this.isToday = false;
     this.user = this.signalsService.getUserSignal()();
@@ -193,4 +195,9 @@ export class CalendarPage {
     current.setHours(0, 0, 0);
     return date < current;
   };
+
+  goToPost(postId: string) {
+    console.log(postId);
+    this.navCtrl.navigateForward(['post', +postId]);
+  }
 }

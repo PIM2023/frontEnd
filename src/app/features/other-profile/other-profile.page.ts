@@ -19,10 +19,9 @@ export class OtherProfilePage implements OnInit {
   username!: string;
   avatar!: string;
   bio!: string;
-  instagram_username!: string;
-  twitter_username!: string;
-  pinterest_username!: string;
-  avatar!: string;
+  instagram!: string;
+  twitter!: string;
+  pinterest!: string;
   userFound: boolean = false;
   loading: boolean = true;
   isFollowing = false;
@@ -76,9 +75,9 @@ export class OtherProfilePage implements OnInit {
         this.id = res.id;
         this.userFound = true;
         this.loading = false;
-        this.instagram_username = res.profile.instagram;
-        this.twitter_username = res.profile.twitter;
-        this.pinterest_username = res.profile.pinterest;
+        this.instagram = res.profile.instagram;
+        this.twitter = res.profile.twitter;
+        this.pinterest = res.profile.pinterest;
         this.bio = res.profile.description;
         this.avatar = res.profile.avatar;
       });
@@ -123,17 +122,6 @@ export class OtherProfilePage implements OnInit {
       });
   }
 
-  copyCurrentUrl() {
-    const currentUrl = window.location.href;
-    const tempInput = document.createElement('input');
-    tempInput.value = currentUrl;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    this.toastService.presentToast('URL copiada al portapapeles');
-  }
-
   followOrUnfollow() {
     const user = this.userSignal();
     if (this.isFollowing) {
@@ -174,7 +162,6 @@ export class OtherProfilePage implements OnInit {
   }
 
   copyCurrentUrl() {
-
     const currentUrl = window.location.href;
     const tempInput = document.createElement('input');
     tempInput.value = currentUrl;
@@ -183,5 +170,5 @@ export class OtherProfilePage implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(tempInput);
     this.toastService.presentToast('URL copiada al portapapeles');
-}
+  }
 }

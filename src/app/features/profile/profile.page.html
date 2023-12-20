@@ -18,19 +18,19 @@
         <ion-col>
           <h2 class="user-name">@{{username}}</h2>
           <h2 class="user-bio" id="bio">{{bio}}</h2>
-          <ion-row class = "ion-padding">
+          <ion-row class="ion-padding">
             <a *ngIf="instagram" href="{{instagram}}" target="_blank">
               <ion-icon
-                class = "icon"
+                class="icon"
                 src="../../../assets/icons/ic-instagram.svg"
                 id="instagram-icon"
                 onerror="src = 'www.instagram.com'"
               ></ion-icon>
             </a>
-            
+
             <a *ngIf="twitter" href="{{twitter}}" target="_blank">
               <ion-icon
-                class = "icon"
+                class="icon"
                 src="../../../assets/icons/ic-twitter.svg"
                 id="twitter-icon"
                 onerror="src = 'www.twitter.com'"
@@ -39,7 +39,7 @@
 
             <a *ngIf="pinterest" href="{{pinterest}}" target="_blank">
               <ion-icon
-                class = "icon"
+                class="icon"
                 src="../../../assets/icons/ic-pinterest.svg"
                 id="pinterest-icon"
                 onerror="src = 'www.pinterest.com'"
@@ -73,9 +73,7 @@
             </div>
           </ion-row>
           <ion-row *ngIf="!outfits">
-            <div class="horizontal-scroll">
-              <h2 class="post-description">No ha publicado ningun outfit</h2>
-            </div>
+            <h2 class="post-description">No ha publicado ningun outfit</h2>
           </ion-row>
         </ion-col>
       </ion-row>

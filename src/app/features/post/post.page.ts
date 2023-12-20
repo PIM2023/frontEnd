@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { Post } from 'src/app/core/models/post';
 import { PostService } from 'src/app/core/services/post/post.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
+import { SignalsService } from 'src/app/core/services/signals/signals.service';
+import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
   selector: 'app-post',
@@ -19,14 +21,17 @@ export class PostPage implements OnInit {
   description!: string;
   isLiked: boolean = false;
 
+  userSignal: WritableSignal<any>;
   constructor(
     private router: Router,
     private postService: PostService,
     private route: ActivatedRoute,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private signalsService: SignalsService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.getPost();
+    this.userSignal = this.signalsService.getUserSignal();
   }
 
   ngOnInit() {}
@@ -65,6 +70,10 @@ export class PostPage implements OnInit {
     this.router.navigate(['/']);
   }
 
+  goToProfile() {
+    this.router.navigate(['/profile', this.userSignal().id]);
+  }
+
   copyUrlToPost() {
     navigator.clipboard.writeText(
       'https://clout-pin.web.app/post/${this.post.id}'
@@ -73,8 +82,56 @@ export class PostPage implements OnInit {
   }
 
   toggleLike() {
-    this.isLiked = !this.isLiked;
+    //this.isLiked = !this.isLiked;
     // this.isLiked = !this.isLiked;
     // this.post.likes += this.isLiked ? 1 : -1;
+    const userId = localStorage.getItem('userId');
+    console.warn(userId);
+
+    if (!localStorage.getItem('userId')) {
+      this.toastService.presentToast(
+        'No puedes dar me gusta a una publicación si no tienes la sesión iniciada'
+      );
+      return;
+    }
+    if (!this.isLiked) {
+      this.postService
+        .likePost(this.post.id, this.userSignal().id)
+        .pipe(
+          catchError((error) => {
+            return of(error);
+          })
+        )
+        .subscribe((response) => {
+          if (response.error) {
+            this.toastService.presentToast(response.error.message);
+            this.loading = false;
+            return;
+          }
+          this.post = response;
+          this.isLiked = true;
+          console.warn(this.post);
+          this.loading = false;
+        });
+    } else {
+      this.postService
+        .dislikePost(this.post.id, this.userSignal().id)
+        .pipe(
+          catchError((error) => {
+            return of(error);
+          })
+        )
+        .subscribe((response) => {
+          if (response.error) {
+            this.toastService.presentToast(response.error.message);
+            this.loading = false;
+            return;
+          }
+          this.post = response;
+          this.isLiked = false;
+          console.warn(this.post);
+          this.loading = false;
+        });
+    }
   }
 }

@@ -64,7 +64,7 @@ export class UserService {
   public getUserProfileWithUsername(username: string) {
     return this.repo.getUserProfileWithUsername(username);
   }
-  
+
   public updateUserProfile(
     id: number,
     username?: string | null,
@@ -73,11 +73,11 @@ export class UserService {
     firstName?: string | null,
     lastName?: string | null,
     pronouns?: string | null,
-    bio?: string | null,
+    description?: string | null,
     isPrivate?: boolean | null,
-    instagram_username?: string | null,
-    twitter_username?: string | null,
-    pinterest_username?: string | null,
+    instagram?: string | null,
+    twitter?: string | null,
+    pinterest?: string | null,
     bornDate?: Date | null,
     avatar?: any | null,
     height?: number | null,
@@ -91,11 +91,11 @@ export class UserService {
       firstName,
       lastName,
       pronouns,
-      bio,
+      description,
       isPrivate,
-      instagram_username,
-      twitter_username,
-      pinterest_username,
+      instagram,
+      twitter,
+      pinterest,
       bornDate,
       avatar,
       height,
@@ -127,5 +127,13 @@ export class UserService {
    */
   public logOut() {
     return localStorage.removeItem('userId');
+  }
+
+  public getAllUsers() {
+    return this.repo.getAllUsers();
+  }
+
+  public matchUsernames(username: string) {
+    return this.repo.matchUsernames(username);
   }
 }

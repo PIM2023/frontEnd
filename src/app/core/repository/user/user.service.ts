@@ -94,11 +94,11 @@ export class UserRepository extends Repository {
    * @param height Height of the user
    * @param weight Weight of the user
    * @param pronouns Pronouns of the user
-   * @param bio Bio of the user
+   * @param description Bio of the user
    * @param isPrivate If the user is private or not
-   * @param instagram_username Instagram username of the user
-   * @param twitter_username Twitter username of the user
-   * @param pinterest_username Pinterest username of the user
+   * @param instagram Instagram username of the user
+   * @param twitter Twitter username of the user
+   * @param pinterest Pinterest username of the user
    * @returns edited user
    */
   updateUserProfile(
@@ -109,11 +109,11 @@ export class UserRepository extends Repository {
     firstName?: string | null,
     lastName?: string | null,
     pronouns?: string | null,
-    bio?: string | null,
+    description?: string | null,
     isPrivate?: boolean | null,
-    instagram_username?: string | null,
-    twitter_username?: string | null,
-    pinterest_username?: string | null,
+    instagram?: string | null,
+    twitter?: string | null,
+    pinterest?: string | null,
     bornDate?: Date | null,
     avatar?: any | null,
     height?: number | null,
@@ -125,16 +125,16 @@ export class UserRepository extends Repository {
       password: password,
       firstName: firstName,
       lastName: lastName,
+      pronouns: pronouns,
+      description: description,
+      isPrivate: isPrivate,
+      instagram: instagram,
+      twitter: twitter,
+      pinterest: pinterest,
       bornDate: bornDate,
       avatar: avatar,
       height: height,
       weight: weight,
-      pronouns: pronouns,
-      bio: bio,
-      isPrivate: isPrivate,
-      instagram_username: instagram_username,
-      twitter_username: twitter_username,
-      pinterest_username: pinterest_username,
     });
   }
   /*
@@ -160,5 +160,17 @@ export class UserRepository extends Repository {
     return this.doRequest<User>('delete', `/followers/${userId}/unfollow`, {
       followerId: followerId,
     });
+  }
+
+  /**
+   * This method is used to get all the users
+   * @returns
+   */
+  getAllUsers() {
+    return this.doRequest<User[]>('get', `/users`);
+  }
+
+  matchUsernames(username: string) {
+    return this.doRequest<User[]>('get', `/users/${username}/match`);
   }
 }

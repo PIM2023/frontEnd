@@ -14,7 +14,7 @@ import { UserService } from 'src/app/core/services/user/user.service';
 })
 export class PostPage implements OnInit {
   state: any;
-  post!: Post;
+  post!: any;
   loading: boolean = true;
   username!: string;
   uploadDate!: string;

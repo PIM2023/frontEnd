@@ -20,11 +20,6 @@ export class ProfilePage implements OnInit {
   instagram_username!: string;
   twitter_username!: string;
   pinterest_username!: string;
-  isFollowing = false;
-
-  toggleFollow() {
-    this.isFollowing = !this.isFollowing;
-  }
 
   outfits = [
     {

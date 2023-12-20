@@ -24,17 +24,18 @@
     <div class="indicator-container">
       <div *ngIf="currentEvents.length" class="event">
         <div *ngFor="let post of currentEvents" class="post-container">
-          <div class="post-media">
+          <div class="post-wrapper">
             <img
-              src="{{ post.image }}"
+              [src]="post.image"
               alt="Post {{ post.id }} de {{ post.username }}"
-              onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+              onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+              class="post-image"
             />
+            <span>{{ post.text }}</span>
           </div>
-          <span>{{ post.text }}</span>
         </div>
       </div>
-      <div *ngIf="!currentEvents.length" class="event">
+      <div *ngIf="!currentEvents.length" class="event" id="no-posts">
         {{calendar.noEventsLabel}}
       </div>
     </div>

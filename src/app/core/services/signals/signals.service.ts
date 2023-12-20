@@ -16,6 +16,7 @@ export class SignalsService {
       const encriptedId = this.encriptionService.encryptId(
         this.userSignal().id
       );
+      console.log('entra aqui');
       localStorage.setItem('userId', encriptedId);
     });
   }

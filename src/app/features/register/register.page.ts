@@ -1,5 +1,6 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import {
   LoadingController,
   AlertController,
@@ -9,6 +10,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
@@ -19,7 +21,9 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
   termsRead = false;
+  termsAgreed: boolean = false;
   userSignal: WritableSignal<any>;
+  img: any;
   check = document.querySelector('#condition');
   loading = this.loadingCtrl.create({
     message: 'Registrando la cuenta...',
@@ -31,9 +35,10 @@ export class RegisterPage implements OnInit {
     private alertController: AlertController,
     private userService: UserService,
     private signalsService: SignalsService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private encryptionService: EncryptionService
   ) {
-    this.checkForm().then(() => this.checkboxListener());
+    this.checkForm();
     this.userSignal = this.signalsService.getUserSignal();
   }
 
@@ -41,7 +46,10 @@ export class RegisterPage implements OnInit {
 
   async checkForm() {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
+      username: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9@\-_*#]+$/)],
+      ],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       bornDate: ['', Validators.required],
@@ -56,16 +64,11 @@ export class RegisterPage implements OnInit {
         ],
       ],
       password: ['', Validators.required],
-      termsAgreed: [false, Validators.requiredTrue],
     });
   }
 
-  async checkboxListener() {
-    this.registerForm.get('termsAgreed')?.valueChanges.subscribe((value) => {
-      if (this.registerForm.get('termsAgreed')!.value && !this.termsRead) {
-        this.presentAlert();
-      }
-    });
+  async checkboxListener(value: any) {
+    this.termsAgreed = value.detail.checked;
   }
 
   async showLoading() {
@@ -80,7 +83,7 @@ export class RegisterPage implements OnInit {
         {
           text: 'Cancelar',
           handler: async () => {
-            this.registerForm.value.termsAgreed = false;
+            this.termsAgreed = false;
             (<any>check).checked = false;
             alert.dismiss();
           },
@@ -89,6 +92,7 @@ export class RegisterPage implements OnInit {
           text: 'Acepto',
           handler: async () => {
             this.termsRead = true;
+            this.termsAgreed = true;
             alert.dismiss();
             (<any>check).checked = true;
           },
@@ -98,8 +102,7 @@ export class RegisterPage implements OnInit {
         Los datos que nos proporciones serán tratados de forma confidencial y no serán compartidos con terceros. \n
         Solo usaremos tus datos para almacenarlos temporalmente en el almacenamiento local del navegador para permitir que sigas con la sesión iniciada al recargar la página \n`,
     });
-
-    alert.present();
+    await alert.present();
   }
 
   onRegister() {
@@ -111,7 +114,9 @@ export class RegisterPage implements OnInit {
         this.registerForm.value.firstName,
         this.registerForm.value.lastName,
         this.registerForm.value.bornDate,
-        this.registerForm.value.avatar ?? null,
+        this.img && this.img !== ''
+          ? this.img.replace('data:image/jpeg;base64,', '')
+          : null,
         this.registerForm.value.height ?? null,
         this.registerForm.value.weight ?? null
       )
@@ -125,6 +130,11 @@ export class RegisterPage implements OnInit {
           this.toastService.presentToast(response.error.message);
         else {
           this.userSignal.set(response);
+          this.userSignal.set(response);
+          const encriptedId = this.encryptionService.encryptId(
+            this.userSignal().id
+          );
+          localStorage.setItem('userId', encriptedId);
           this.navCtrl.navigateRoot('home');
         }
       });
@@ -132,5 +142,26 @@ export class RegisterPage implements OnInit {
 
   goTo(dest: string, extras?: any) {
     this.navCtrl.navigateRoot(dest);
+  }
+
+  async takePicture() {
+    try {
+      const picture = await Camera.getPhoto({
+        quality: 100,
+        allowEditing: true,
+        resultType: CameraResultType.DataUrl,
+        saveToGallery: true,
+        promptLabelHeader: 'Selecciona de donde quieres obtener la foto',
+        promptLabelCancel: 'Cancelar',
+        promptLabelPicture: 'Hacer foto',
+        promptLabelPhoto: 'Seleccionar de la galería',
+        source: CameraSource.Prompt,
+      });
+      this.img = picture.dataUrl || '';
+    } catch (_) {
+      this.toastService.presentToast(
+        'Parece que ha habido un problema al seleccionar la foto'
+      );
+    }
   }
 }

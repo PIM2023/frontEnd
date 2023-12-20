@@ -18,6 +18,7 @@ export class ProfilePage implements OnInit {
   instagram!: string;
   twitter!: string;
   pinterest!: string;
+  isFollowing: boolean = false;
 
   outfits: any = [];
 

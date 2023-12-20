@@ -9,40 +9,7 @@ import { Post } from 'src/app/core/models/post';
 })
 export class LikedOutfitsPage implements OnInit {
   loading: boolean = true;
-  likedPosts: any[] = [
-    {
-      id: 11,
-      username: '12usaer',
-      text: 'teeeexxxtto',
-      image: 'https://api.jorma28j.upv.edu.es/uploads/2/sbjfrot5c2c.png',
-      likes: 0,
-      comments: [],
-    },
-    {
-      id: 12,
-      username: 'marcel',
-      text: 'Post de prueba',
-      image: 'https://api.jorma28j.upv.edu.es/uploads/5/hcwwpn8ezgo.png',
-      likes: 0,
-      comments: [],
-    },
-    {
-      id: 13,
-      username: 'marcel',
-      text: 'Post de prueba',
-      image: 'https://api.jorma28j.upv.edu.es/uploads/5/8scwxulqu1.png',
-      likes: 0,
-      comments: [],
-    },
-    {
-      id: 14,
-      username: 'marcel',
-      text: 'prueba',
-      image: 'https://api.jorma28j.upv.edu.es/uploads/5/9afot372e6k.png',
-      likes: 0,
-      comments: [],
-    },
-  ];
+  likedPosts: any[] = [];
   arrayOfArrays: any[][] = [];
   constructor(private navCtrl: NavController) {}
 

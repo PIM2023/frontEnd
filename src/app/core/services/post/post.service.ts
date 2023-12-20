@@ -78,4 +78,8 @@ export class PostService {
   public dislikePost(postId: number, userId: number) {
     return this.repo.dislikePost(postId, userId);
   }
+
+  public getPostsByUserId(userId: number) {
+    return this.repo.getPostsByUserId(userId);
+  }
 }

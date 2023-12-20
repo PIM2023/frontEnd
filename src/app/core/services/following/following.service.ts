@@ -29,4 +29,8 @@ export class FollowingService {
   public follow(id: number, followerId: number) {
     return this.repo.follow(id, followerId);
   }
+
+  public isFollowing(id: number, followerId: number) {
+    return this.repo.isFollowing(id, followerId);
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Repository } from '../../base/repository.repository';
-import { Post, PostCreated } from '../../models/post';
+import { Post, PostCreated, PostLiked } from '../../models/post';
 
 @Injectable({
   providedIn: 'root',
@@ -86,5 +86,9 @@ export class PostRepository extends Repository {
     return this.doRequest<Post>('post', `/post/${postId}/dislike`, {
       userId: userId,
     });
+  }
+
+  getPostsByUserId(userId: number) {
+    return this.doRequest<PostLiked[]>('post', `/post/${userId}`, {});
   }
 }

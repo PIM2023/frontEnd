@@ -86,7 +86,10 @@ export class PostPage implements OnInit {
     // this.isLiked = !this.isLiked;
     // this.post.likes += this.isLiked ? 1 : -1;
     const userId = localStorage.getItem('userId');
-    console.warn(userId);
+    console.log(userId);
+    console.log(this.post);
+    const postId = this.route.snapshot.paramMap.get('id');
+    console.log(postId);
 
     if (!localStorage.getItem('userId')) {
       this.toastService.presentToast(
@@ -96,7 +99,7 @@ export class PostPage implements OnInit {
     }
     if (!this.isLiked) {
       this.postService
-        .likePost(this.post.id, this.userSignal().id)
+        .likePost(+postId!, +this.userSignal().id)
         .pipe(
           catchError((error) => {
             return of(error);
@@ -115,7 +118,7 @@ export class PostPage implements OnInit {
         });
     } else {
       this.postService
-        .dislikePost(this.post.id, this.userSignal().id)
+        .dislikePost(+postId!, +this.userSignal().id)
         .pipe(
           catchError((error) => {
             return of(error);

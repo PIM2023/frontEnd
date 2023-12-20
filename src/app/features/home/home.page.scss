@@ -13,6 +13,10 @@ ion-icon {
   height: 24px;
 }
 
+img {
+  object-fit: cover;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;

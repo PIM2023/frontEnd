@@ -1,0 +1,46 @@
+<ion-header mode="ios" [translucent]="true">
+  <ion-toolbar id="close-placeholder">
+    <ion-buttons slot="start" (click)="goToProfileSettings()">
+      <ion-button slot="icon-only" fill="clear">
+        <ion-icon
+          src="../../../assets/icons/ic-arrow.svg"
+          id="arrow-icon"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Siguiendo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <ion-list lines="none">
+          <ion-item *ngFor="let user of followingList">
+            <ion-row (click)="goToProfileFollowing(user.username)">
+              <ion-avatar>
+                <img
+                  src="{{user.avatar}}"
+                  alt="Avatar"
+                  onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+                  class="user-avatar"
+                  id="avatar"
+                />
+              </ion-avatar>
+              <ion-label class="username">{{ user.username }} </ion-label>
+            </ion-row>
+            <ion-button
+              fill="clear"
+              slot="end"
+              (click)="unfollow(user.id)"
+              class="unfollow"
+            >
+              unfollow
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+</ion-content>

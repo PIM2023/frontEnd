@@ -1,28 +1,82 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+<ion-header [translucent]="true">
+  <ion-toolbar id="close-placeholder">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goTo('settings')">
+        <ion-icon
+          src="../../../assets/icons/ic-settings.svg"
+          id="settings-icon"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class = "profile">
-    <div class = "avatar-section">
-      <img src="avatar.jpg" alt="Avatar" onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'" class="user-avatar">
-      <h2 class="user-name">{{username}}</h2>
-    </div>
-    <div class = "info-profile">
-      <h2 class="user-email">Email: {{email}}</h2>
-      <h2 class="user-firstname">Nombre: {{firstname}}</h2>
-      <h2 class="user-lastname">Apellido: {{lastname}}</h2>
-      <h2 class="user-height">Altura: {{height}}</h2>
-      <h2 class="user-weight">Peso: {{weight}}</h2>
-      <h2 class="user-borndate">Fecha de nacimiento: {{borndate}}</h2>
-    </div>
-  </div>
-  <ion-button
-    class="but1"
-    fill="solid"
-    (click)="goTo('settings')"
-    >Editar Perfil</ion-button
-  >
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <ion-col>
+          <h2 class="user-name">@{{username}}</h2>
+          <h2 class="user-bio" id="bio">{{bio}}</h2>
+          <ion-row class="ion-padding">
+            <a *ngIf="instagram" href="{{instagram}}" target="_blank">
+              <ion-icon
+                class="icon"
+                src="../../../assets/icons/ic-instagram.svg"
+                id="instagram-icon"
+                onerror="src = 'www.instagram.com'"
+              ></ion-icon>
+            </a>
+
+            <a *ngIf="twitter" href="{{twitter}}" target="_blank">
+              <ion-icon
+                class="icon"
+                src="../../../assets/icons/ic-twitter.svg"
+                id="twitter-icon"
+                onerror="src = 'www.twitter.com'"
+              ></ion-icon>
+            </a>
+
+            <a *ngIf="pinterest" href="{{pinterest}}" target="_blank">
+              <ion-icon
+                class="icon"
+                src="../../../assets/icons/ic-pinterest.svg"
+                id="pinterest-icon"
+                onerror="src = 'www.pinterest.com'"
+              ></ion-icon>
+            </a>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <img
+            src="{{avatar}}"
+            alt="Avatar"
+            onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+            class="user-avatar"
+          />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p class="text">my outfits</p>
+          <ion-row *ngIf="outfits">
+            <div class="horizontal-scroll">
+              <ion-col *ngFor="let outfit of outfits">
+                <img
+                  src="{{outfit.image}}"
+                  alt="Post image"
+                  onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+                  class="post-avatar"
+                />
+                <h2 class="post-description">{{outfit.text}}</h2>
+              </ion-col>
+            </div>
+          </ion-row>
+          <ion-row *ngIf="!outfits">
+            <h2 class="post-description">No ha publicado ningun outfit</h2>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
 </ion-content>

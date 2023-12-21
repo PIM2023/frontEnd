@@ -1,0 +1,210 @@
+<ion-header [translucent]="true">
+  <ion-toolbar id="close-placeholder">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goToProfile()">
+        <ion-icon
+          src="../../../assets/icons/ic-close.svg"
+          id="close-icon"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <img
+          src="avatar.jpg"
+          alt="Avatar"
+          onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
+          class="user-avatar"
+          id="avatar"
+          (click)="setNewProfilePicture()"
+        />
+        <ion-icon
+          src="../../../assets/icons/ic-camera-elipse.svg"
+          id="camera-elipse-icon"
+          (click)="setNewProfilePicture()"
+        ></ion-icon>
+        <ion-icon
+          src="../../../assets/icons/ic-camera.svg"
+          id="camera-icon"
+          (click)="setNewProfilePicture()"
+        ></ion-icon>
+
+        <ion-col class="name-holder">
+          <ion-label class="prompt" id="prompt-username"> Username </ion-label>
+          <ion-row>
+            <input
+              class="information"
+              id="username"
+              value="{{username}}"
+              minlength="3"
+              maxlength="15"
+              readonly
+            />
+            <ion-icon
+              src="../../../assets/icons/ic-edit-white.svg"
+              class="edit-icon"
+              id="edit-username"
+              (click)="editUsername()"
+            ></ion-icon>
+          </ion-row>
+
+          <ion-label class="prompt" id="prompt-name"> Nombre </ion-label>
+          <ion-row>
+            <input
+              class="information"
+              minlength="2"
+              maxlength="30"
+              id="name"
+              value="{{name}}"
+              readonly
+            />
+            <ion-icon
+              src="../../../assets/icons/ic-edit-white.svg"
+              class="edit-icon"
+              id="edit-name"
+              (click)="editName()"
+            ></ion-icon>
+          </ion-row>
+          <ion-label class="prompt" id="prompt-name"> Apellido(s) </ion-label>
+          <ion-row>
+            <input
+              class="information"
+              id="surname"
+              value="{{surname}}"
+              maxlength="50"
+              readonly
+            />
+            <ion-icon
+              src="../../../assets/icons/ic-edit-white.svg"
+              class="edit-icon"
+              id="edit-surname"
+              (click)="editSurname()"
+            ></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="margin-left">
+          <ion-label class="prompt" id="prompt-bio"> Biografía </ion-label>
+          <ion-row>
+            <ion-textarea
+              class="information"
+              id="biografy"
+              value="{{bio}}"
+              [autoGrow]="true"
+              [readonly]="true"
+              [maxlength]="120"
+              [counter]="true"
+            />
+            <ion-icon
+              src="../../../assets/icons/ic-edit-white.svg"
+              class="edit-icon"
+              id="edit-bio"
+              (click)="editBio()"
+            ></ion-icon>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <hr />
+
+      <ion-row>
+        <ion-col class="margin-left">
+          <ion-row class="margin" (click)="goToLikedOutfits()">
+            <ion-icon
+              src="../../../assets/icons/ic-heart-filled.svg"
+              class="icons"
+            >
+            </ion-icon>
+            <label class="text">Mis me gusta</label>
+            <ion-row class="arrow-holder">
+              <ion-icon
+                src="../../../assets/icons/ic-arrow.svg"
+                id="liked-outfits-arrow"
+              >
+              </ion-icon>
+            </ion-row>
+          </ion-row>
+
+          <ion-row class="margin-top" (click)="goToFollowing()">
+            <ion-icon src="../../../assets/icons/ic-people.svg" class="icons">
+            </ion-icon>
+            <label class="text"> Siguiendo </label>
+            <ion-row class="arrow-holder">
+              <ion-icon
+                src="../../../assets/icons/ic-arrow.svg"
+                id="liked-outfits-arrow"
+              >
+              </ion-icon>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <hr />
+
+      <ion-row>
+        <ion-col class="margin-left">
+          <ion-row id="instagram" (click)="createAlert('instagram')">
+            <ion-icon
+              src="../../../assets/icons/ic-instagram.svg"
+              class="icons"
+            >
+            </ion-icon>
+            <label class="text"> Instagram </label>
+            <ion-row class="arrow-holder">
+              <ion-icon
+                src="../../../assets/icons/ic-arrow.svg"
+                id="liked-outfits-arrow"
+              >
+              </ion-icon>
+            </ion-row>
+          </ion-row>
+
+          <ion-row
+            class="margin-top"
+            id="twitter"
+            (click)="createAlert('twitter')"
+          >
+            <ion-icon src="../../../assets/icons/ic-twitter.svg" class="icons">
+            </ion-icon>
+            <label class="text"> Twitter </label>
+            <ion-row class="arrow-holder">
+              <ion-icon
+                src="../../../assets/icons/ic-arrow.svg"
+                id="liked-outfits-arrow"
+              >
+              </ion-icon>
+            </ion-row>
+          </ion-row>
+
+          <ion-row
+            class="margin-top-bottom"
+            id="pinterest"
+            (click)="createAlert('pinterest')"
+          >
+            <ion-icon
+              src="../../../assets/icons/ic-pinterest.svg"
+              class="icons"
+            >
+            </ion-icon>
+            <label class="text"> Pinterest </label>
+            <ion-row class="arrow-holder">
+              <ion-icon
+                src="../../../assets/icons/ic-arrow.svg"
+                id="liked-outfits-arrow"
+              >
+              </ion-icon>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+</ion-content>

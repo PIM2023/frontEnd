@@ -4,13 +4,8 @@ import { CanActivateGuard } from './core/guards/can-activate.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'profile',
-    pathMatch: 'full',
-  },
-  {
     path: 'register',
-    title: 'Registro',
+    title: 'Clout - Registro',
     loadChildren: () =>
       import('./features/register/register.module').then(
         (m) => m.RegisterPageModule
@@ -18,33 +13,41 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => 
-      import('./features/login/login.module').then( 
-        (m) => m.LoginPageModule
-      ),
-  },
-  {
-    path: 'other-profile',
-    loadChildren: () => 
-      import('./features/other-profile/other-profile.module').then( 
-        (m) => m.OtherProfilePageModule
-      ),
-  },
-  {
-    path: 'profile',
-    loadChildren: () => 
-      import('./features/profile/profile.module').then( 
-        (m) => m.ProfilePageModule
-      ),
-  },
-  {
-    path: 'home',
-    title: 'Página principal',
-    canActivate: [CanActivateGuard],
+    title: 'Clout - Iniciar sesión',
     loadChildren: () =>
-      import('./features/home/home.module').then(
-        (m) => m.HomePageModule
+      import('./features/login/login.module').then((m) => m.LoginPageModule),
+  },
+  {
+    path: '',
+    canActivate: [CanActivateGuard],
+    title: 'Clout',
+    loadChildren: () =>
+      import('./features/main/main.module').then((m) => m.MainPageModule),
+  },
+  {
+    path: 'post/:id',
+    loadChildren: () =>
+      import('./features/post/post.module').then((m) => m.PostPageModule),
+  },
+  {
+    path: 'welcome',
+    title: 'Clout - Bienvenido',
+    loadChildren: () =>
+      import('./features/landing/landing.module').then(
+        (m) => m.LandingPageModule
       ),
+  },
+  {
+    path: 'not-found',
+    title: 'Clout - Página no encontrada',
+    loadChildren: () =>
+      import('./features/not-found/not-found.module').then(
+        (m) => m.NotFoundPageModule
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];
 

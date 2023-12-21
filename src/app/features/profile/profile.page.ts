@@ -1,33 +1,52 @@
-import { Component, OnInit, WritableSignal } from '@angular/core';
-
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  WritableSignal,
+} from '@angular/core';
+import { PostService } from 'src/app/core/services/post/post.service';
 import { NavController } from '@ionic/angular';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
+import { catchError, of } from 'rxjs';
+import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
+  id!: number;
   username!: string;
-  email!: string;
-  firstname!: string;
-  lastname!: string;
-  height!: string;
-  weight!: string;
-  borndate!: string;
+  avatar!: string;
+  bio!: string;
+  instagram!: string;
+  twitter!: string;
+  pinterest!: string;
+  isFollowing: boolean = false;
 
+  outfits: any = [];
+
+  toggleFollow() {
+    this.isFollowing = !this.isFollowing;
+  }
   userSignal: WritableSignal<any>;
 
   constructor(
     private navCtrl: NavController,
-    private signalsService: SignalsService
+    private signalsService: SignalsService,
+    private postService: PostService,
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef
   ) {
     this.userSignal = this.signalsService.getUserSignal();
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    console.warn('');
+    console.log(this.userSignal());
     this.populateProfile();
+    this.cdr.detectChanges();
   }
 
   goTo(dest: string, extras?: any) {
@@ -36,13 +55,36 @@ export class ProfilePage implements OnInit {
 
   populateProfile() {
     const user = this.userSignal();
-
+    this.id = user.id;
     this.username = user.username;
-    this.email = user.email;
-    this.firstname = user.firstName;
-    this.lastname = user.lastName;
-    this.height = user.height;
-    this.weight = user.weight;
-    this.borndate = user.bornDate;
+    const timestamp = new Date().getTime();
+    this.avatar = user.profile.avatar;
+    this.avatar += `?nocache=${timestamp}`;
+    this.bio = user.profile.description;
+    this.instagram = user.profile.instagram;
+    this.twitter = user.profile.twitter;
+    this.pinterest = user.profile.pinterest;
+    this.getPosts(this.id);
+
+    //Hacer llamada para obtener todoso los posts
+  }
+
+  getPosts(id: number) {
+    this.postService
+      .getPostsByUserId(id)
+      .pipe(
+        catchError((error) => {
+          return of(error);
+        })
+      )
+      .subscribe((response: any) => {
+        console.log('response', response);
+        if (response.error)
+          this.toastService.presentToast(response.error.message);
+        else {
+          this.outfits = response;
+          console.log(response);
+        }
+      });
   }
 }

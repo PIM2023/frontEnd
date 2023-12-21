@@ -1,59 +1,148 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-col>
+      <ion-row class="top">
+        <label id="active"> inicio </label>
+        <label id="open-modal"> crear post </label>
+      </ion-row>
 
-<ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-list>
-    <post *ngFor="let post of posts" [post]="post"></post>
-  </ion-list>
+      <div *ngIf="!posts && !postsArrived">
+        <div class="center-spinner">
+          <span>Cargando los posts</span>
+          <ion-spinner></ion-spinner>
+        </div>
+      </div>
+      <div *ngIf="!posts && postsArrived">
+        <div class="center-spinner">
+          <span>Actualmente no hay ningún post</span>
+        </div>
+      </div>
+
+      <div *ngIf="posts" class="event">
+        <div *ngFor="let post of posts" class="post-container">
+          <ion-row>
+            <div class="function-container">
+              <ion-row>
+                <img
+                  class="profile-img"
+                  src="{{post.user.avatar}}"
+                  onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+                  (click)="goToProfile(post.user.username)"
+                />
+              </ion-row>
+              <ion-row>
+                <ion-icon
+                  *ngIf="!post.hasLiked"
+                  src="../../../assets/icons/ic-heart-filled.svg"
+                  id="like-icon"
+                  (click)="toggleLike(post)"
+                >
+                </ion-icon>
+                <ion-icon
+                  *ngIf="post.hasLiked"
+                  src="../../../assets/icons/ic-heart-empty.svg"
+                  id="like-icon"
+                  (click)="toggleLike(post)"
+                >
+                </ion-icon>
+              </ion-row>
+              <ion-row>
+                <ion-icon
+                  src="../../../assets/icons/ic-comments.svg"
+                  id="comment-icon"
+                >
+                </ion-icon>
+              </ion-row>
+            </div>
+
+            <ion-col>
+              <ion-row>
+                <img
+                  src="{{post.image}}"
+                  class="post-image"
+                  (click)="goToPost(post.id)"
+                />
+              </ion-row>
+              <ion-row>
+                <label
+                  class="username"
+                  (click)="goToProfile(post.user.username)"
+                >
+                  @{{post.user.username}}
+                </label>
+              </ion-row>
+              <ion-row> </ion-row>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </ion-col>
+  </ion-grid>
 </ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-button id="open-modal">
-      <ion-label>Post</ion-label>
-    </ion-button>
-  </ion-toolbar>
-</ion-footer>
 
 <ion-modal mode="ios" trigger="open-modal">
   <ng-template>
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="cancel()">Cancelar</ion-button>
+          <ion-button (click)="cancel()">
+            <ion-icon
+              src="../../../assets/icons/ic-close.svg"
+              id="close-icon"
+            ></ion-icon>
+          </ion-button>
         </ion-buttons>
         <ion-title>Nuevo post</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Publicar</ion-button>
+          <ion-button (click)="confirm()" [strong]="true" id="publish-button"
+            >Publicar</ion-button
+          >
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <div class="wrapper">
-        <ion-button fill="clear" (click)="takePicture()">
-          <ion-label>Img</ion-label>
+        <p class="text">Añade tu outfit</p>
+        <ion-button
+          fill="clear"
+          (click)="takePicture()"
+          shape="round"
+          id="outfit-button"
+        >
+          <ion-col id="add-outfit">
+            <ion-icon
+              src="../../../assets/icons/ic-add.svg"
+              id="add-icon"
+            ></ion-icon>
+            <span id="button-text">add outfit</span>
+          </ion-col>
         </ion-button>
-        <img *ngIf="img" [src]="img" alt="Foto" />
       </div>
-      <ion-item>
-        <ion-input
-          label="Introduce una descripción"
-          labelPlacement="stacked"
+      <ion-item lines="none">
+        <ion-textarea
           type="text"
+          id="text-descripcion"
           placeholder="Descripción del post"
           [(ngModel)]="description"
-        ></ion-input>
+        ></ion-textarea>
       </ion-item>
+      <ion-list>
+        <ion-item lines="none">
+          <ion-select
+            id="text-etiquetas"
+            aria-label="Etiquetas"
+            placeholder="Añade algunas etiquetas"
+            [multiple]="true"
+            [(ngModel)]="selectedEtiquetas"
+          >
+            <ion-select-option
+              *ngFor="let etiqueta of etiquetas"
+              [value]="etiqueta.value"
+              >{{etiqueta.label}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ng-template>
 </ion-modal>

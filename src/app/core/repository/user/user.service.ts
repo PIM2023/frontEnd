@@ -69,4 +69,105 @@ export class UserRepository extends Repository {
   getUserProfile(id: number) {
     return this.doRequest<User>('get', `/users/${id}/profile`);
   }
+
+  /**
+   * @param username Username of the user
+   * @returns User with the given username
+   */
+  getUserProfileWithUsername(username: string) {
+    return this.doRequest<User>('get', `/users/${username}/profile`);
+  }
+
+  /**
+   * This method is used to edit a user
+   * @param id Id of the user
+   * @param username Username of the user
+   * @param email Email of the user
+   * @param password Password of the user
+   * @param firstName First name of the user
+   * @param lastName Last name of the user
+   * @param bornDate Born date of the user
+   * @param avatar Avatar of the user
+   * @param height Height of the user
+   * @param weight Weight of the user
+   * @param pronouns Pronouns of the user
+   * @param description Bio of the user
+   * @param isPrivate If the user is private or not
+   * @param instagram Instagram username of the user
+   * @param twitter Twitter username of the user
+   * @param pinterest Pinterest username of the user
+   * @returns edited user
+   */
+  updateUserProfile(
+    id: number,
+    username?: string | null,
+    email?: string | null,
+    password?: string | null,
+    firstName?: string | null,
+    lastName?: string | null,
+    pronouns?: string | null,
+    description?: string | null,
+    isPrivate?: boolean | null,
+    instagram?: string | null,
+    twitter?: string | null,
+    pinterest?: string | null,
+    bornDate?: Date | null,
+    avatar?: any | null,
+    height?: number | null,
+    weight?: number | null
+  ) {
+    return this.doRequest<User>('put', `/users/${id}`, {
+      username: username,
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      pronouns: pronouns,
+      description: description,
+      isPrivate: isPrivate,
+      instagram: instagram,
+      twitter: twitter,
+      pinterest: pinterest,
+      bornDate: bornDate,
+      avatar: avatar,
+      height: height,
+      weight: weight,
+    });
+  }
+  /*
+      
+   * This method is used to follow a user
+   * @param userId Id of the user to follow
+   * @param followerId Id of the user that follows
+   * @returns
+   */
+  followUser(userId: number, followerId: number) {
+    return this.doRequest<User>('post', `/followers/${userId}/follow`, {
+      followerId: followerId,
+    });
+  }
+
+  /**
+   * This method is used to unfollow a user
+   * @param userId Id of the user to unfollow
+   * @param followerId Id of the user that unfollows
+   * @returns
+   */
+  unfollowUser(userId: number, followerId: number) {
+    return this.doRequest<User>('delete', `/followers/${userId}/unfollow`, {
+      followerId: followerId,
+    });
+  }
+
+  /**
+   * This method is used to get all the users
+   * @returns
+   */
+  getAllUsers() {
+    return this.doRequest<User[]>('get', `/users`);
+  }
+
+  matchUsernames(username: string) {
+    return this.doRequest<User[]>('get', `/users/${username}/match`);
+  }
 }

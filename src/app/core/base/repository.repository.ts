@@ -3,7 +3,11 @@ import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export abstract class Repository {
-  protected basePath = `https://api.jorma28j.upv.edu.es`;
+  private paths = Object.freeze({
+    dev: 'https://api.jorma28j.upv.edu.es',
+    prod: 'https://api-pin.crazyjmb.com',
+  });
+  protected basePath = this.paths.prod;
   protected http: HttpClient = this.injector.get(HttpClient);
 
   constructor(protected injector: Injector) {}

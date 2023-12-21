@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { User } from 'src/app/core/models/user';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
@@ -27,7 +28,8 @@ export class LoginPage implements OnInit {
     private loadingCtrl: LoadingController,
     private userService: UserService,
     private signalsService: SignalsService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private encryptionService: EncryptionService
   ) {
     this.checkForm();
     this.userSignal = this.signalsService.getUserSignal();
@@ -53,7 +55,7 @@ export class LoginPage implements OnInit {
     (await this.loading).present();
   }
 
-  onRegister() {
+  onLogin() {
     this.userService
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .pipe(
@@ -61,17 +63,18 @@ export class LoginPage implements OnInit {
           return of(error);
         })
       )
-      .subscribe((response) => {
+      .subscribe(async (response) => {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
-          //mi usuario, se ha de cambiar por response
-          console.log('RES: ', response);
-          console.log('userSignal: ', this.userSignal);
-          console.log('usersignal(): ', this.userSignal());
+          console.log(response);
           this.userSignal.set(response);
-          console.log('usersignal2(): ', this.userSignal());
-          this.navCtrl.navigateRoot('home');
+          console.warn(this.userSignal());
+          const encriptedId = this.encryptionService.encryptId(
+            this.userSignal().id
+          );
+          localStorage.setItem('userId', encriptedId);
+          this.navCtrl.navigateRoot('');
         }
       });
   }

@@ -1,4 +1,9 @@
-import { Component, OnInit, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  WritableSignal,
+} from '@angular/core';
 import { PostService } from 'src/app/core/services/post/post.service';
 import { NavController } from '@ionic/angular';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
@@ -10,7 +15,7 @@ import { ToastService } from 'src/app/shared/utils/toast.service';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
   id!: number;
   username!: string;
   avatar!: string;
@@ -31,18 +36,17 @@ export class ProfilePage implements OnInit {
     private navCtrl: NavController,
     private signalsService: SignalsService,
     private postService: PostService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef
   ) {
     this.userSignal = this.signalsService.getUserSignal();
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     console.warn('');
     console.log(this.userSignal());
     this.populateProfile();
-    setTimeout(() => {
-      this.getPosts(this.id);
-    }, 1000);
+    this.cdr.detectChanges();
   }
 
   goTo(dest: string, extras?: any) {
@@ -53,11 +57,14 @@ export class ProfilePage implements OnInit {
     const user = this.userSignal();
     this.id = user.id;
     this.username = user.username;
+    const timestamp = new Date().getTime();
     this.avatar = user.profile.avatar;
+    this.avatar += `?nocache=${timestamp}`;
     this.bio = user.profile.description;
     this.instagram = user.profile.instagram;
     this.twitter = user.profile.twitter;
     this.pinterest = user.profile.pinterest;
+    this.getPosts(this.id);
 
     //Hacer llamada para obtener todoso los posts
   }

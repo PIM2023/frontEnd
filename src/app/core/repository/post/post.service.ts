@@ -31,8 +31,8 @@ export class PostRepository extends Repository {
    *
    * @returns Observable that returns all the posts
    */
-  getPosts() {
-    return this.doRequest<Post[]>('get', '/post');
+  getPosts(userId?: number) {
+    return this.doRequest<Post[]>('get', `/post/feed/${userId}`);
   }
 
   /**

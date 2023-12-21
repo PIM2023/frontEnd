@@ -69,7 +69,9 @@ export class ProfileSettingsPage implements OnInit {
           .toString()
           .replace('https://www.pinterest.es/', '')
       : '';
+    const timestamp = new Date().getTime();
     this.img = user.profile.avatar;
+    this.img += `?nocache=${timestamp}`;
     if (this.img !== '') {
       const avatar = document.getElementById('avatar') as HTMLImageElement;
       avatar.src = this.img;
@@ -332,7 +334,7 @@ export class ProfileSettingsPage implements OnInit {
         null,
         null,
         null,
-        this.img,
+        this.img.replace('data:image/jpeg;base64,', ''),
         null,
         null
       );

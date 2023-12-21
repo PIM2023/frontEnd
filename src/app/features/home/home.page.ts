@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, WritableSignal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { IonModal } from '@ionic/angular';
+import { IonModal, NavController } from '@ionic/angular';
 import { catchError, of } from 'rxjs';
 import { Post } from 'src/app/core/models/post';
 import { User } from 'src/app/core/models/user';
 import { PostService } from 'src/app/core/services/post/post.service';
 import { SignalsService } from 'src/app/core/services/signals/signals.service';
+import { EncryptionService } from 'src/app/shared/utils/encryption.service';
 import { ToastService } from 'src/app/shared/utils/toast.service';
 
 @Component({
@@ -26,7 +27,9 @@ export class HomePage implements OnInit {
   state: any;
   postsArrived: boolean = false;
   userSignal: WritableSignal<User>;
-  posts: Post[] = [];
+  isLiked: boolean = false;
+  loading: boolean = false;
+  posts: any[] = [];
   selectedEtiquetas: string[] = [];
   @ViewChild(IonModal) modal!: IonModal;
 
@@ -34,7 +37,10 @@ export class HomePage implements OnInit {
     private postService: PostService,
     private toastService: ToastService,
     private router: Router,
-    private signalsService: SignalsService
+    private signalsService: SignalsService,
+    private navCtrl: NavController,
+    private route: ActivatedRoute,
+    private encryptionService: EncryptionService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.userSignal = this.signalsService.getUserSignal();
@@ -43,7 +49,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.getPosts();
+    this.getPosts(this.userSignal().id);
     this.getTags();
   }
 
@@ -52,7 +58,7 @@ export class HomePage implements OnInit {
     this.postService
       .post(
         this.description,
-        this.img,
+        imgToSend,
         this.userSignal().id,
         this.selectedEtiquetas
       )
@@ -73,9 +79,9 @@ export class HomePage implements OnInit {
       });
   }
 
-  async getPosts() {
+  async getPosts(id: number) {
     this.postService
-      .getPosts()
+      .getPosts(id)
       .pipe(
         catchError((error) => {
           return of(error);
@@ -141,7 +147,7 @@ export class HomePage implements OnInit {
   }
 
   async refreshPage(ev: any) {
-    await this.getPosts();
+    await this.getPosts(this.userSignal().id);
     ev.target.complete();
   }
 
@@ -162,5 +168,67 @@ export class HomePage implements OnInit {
         if (response.error.message)
           this.toastService.presentToast(response.error.message);
       });
+  }
+
+  goToProfile(username: string) {
+    this.navCtrl.navigateForward(`/profile/name/${username}`);
+  }
+
+  goToPost(postId: number) {
+    this.navCtrl.navigateForward(`/post/${postId}`);
+  }
+
+  toggleLike(post: any) {
+    //this.isLiked = !this.isLiked;
+    // this.isLiked = !this.isLiked;
+    // this.post.likes += this.isLiked ? 1 : -1;
+    console.log(this.post);
+
+    console.log('this.userSignal()', this.userSignal());
+    const userId = this.encryptionService.decryptId(
+      localStorage.getItem('userId')!
+    );
+
+    if (!post.hasLiked) {
+      console.log('like');
+      this.postService
+        .likePost(+post.id!, +userId)
+        .pipe(
+          catchError((error) => {
+            return of(error);
+          })
+        )
+        .subscribe((response) => {
+          console.log('response', response);
+          if (response.error) {
+            this.toastService.presentToast(response.error.message);
+            this.loading = false;
+            return;
+          }
+          post.hasLiked = true;
+          console.warn(this.post);
+          this.loading = false;
+        });
+    } else {
+      console.log('dislike');
+      this.postService
+        .dislikePost(+post.id!, +userId)
+        .pipe(
+          catchError((error) => {
+            return of(error);
+          })
+        )
+        .subscribe((response) => {
+          console.log('aqui');
+          if (response.error) {
+            this.toastService.presentToast(response.error.message);
+            this.loading = false;
+            return;
+          }
+          post.hasLiked = false;
+          console.warn(this.post);
+          this.loading = false;
+        });
+    }
   }
 }

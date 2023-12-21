@@ -32,18 +32,22 @@
                     >{{ isFollowing ? '- unfollow' : '+ follow' }}</span
                   >
                 </ion-button>
-                <ion-button (click) ="copyCurrentUrl()" shape="round" id="share-button">
-                  <ion-icon 
+                <ion-button
+                  (click)="copyCurrentUrl()"
+                  shape="round"
+                  id="share-button"
+                >
+                  <ion-icon
                     src="../../../assets/icons/ic-share.svg"
                     id="share-icon"
                   ></ion-icon>
-                    <span id="button-text-share">share</span>
+                  <span id="button-text-share">share</span>
                 </ion-button>
               </ion-row>
-              <ion-row class = "ion-padding">
+              <ion-row class="ion-padding">
                 <a *ngIf="instagram" href="{{instagram}}" target="_blank">
                   <ion-icon
-                    class = "icon"
+                    class="icon"
                     src="../../../assets/icons/ic-instagram.svg"
                     id="instagram-icon"
                     onerror="src = 'www.instagram.com'"
@@ -51,7 +55,7 @@
                 </a>
                 <a *ngIf="twitter" href="{{twitter}}" target="_blank">
                   <ion-icon
-                    class = "icon"
+                    class="icon"
                     src="../../../assets/icons/ic-twitter.svg"
                     id="twitter-icon"
                     onerror="src = 'www.twitter.com'"
@@ -59,7 +63,7 @@
                 </a>
                 <a *ngIf="pinterest" href="{{pinterest}}" target="_blank">
                   <ion-icon
-                    class = "icon"
+                    class="icon"
                     src="../../../assets/icons/ic-pinterest.svg"
                     id="pinterest-icon"
                     onerror="src = 'www.pinterest.com'"
@@ -68,9 +72,9 @@
               </ion-row>
             </ion-col>
             <ion-col>
-              <img 
-                src="{{avatar}}" 
-                alt="Avatar" 
+              <img
+                src="{{avatar}}"
+                alt="Avatar"
                 onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
                 class="user-avatar"
                 id="avatar"
@@ -81,19 +85,20 @@
             <ion-col>
               <p class="text">outfits</p>
               <ion-row *ngIf="outfits">
-                <div class="horizontal-scroll"> 
+                <div class="horizontal-scroll">
                   <ion-col *ngFor="let outfit of outfits">
-                    <img 
-                      src="{{outfit.imageUrl}}"
+                    <img
+                      src="{{outfit.image}}"
                       alt="Post image"
                       onerror="this.src = 'https://images.hola.com/imagenes/mascotas/20210217184541/gatos-gestos-lenguaje-significado/0-922-380/gatos-gestos-m.jpg?tx=w_680'"
-                      class="post-avatar" />
-                    <h2 class="post-description"> {{outfit.description}} </h2>
+                      class="post-avatar"
+                    />
+                    <h2 class="post-description">{{outfit.text}}</h2>
                   </ion-col>
                 </div>
               </ion-row>
               <ion-row *ngIf="!outfits">
-                <div class="horizontal-scroll"> 
+                <div class="horizontal-scroll">
                   <ion-col *ngFor="let outfit of outfits">
                     <img
                       src="{{outfit.image}}"

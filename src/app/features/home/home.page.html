@@ -25,14 +25,24 @@
               <ion-row>
                 <img
                   class="profile-img"
-                  src=""
+                  src="{{post.user.avatar}}"
                   onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+                  (click)="goToProfile(post.user.username)"
                 />
               </ion-row>
               <ion-row>
                 <ion-icon
+                  *ngIf="!post.hasLiked"
                   src="../../../assets/icons/ic-heart-filled.svg"
                   id="like-icon"
+                  (click)="toggleLike(post)"
+                >
+                </ion-icon>
+                <ion-icon
+                  *ngIf="post.hasLiked"
+                  src="../../../assets/icons/ic-heart-empty.svg"
+                  id="like-icon"
+                  (click)="toggleLike(post)"
                 >
                 </ion-icon>
               </ion-row>
@@ -48,13 +58,19 @@
             <ion-col>
               <ion-row>
                 <img
-                  src=""
+                  src="{{post.image}}"
                   class="post-image"
                   onerror="this.onerror=null;this.src='https://picsum.photos/id/237/1000/1000';"
+                  (click)="goToPost(post.id)"
                 />
               </ion-row>
               <ion-row>
-                <label class="username"> @username </label>
+                <label
+                  class="username"
+                  (click)="goToProfile(post.user.username)"
+                >
+                  @{{post.user.username}}
+                </label>
               </ion-row>
               <ion-row> </ion-row>
             </ion-col>

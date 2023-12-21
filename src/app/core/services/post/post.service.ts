@@ -28,8 +28,8 @@ export class PostService {
    *
    * @returns Observable that returns all the posts
    */
-  public getPosts() {
-    return this.repo.getPosts();
+  public getPosts(userId?: number) {
+    return this.repo.getPosts(userId);
   }
 
   /**

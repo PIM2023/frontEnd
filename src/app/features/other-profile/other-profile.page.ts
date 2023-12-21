@@ -45,12 +45,6 @@ export class OtherProfilePage implements OnInit {
   ngOnInit() {
     console.warn(this.username);
     this.getProfileWithUsername(this.username);
-    setTimeout(() => {
-      this.isFollowingUser();
-    }, 1000);
-    setTimeout(() => {
-      this.getPosts(this.id);
-    }, 1000);
   }
 
   goTo(dest: string, extras?: any) {
@@ -79,7 +73,11 @@ export class OtherProfilePage implements OnInit {
         this.twitter = res.profile.twitter;
         this.pinterest = res.profile.pinterest;
         this.bio = res.profile.description;
+        const timestamp = new Date().getTime();
         this.avatar = res.profile.avatar;
+        this.avatar += `?nocache=${timestamp}`;
+        this.isFollowingUser();
+        this.getPosts(this.id);
       });
   }
 

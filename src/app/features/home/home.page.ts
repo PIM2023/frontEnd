@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  WritableSignal,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonModal, NavController } from '@ionic/angular';
@@ -40,6 +46,7 @@ export class HomePage implements OnInit {
     private signalsService: SignalsService,
     private navCtrl: NavController,
     private route: ActivatedRoute,
+    private cd: ChangeDetectorRef,
     private encryptionService: EncryptionService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
@@ -48,9 +55,12 @@ export class HomePage implements OnInit {
     console.log('userSignal()', this.userSignal());
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
     this.getPosts(this.userSignal().id);
     this.getTags();
+    this.cd.detectChanges();
   }
 
   async post() {
@@ -71,8 +81,8 @@ export class HomePage implements OnInit {
         if (response.error)
           this.toastService.presentToast(response.error.message);
         else {
-          this.posts.push(response);
-          console.warn('LO QUE ENVIO ES: ', this.img);
+          this.posts.unshift(response);
+          console.warn('LO QUE ENVIO ES: ', imgToSend);
           console.warn('Etiquetas seleccionadas:', this.selectedEtiquetas);
           console.log('LO QUE RECIBO DE LA RESPONSE ES: ', response);
         }
@@ -230,5 +240,11 @@ export class HomePage implements OnInit {
           this.loading = false;
         });
     }
+  }
+
+  noComments() {
+    this.toastService.presentToast(
+      'La funcionalidad de los comentarios no está disponible aún'
+    );
   }
 }

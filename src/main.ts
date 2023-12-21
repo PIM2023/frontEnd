@@ -10,7 +10,7 @@ defineCustomElements(window);
 
 if (environment.production) {
   enableProdMode();
-  // disableLogs();
+  disableLogs();
 }
 
 // disableLogs();
